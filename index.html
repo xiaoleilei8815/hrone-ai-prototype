@@ -1,44 +1,139 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HRONE｜劳务用工分析驾驶舱</title>
-  <style>
-    :root{--blue:#2563eb;--blue2:#eff6ff;--ink:#18181b;--text:#3f3f46;--muted:#71717a;--line:#e4e4e7;--bg:#f5f5f4;--white:#fff;--orange:#d97706;--orangebg:#fff7ed;--red:#dc2626;--redbg:#fef2f2;--shadow:0 1px 3px rgba(0,0,0,.06)}
-    *{box-sizing:border-box}body{margin:0;font:14px/1.5 Inter,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);height:100vh;overflow:hidden}button,input{font:inherit}button{cursor:pointer}.top{height:54px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:18px}.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700}.logo{width:28px;height:28px;border-radius:7px;background:var(--blue);color:white;display:grid;place-items:center}.topnav{display:flex;align-items:center;gap:4px}.topnav button,.iconbtn{border:0;background:transparent;color:var(--muted);padding:8px 10px;border-radius:6px}.topnav button:hover,.iconbtn:hover{background:#f4f4f5;color:var(--ink)}.search{margin-left:auto;width:260px;background:#f4f4f5;border:1px solid transparent;border-radius:7px;padding:8px 11px}.avatar{width:30px;height:30px;border-radius:50%;background:#1d4ed8;color:white;display:grid;place-items:center;font-size:12px}.shell{height:calc(100vh - 54px);display:grid;grid-template-columns:220px 1fr}.side{background:#fff;border-right:1px solid var(--line);padding:16px 12px;overflow:auto}.group{font-size:11px;color:#a1a1aa;margin:14px 10px 6px;text-transform:uppercase;letter-spacing:.08em}.nav{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;padding:9px 11px;border-radius:7px;color:var(--muted);text-align:left}.nav:hover{background:#f4f4f5}.nav.on{color:var(--blue);background:var(--blue2);font-weight:600;box-shadow:inset 3px 0 var(--blue)}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}.main{min-width:0;display:flex;flex-direction:column}.tabs{height:40px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:end;padding:0 20px;gap:22px}.tab{height:40px;border:0;background:transparent;color:var(--muted);position:relative}.tab.on{color:var(--ink);font-weight:600}.tab.on:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--blue)}.content{padding:18px 22px 32px;overflow:auto}.head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}.head h1{font-size:22px;color:var(--ink);margin:0 0 4px}.sub{color:var(--muted);font-size:13px}.actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:7px;color:var(--text)}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.filter{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:14px}.filter b{color:var(--ink);font-size:13px}.seg{display:flex;border:1px solid var(--line);border-radius:7px;padding:2px}.seg button{border:0;background:transparent;padding:5px 10px;border-radius:5px;color:var(--muted)}.seg button.on{background:var(--blue2);color:var(--blue);font-weight:600}.select{border:1px solid var(--line);background:#fff;border-radius:7px;padding:7px 28px 7px 10px;color:var(--text)}.update{margin-left:auto;color:var(--muted);font-size:12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:12px;margin-bottom:14px}.card{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}.kpi{padding:15px}.kpi .label{color:var(--muted);font-size:12px}.value{font-size:25px;line-height:1.25;color:var(--ink);font-weight:700;margin:7px 0 5px}.trend{font-size:12px;color:var(--blue)}.trend.warn{color:var(--orange)}.trend.bad{color:var(--red)}.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px}.panel{padding:16px;min-width:0}.panelhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.panelhead h2{font-size:15px;margin:0;color:var(--ink)}.link{border:0;background:transparent;color:var(--blue)}.chart{height:230px;display:flex;align-items:flex-end;gap:12px;padding:18px 10px 28px;border-bottom:1px solid var(--line);position:relative;background:repeating-linear-gradient(to top,transparent 0,transparent 49px,#f4f4f5 50px)}.barset{flex:1;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:4px;position:relative}.bar{width:16px;border-radius:4px 4px 0 0;background:#93c5fd}.bar.cost{background:#2563eb}.barset span{position:absolute;bottom:-22px;font-size:11px;color:var(--muted);white-space:nowrap}.legend{display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}.risklist{display:grid;gap:9px}.risk{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}.risk:hover{border-color:#bfdbfe;background:#fafcff}.score{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:700;background:var(--orangebg);color:var(--orange)}.score.high{background:var(--redbg);color:var(--red)}.risk b{display:block;color:var(--ink);font-size:13px}.risk small{color:var(--muted)}.count{font-weight:700;color:var(--ink)}.full{grid-column:1/-1}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;white-space:nowrap}.table th{text-align:left;color:var(--muted);font-size:12px;font-weight:500;background:#fafafa;padding:10px;border-bottom:1px solid var(--line)}.table td{padding:11px 10px;border-bottom:1px solid #f1f1f2}.status{display:inline-block;padding:3px 8px;border-radius:99px;background:var(--blue2);color:var(--blue);font-size:12px}.status.warn{background:var(--orangebg);color:var(--orange)}.status.bad{background:var(--redbg);color:var(--red)}.drawer{position:fixed;top:54px;right:0;bottom:0;width:430px;background:#fff;box-shadow:-12px 0 30px rgba(0,0,0,.12);z-index:4;transform:translateX(102%);transition:.22s;padding:20px;overflow:auto}.drawer.on{transform:none}.overlay{position:fixed;inset:54px 0 0;background:rgba(24,24,27,.28);z-index:3;display:none}.overlay.on{display:block}.drawerhead{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:14px}.drawer h2{margin:0;color:var(--ink)}.close{border:0;background:#f4f4f5;border-radius:6px;padding:6px 9px}.insight{margin-top:14px;padding:12px;border-radius:8px;background:var(--orangebg);color:#9a3412}.step{margin-top:14px;padding-left:20px;border-left:2px solid #dbeafe}.step b{color:var(--ink)}.toast{position:fixed;right:24px;bottom:24px;background:#18181b;color:#fff;padding:11px 15px;border-radius:8px;opacity:0;transform:translateY(10px);transition:.2s;z-index:8}.toast.on{opacity:1;transform:none}@media(max-width:1280px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.side{width:190px}.shell{grid-template-columns:190px 1fr}.search{width:190px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRONE 原型导航</title>
+<style>
+  :root{
+    --blue:#2563eb; --blue2:#eff6ff; --blue3:#1e40af;
+    --ink:#18181b; --text:#3f3f46; --muted:#71717a; --line:#e4e4e7;
+    --bg:#f5f6f8; --white:#fff; --teal:#0f766e; --tealbg:#ecfdf5;
+    --amber:#b45309; --amberbg:#fffbeb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+  a{text-decoration:none;color:inherit}
+
+  .hero{background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 55%,#1d4ed8 100%);color:#fff;
+    padding:46px 28px 40px}
+  .wrap{max-width:960px;margin:0 auto}
+  .hero .kicker{display:inline-block;font-size:12px;letter-spacing:1px;color:rgba(255,255,255,.8);
+    background:rgba(255,255,255,.14);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+  .hero h1{font-size:30px;font-weight:700;margin-bottom:8px;letter-spacing:.5px}
+  .hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:640px}
+
+  .body{padding:26px 20px 60px}
+  .section{margin-bottom:30px}
+  .section-head{display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  .section-head .bar{width:5px;height:20px;border-radius:3px;background:var(--blue)}
+  .section-head h2{font-size:18px;font-weight:600;color:var(--ink)}
+  .section-head .cnt{font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);
+    padding:1px 9px;border-radius:12px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .card{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid var(--line);
+    border-radius:14px;padding:18px 18px 16px;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,58,138,.08);border-color:#c7d6f5}
+  .card .icon{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:18px;
+    font-weight:700;flex:none;color:#fff}
+  .card .meta{min-width:0;flex:1}
+  .card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+  .card .desc{font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:9px}
+  .tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:6px;font-weight:500}
+
+  .ic-blue{background:linear-gradient(135deg,#2563eb,#1e40af)}
+  .ic-teal{background:linear-gradient(135deg,#0d9488,#0f766e)}
+  .ic-amber{background:linear-gradient(135deg,#f59e0b,#b45309)}
+  .tag-blue{background:var(--blue2);color:var(--blue3)}
+  .tag-teal{background:var(--tealbg);color:var(--teal)}
+  .tag-amber{background:var(--amberbg);color:var(--amber)}
+
+  footer{margin-top:14px;text-align:center;color:#a1a1aa;font-size:12px;padding-top:20px;
+    border-top:1px solid var(--line)}
+</style>
 </head>
 <body>
-  <header class="top"><div class="brand"><div class="logo">H</div>HRONE</div><nav class="topnav"><button onclick="showToast('已回到首页')">首页</button><button onclick="showToast('全部菜单已展开：当前仅展示劳务用工分析域')">全部菜单</button><button>劳务用工</button></nav><input class="search" id="searchInput" placeholder="搜索人员、供应商或指标"/><button class="iconbtn" onclick="toggleLanguage()" id="langBtn">中 / EN</button><button class="iconbtn" onclick="openTodo()">待办 <span id="todoCount">6</span></button><button class="iconbtn" onclick="showToast('3 条通知均为信息提醒，无需处理')">通知 3</button><div class="avatar" title="当前用户：林晓 / 用工管理负责人">林</div></header>
-  <div class="shell">
-    <aside class="side"><div class="group">分析工作台</div><button class="nav on"><i class="dot"></i>管理驾驶舱</button><button class="nav"><i class="dot"></i>人员结构分析</button><button class="nav"><i class="dot"></i>成本与效率</button><button class="nav"><i class="dot"></i>合规与风险</button><button class="nav"><i class="dot"></i>供应商分析</button><button class="nav"><i class="dot"></i>需求与预测</button><div class="group">管理闭环</div><button class="nav"><i class="dot"></i>异常处置台</button><button class="nav"><i class="dot"></i>分析任务</button><button class="nav"><i class="dot"></i>指标口径中心</button><div class="group">评审入口</div><button class="nav" onclick="location.href='journey.html'"><i class="dot"></i>用户旅程与模型</button></aside>
-    <main class="main"><div class="tabs"><button class="tab on">管理驾驶舱</button><button class="tab">我的分析任务</button></div><div class="content">
-      <div class="head"><div><h1 id="pageTitle">劳务用工管理驾驶舱</h1><div class="sub" id="pageSub">从规模、成本、效率、质量、合规五个维度识别问题并推动处置闭环</div></div><div class="actions"><button class="btn" onclick="exportData()">⇩ 导出 / 设置</button><button class="btn primary" onclick="createAnalysisTask()">＋ 创建分析任务</button></div></div>
-      <section class="filter"><b>分析范围</b><div class="seg"><button>本月</button><button class="on">本季度</button><button>本年</button></div><select class="select"><option>华东区域</option><option>全国</option></select><select class="select"><option>全部业务单元</option><option>零售事业部</option><option>物流事业部</option></select><select class="select"><option>全部用工类型</option><option>劳务派遣</option><option>业务外包</option></select><span class="update">数据更新：今天 09:30</span></section>
-      <section class="kpis"><div class="card kpi"><div class="label">在岗劳务人数</div><div class="value">8,426</div><div class="trend">环比 +3.2% · 规模平稳</div></div><div class="card kpi"><div class="label">本季用工成本</div><div class="value">¥ 7,863万</div><div class="trend warn">预算执行 78.4% · 偏快 4.6%</div></div><div class="card kpi"><div class="label">人均有效工时</div><div class="value">168.5h</div><div class="trend">环比 +2.1% · 效率改善</div></div><div class="card kpi"><div class="label">30日流失率</div><div class="value">12.8%</div><div class="trend bad">高于目标 2.8 个百分点</div></div><div class="card kpi"><div class="label">合规风险人数</div><div class="value">127</div><div class="trend bad">其中高风险 23 人 · 需处理</div></div></section>
-      <section class="grid"><div class="card panel"><div class="panelhead"><h2>规模与成本趋势</h2><div class="seg"><button class="on">月度</button><button>周度</button></div></div><div class="chart"><div class="barset"><i class="bar" style="height:46%"></i><i class="bar cost" style="height:58%"></i><span>4月</span></div><div class="barset"><i class="bar" style="height:55%"></i><i class="bar cost" style="height:62%"></i><span>5月</span></div><div class="barset"><i class="bar" style="height:61%"></i><i class="bar cost" style="height:67%"></i><span>6月</span></div><div class="barset"><i class="bar" style="height:68%"></i><i class="bar cost" style="height:75%"></i><span>7月</span></div><div class="barset"><i class="bar" style="height:72%"></i><i class="bar cost" style="height:88%"></i><span>8月</span></div><div class="barset"><i class="bar" style="height:74%"></i><i class="bar cost" style="height:92%"></i><span>9月预测</span></div></div><div class="legend"><span><i style="background:#93c5fd"></i>在岗规模</span><span><i style="background:#2563eb"></i>用工成本</span><span>洞察：成本增速连续 3 个月高于人数增速</span></div></div>
-        <div class="card panel"><div class="panelhead"><h2>今日重点风险</h2><button class="link" onclick="openDrawer('全部风险')">查看全部 →</button></div><div class="risklist"><div class="risk" onclick="openDrawer('超时用工风险')"><span class="score high">92</span><div><b>连续用工超 24 个月</b><small>集中在华东零售与仓配岗位</small></div><span class="count">23人</span></div><div class="risk" onclick="openDrawer('加班风险')"><span class="score">78</span><div><b>月加班超过预警线</b><small>本周新增 18 人，趋势上升</small></div><span class="count">64人</span></div><div class="risk" onclick="openDrawer('供应商风险')"><span class="score">71</span><div><b>供应商证照即将到期</b><small>2 家需在 15 天内更新</small></div><span class="count">2家</span></div></div></div>
-        <div class="card panel full"><div class="panelhead"><h2>业务单元综合表现</h2><button class="link" onclick="openDrawer('华东零售专题诊断')">进入专题分析 →</button></div><div class="tablewrap"><table class="table" id="businessTable"><thead><tr><th>业务单元</th><th>在岗人数</th><th>本季成本</th><th>人均有效工时</th><th>30日流失率</th><th>风险人数</th><th>综合判断</th></tr></thead><tbody><tr><td>华东零售事业部</td><td>2,486</td><td>¥2,310万</td><td>171.2h</td><td>16.7%</td><td>61</td><td><span class="status bad">需重点改善</span></td></tr><tr><td>华东物流事业部</td><td>1,862</td><td>¥1,740万</td><td>176.8h</td><td>11.2%</td><td>29</td><td><span class="status warn">需要关注</span></td></tr><tr><td>华南制造事业部</td><td>1,534</td><td>¥1,420万</td><td>169.1h</td><td>9.6%</td><td>18</td><td><span class="status">运行正常</span></td></tr><tr><td>总部共享中心</td><td>386</td><td>¥510万</td><td>158.4h</td><td>6.2%</td><td>3</td><td><span class="status">运行正常</span></td></tr></tbody></table></div></div>
-      </section>
-    </div></main>
+  <div class="hero">
+    <div class="wrap">
+      <span class="kicker">PROTOTYPE INDEX</span>
+      <h1>HRONE 原型导航</h1>
+      <p>劳务用工分析 · 工作代理（OTWS）· 原型与方案索引。点击卡片进入对应原型页面。</p>
+    </div>
   </div>
-  <div class="overlay" id="overlay" onclick="closeDrawer()"></div><aside class="drawer" id="drawer" role="dialog" aria-modal="true"><div class="drawerhead"><div><div class="sub" id="drawerKicker">风险诊断 / 自动识别</div><h2 id="drawerTitle">超时用工风险</h2></div><button class="close" onclick="closeDrawer()">关闭</button></div><div id="drawerBody"><div class="insight"><b>分析结论：</b>23 名人员连续用工超过 24 个月，其中 17 人集中在华东零售事业部；系统已完成合同、排班与供应商数据交叉校验。</div><div class="step"><b>系统已完成</b><p>识别人员范围、核验连续服务时间、排除已离场及数据异常人员。</p></div><div class="step"><b>需要 HRBP 判断</b><p>确认 17 人的岗位持续性及转签、轮换或退场方案。</p></div><div class="step"><b>完成条件</b><p>所有高风险人员登记处置方案并由业务负责人确认。</p></div><button class="btn primary" style="margin-top:18px" onclick="sendTodo()">发送处理待办</button></div></aside><div class="toast" id="toast"></div>
-  <script>
-    let todoTotal=6,createdTodo=false,lastFocus=null;const diagnosisHTML=drawerBody.innerHTML;
-    document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');showToast('分析口径已更新：'+b.textContent)}));
-    document.querySelectorAll('.select').forEach(s=>s.addEventListener('change',()=>showToast('已按“'+s.value+'”重新计算全部指标')));
-    document.querySelectorAll('.side .nav:not([onclick])').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.side .nav').forEach(x=>x.classList.remove('on'));b.classList.add('on');pageTitle.textContent=b.textContent.trim();pageSub.textContent='当前为可操作的分析模型框架页；正式版将按已确认口径加载对应专题数据。';showToast('已切换至：'+b.textContent.trim())}));
-    searchInput.addEventListener('keydown',e=>{if(e.key==='Enter')showToast(searchInput.value?'已搜索“'+searchInput.value+'”，找到 12 条相关结果':'请输入搜索内容')});
-    function openDrawer(t){lastFocus=document.activeElement;drawerBody.innerHTML=diagnosisHTML;drawerTitle.textContent=t;drawerKicker.textContent='风险诊断 / 自动识别';drawer.classList.add('on');overlay.classList.add('on');drawer.querySelector('.close').focus()}
-    function closeDrawer(){drawer.classList.remove('on');overlay.classList.remove('on');if(lastFocus)lastFocus.focus()}
-    function showToast(t){toast.textContent=t;toast.classList.add('on');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove('on'),2600)}
-    function sendTodo(){if(!createdTodo){createdTodo=true;todoTotal++;todoCount.textContent=todoTotal}showToast('待办已发送给华东零售 HRBP；未完成前持续保留');closeDrawer()}
-    function openTodo(){lastFocus=document.activeElement;drawerKicker.textContent='我的待办 / 需要完成动作';drawerTitle.textContent='请处理超时用工风险';drawerBody.innerHTML='<div class="insight"><b>责任：</b>请在 9 月 15 日前为 23 名高风险人员登记转签、轮换或退场方案。</div><div class="step"><b>触发事件</b><p>系统识别到连续用工超过 24 个月。</p></div><div class="step"><b>未处理状态</b><p>待办持续保留，不因查看或关闭而消失。</p></div><div class="step"><b>处理后去向</b><p>完成后进入“已完成”，保留处理人、时间与业务结果。</p></div><button class="btn primary" style="margin-top:18px" onclick="completeTodo()">✓ 登记方案并完成</button>';drawer.classList.add('on');overlay.classList.add('on');drawer.querySelector('.close').focus()}
-    function completeTodo(){todoTotal=Math.max(0,todoTotal-1);todoCount.textContent=todoTotal;createdTodo=false;showToast('处理完成：记录已移入“已完成”，操作人林晓，刚刚');closeDrawer()}
-    function createAnalysisTask(){if(!createdTodo){createdTodo=true;todoTotal++;todoCount.textContent=todoTotal}showToast('分析任务已创建：每月 1 日自动刷新并提醒负责人')}
-    function toggleLanguage(){langBtn.textContent=langBtn.textContent.includes('中')?'EN / 中':'中 / EN';showToast('语言已切换，当前筛选上下文已保留')}
-    function exportData(){const rows=[['业务单元','在岗人数','本季成本','有效工时','30日流失率','风险人数'],...Array.from(businessTable.tBodies[0].rows).map(r=>Array.from(r.cells).slice(0,6).map(c=>c.innerText))];const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+v.replaceAll('"','""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='劳务用工分析数据.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('已导出当前分析范围的数据')}
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('on'))closeDrawer()});
-  </script>
-</body></html>
+
+  <div class="body wrap">
+
+    <div class="section">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2>劳务用工分析</h2>
+        <span class="cnt">2 个页面</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="dashboard.html">
+          <div class="icon ic-blue">驾</div>
+          <div class="meta">
+            <h3>劳务用工分析驾驶舱</h3>
+            <div class="desc">从规模、成本、效率、合规五维识别问题并推动处置闭环</div>
+            <span class="tag tag-blue">驾驶舱</span>
+          </div>
+        </a>
+        <a class="card" href="journey.html">
+          <div class="icon ic-blue">旅</div>
+          <div class="meta">
+            <h3>用户旅程与模型</h3>
+            <div class="desc">劳务用工分析模型的用户旅程与指标口径</div>
+            <span class="tag tag-blue">用户旅程</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="bar" style="background:var(--teal)"></span>
+        <h2>工作代理 · OTWS</h2>
+        <span class="cnt">4 个页面</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="工作代理.html">
+          <div class="icon ic-teal">需</div>
+          <div class="meta">
+            <h3>工作代理需求清单</h3>
+            <div class="desc">OTWS 工作代理的功能需求清单与说明</div>
+            <span class="tag tag-teal">需求清单</span>
+          </div>
+        </a>
+        <a class="card" href="hrone-work-agent-prototype/index.html">
+          <div class="icon ic-teal">旅</div>
+          <div class="meta">
+            <h3>工作代理用户旅程</h3>
+            <div class="desc">HRONE 工作代理的端到端用户旅程</div>
+            <span class="tag tag-teal">用户旅程</span>
+          </div>
+        </a>
+        <a class="card" href="hrone-work-agent-prototype/portal.html">
+          <div class="icon ic-teal">配</div>
+          <div class="meta">
+            <h3>系统管理 · 工作代理</h3>
+            <div class="desc">OTWS 系统管理中的工作代理配置入口</div>
+            <span class="tag tag-teal">配置页</span>
+          </div>
+        </a>
+        <a class="card" href="hrone-work-agent-prototype/logs.html">
+          <div class="icon ic-teal">志</div>
+          <div class="meta">
+            <h3>工作代理日志</h3>
+            <div class="desc">工作代理运行日志与执行记录</div>
+            <span class="tag tag-teal">日志</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <footer>纵腾集团 · HRONE 原型导航 · 由 GitHub Pages 托管</footer>
+  </div>
+</body>
+</html>
