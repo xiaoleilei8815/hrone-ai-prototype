@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OTWS 工作代理需求清单</title>
+  <style>
+    :root{--ink:#172033;--muted:#667085;--line:#e4e7ec;--brand:#3157d5;--soft:#f5f7ff;--ok:#087a55;--warn:#a15c00}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f5f6f8;color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    .shell{display:grid;grid-template-columns:250px minmax(0,900px);gap:32px;max-width:1230px;margin:auto;padding:32px 24px 72px}
+    aside{position:sticky;top:24px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;max-height:calc(100vh - 48px);overflow:auto}
+    aside strong{display:block;font-size:13px;color:var(--muted);margin-bottom:10px}aside a{display:block;color:#344054;text-decoration:none;padding:7px 8px;border-radius:7px}aside a:hover{background:var(--soft);color:var(--brand)}
+    main{background:#fff;border:1px solid var(--line);border-radius:16px;padding:44px 54px;box-shadow:0 10px 35px rgba(16,24,40,.05)}
+    h1{font-size:32px;line-height:1.25;margin:0 0 8px}h2{font-size:23px;margin:48px 0 16px;padding-top:8px;border-top:1px solid var(--line)}h3{font-size:18px;margin:28px 0 10px}h4{font-size:15px;margin:22px 0 8px}p{margin:8px 0 16px}ul,ol{padding-left:22px;margin:8px 0 18px}li+li{margin-top:5px}
+    .meta{color:var(--muted);margin-bottom:28px}.lead{background:linear-gradient(135deg,#f2f5ff,#f8fbff);border-left:4px solid var(--brand);padding:18px 20px;border-radius:0 10px 10px 0}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}.chip{background:var(--soft);color:var(--brand);border:1px solid #d9e0ff;border-radius:99px;padding:3px 10px;font-size:13px}
+    table{width:100%;border-collapse:collapse;margin:12px 0 24px;font-size:14px}th,td{border:1px solid var(--line);text-align:left;vertical-align:top;padding:10px 12px}th{background:#f8fafc;font-weight:650}code{background:#f2f4f7;border-radius:5px;padding:2px 5px}.flow{white-space:pre-wrap;background:#111827;color:#e5e7eb;border-radius:10px;padding:18px;overflow:auto}.note{border:1px solid #b9e5d5;background:#f2fbf7;color:#175c46;border-radius:10px;padding:14px 16px}.warn{border-color:#f4d4a3;background:#fff9ed;color:#774509}
+    .rule-list{counter-reset:r;list-style:none;padding:0}.rule-list li{counter-increment:r;display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}.rule-list li:before{content:counter(r);flex:0 0 26px;height:26px;border-radius:50%;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:12px}
+    footer{color:var(--muted);font-size:13px;margin-top:54px;padding-top:18px;border-top:1px solid var(--line)}
+    @media(max-width:900px){.shell{display:block;padding:0}aside{display:none}main{border:0;border-radius:0;padding:28px 20px}h1{font-size:27px}table{display:block;overflow:auto}}
+    @media print{body{background:#fff}.shell{display:block;padding:0}.shell aside{display:none}main{box-shadow:none;border:0;padding:0}h2{break-after:avoid}table{break-inside:avoid}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <strong>文档目录</strong>
+    <a href="#background">一、需求背景</a><a href="#goal">二、产品目标</a><a href="#roles">三、角色与职责</a><a href="#journey">四、核心流程</a><a href="#fields">五、设置字段</a><a href="#rules">六、功能规则</a><a href="#tasks">七、任务处理</a><a href="#end">八、自动结束</a><a href="#notice">九、待办与通知</a><a href="#pages">十、页面需求</a><a href="#state">十一、状态设计</a><a href="#audit">十二、数据审计</a><a href="#summary">十三、业务规则</a><a href="#mvp">十四、MVP范围</a>
+  </aside>
+  <main>
+    <header>
+      <h1>OTWS 工作代理需求清单</h1>
+      <div class="meta">文档名称：工作代理　·　最终版　·　2026-09-07</div>
+      <div class="chips"><span class="chip">HR</span><span class="chip">文员</span><span class="chip">组长</span><span class="chip">PC业务系统</span></div>
+    </header>
+
+    <section id="background"><h2>一、需求背景</h2><p class="lead">当用户在一段时间内无法处理工作时，可独立设置代理人，由代理人在指定时间内代为处理相关待办。本功能不包含请假提交、请假审批或与休假单联动的操作。</p></section>
+
+    <section id="goal"><h2>二、产品目标</h2><ul><li>设置代理人、有效时间及代理范围。</li><li>生效后自动分配范围内的新待办。</li><li>通过“代理已有待办”决定是否转移存量待办。</li><li>到达结束时间后自动停用并转回未完成任务。</li><li>委托人和代理人均可识别、查看和处理代理任务。</li><li>代理关系、任务流转及实际处理人全程可追溯。</li></ul></section>
+
+    <section id="roles"><h2>三、角色与职责</h2><table><thead><tr><th>角色</th><th>核心职责</th></tr></thead><tbody><tr><td>委托人</td><td>设置代理人、范围、时间及是否代理已有待办；查看、修改、取消或提前结束。</td></tr><tr><td>代理人</td><td>在有效期内接收并处理代理任务。</td></tr><tr><td>HR/管理员</td><td>查看全部代理关系，代为设置或结束代理，处理异常。</td></tr><tr><td>系统</td><td>按开始时间启用；按范围及字段配置转派任务；按结束时间停用、转回未完成任务、通知并记录日志。</td></tr></tbody></table></section>
+
+    <section id="journey"><h2>四、核心业务流程</h2><ol><li>委托人新增代理，设置代理人、开始/结束时间、“代理已有待办”和代理范围。</li><li>系统校验用户、时间及关系冲突，保存后进入“待生效”；开始时间已到则立即启用。</li><li>启用时按字段配置决定是否转移存量待办。</li><li>有效期内的新待办按代理范围自动分配给代理人。</li><li>双方均可处理任务，系统控制并发并阻止重复提交。</li><li>到达结束时间后自动停用，未完成任务转回委托人。</li><li>后续新待办恢复给委托人，系统通知相关人员并记录日志。</li></ol></section>
+
+    <section id="fields"><h2>五、设置字段</h2><table><thead><tr><th>字段</th><th>必填</th><th>默认值</th><th>配置说明</th></tr></thead><tbody><tr><td>委托人</td><td>是</td><td>当前用户</td><td>本人自动带出；管理员可选择</td></tr><tr><td>代理人</td><td>是</td><td>无</td><td>选择具体代理人</td></tr><tr><td>代理开始时间</td><td>是</td><td>无</td><td>精确到分钟</td></tr><tr><td>代理结束时间</td><td>是</td><td>无</td><td>精确到分钟，晚于开始时间</td></tr><tr><td>代理已有待办</td><td>是</td><td>是</td><td>可选“是”“否”</td></tr><tr><td>代理范围</td><td>是</td><td>全部</td><td>可选“全部”“指定”</td></tr><tr><td>指定范围</td><td>条件必填</td><td>无</td><td>可选“需求指派”“用工需求审批”</td></tr><tr><td>代理说明</td><td>否</td><td>无</td><td>补充说明</td></tr></tbody></table><p class="note">通知方式不作为设置字段，统一使用系统配置的通知渠道。</p></section>
+
+    <section id="rules"><h2>六、配置与校验规则</h2>
+      <h3>代理已有待办</h3><table><thead><tr><th>配置</th><th>处理方式</th></tr></thead><tbody><tr><td>是（默认）</td><td>启用时转移范围内的存量未处理待办；已完成、取消、关闭、失效任务不转移；失败项进入异常队列。</td></tr><tr><td>否</td><td>存量待办继续由委托人处理，仅将生效后的新待办分配给代理人。</td></tr></tbody></table><p>关系生效后不允许修改该字段；如需改变，须结束当前代理并重新创建。</p>
+      <h3>代理范围</h3><ul><li>“全部”包含需求指派和用工需求审批。</li><li>“指定”至少选一项，也可同时选择两项。</li><li>未选中的业务继续由委托人处理。</li><li>两类业务可设置不同代理人，以多条独立代理关系管理。</li></ul>
+      <h3>保存校验</h3><ul><li>代理人不是委托人本人，且为有效用户；结束时间晚于开始时间。</li><li>同一委托人、同一范围、同一时间段只能有一个代理人。</li><li>禁止循环代理、二次代理及多级代理。</li><li>代理人可同时代理多人或多种业务。</li><li>不限制代理人原岗位权限，也不授予永久岗位或角色权限。</li></ul>
+      <h3>确认机制</h3><p>代理人无需确认，也不允许拒绝。具体任务转给代理人后，代理人获得该任务的处理资格；资格不扩大到范围外的数据和功能。无敏感审批排除。</p>
+    </section>
+
+    <section id="tasks"><h2>七、代理任务处理</h2>
+      <h3>需求指派</h3><ul><li>范围包含“需求指派”时，新待办自动分配给代理人，并标记“代理处理”。</li><li>字段为“是”时转移存量“待指派”需求，为“否”时不转移。</li><li>已完成、取消、关闭、失效的需求不转移。</li><li>记录需求编号、原负责人、实际代理人、指派对象、时间及关系编号。</li></ul>
+      <h3>用工需求审批</h3><ul><li>新待办自动分配给代理人，标题为“请代理审批用工需求”。</li><li>字段为“是”时转移存量未处理审批，为“否”时不转移。</li><li>审批记录保存原审批人和实际审批人，并明确显示代理关系。</li></ul>
+      <h3>委托人仍可处理</h3><ul><li>双方看到一致状态，任意一方完成后另一方待办同步关闭。</li><li>提交时重新校验；任务已处理则阻止重复提交并显示处理人和时间。</li><li>不保留另一方未提交的编辑内容或草稿。</li></ul>
+      <h3>修改与提前结束</h3><ul><li>待生效：可修改全部设置字段。</li><li>生效中：仅可修改结束时间和说明；其他变更需结束后重建。</li><li>支持取消待生效代理及提前结束生效中代理。</li><li>提前结束前展示未完成数量，确认后立即停止并转回任务。</li></ul>
+    </section>
+
+    <section id="end"><h2>八、自动结束代理</h2><p>主要触发条件为到达设置的结束时间，也可由委托人提前结束、管理员强制结束或双方账号失效触发。</p><ol><li>状态更新为“结束处理中”。</li><li>停止向代理人分配新任务，并使未完成代理任务的处理资格失效。</li><li>将未完成的需求指派和用工需求审批转回委托人。</li><li>已完成结果保持不变，后续新任务恢复给委托人。</li><li>通知双方并记录结束时间、方式和任务转回结果。</li><li>全部成功后更新为“已结束”。</li></ol><p class="note warn">若部分步骤失败，系统只重试失败步骤并优先停止代理处理资格；多次失败后向HR/管理员生成异常待办，支持人工重试。</p></section>
+
+    <section id="notice"><h2>九、待办与通知</h2><table><thead><tr><th>场景</th><th>接收人</th><th>类型</th><th>核心内容</th></tr></thead><tbody><tr><td>设置成功/即将开始/正式生效</td><td>双方</td><td>通知</td><td>范围、有效期、结果及入口</td></tr><tr><td>存量转移完成</td><td>双方</td><td>通知</td><td>任务类型及数量</td></tr><tr><td>收到代理任务</td><td>代理人</td><td>待办</td><td>委托人及业务信息</td></tr><tr><td>即将结束/时间修改/代理结束</td><td>双方</td><td>通知</td><td>时间、剩余数量或任务去向</td></tr><tr><td>启用、转移或结束失败</td><td>HR/管理员</td><td>异常待办</td><td>原因、影响及处理入口</td></tr></tbody></table><p>需要动作的事项使用待办，结果告知使用通知；两类计数分开。支持结束前提醒，时间由系统统一配置，例如提前1天。</p></section>
+
+    <section id="pages"><h2>十、页面需求</h2><table><thead><tr><th>页面</th><th>主要内容</th></tr></thead><tbody><tr><td>我设置的代理</td><td>代理人、范围、已有待办配置、有效期、状态、任务统计及修改/取消/结束操作</td></tr><tr><td>我代理的工作</td><td>委托人、范围、有效期、剩余时间、两类待办数量及任务入口</td></tr><tr><td>代理详情</td><td>关系编号、字段配置、状态、变更记录、任务统计、启停与通知记录、任务明细</td></tr><tr><td>管理端</td><td>查询筛选、代设、修改结束时间、取消/结束、异常处理、重试及导出</td></tr></tbody></table></section>
+
+    <section id="state"><h2>十一、状态设计</h2><div class="flow">草稿 → 待生效 → 启用处理中 → 生效中 → 结束处理中 → 已结束
+          ↓           ↓                       ↓
+        已取消      启用异常                结束异常</div></section>
+
+    <section id="audit"><h2>十二、数据与审计</h2><p>记录创建与修改、双方用户、有效期、代理范围、“代理已有待办”值、实际启停时间、存量识别与转移数量、期间新增任务、双方完成数量、结束转回数量、实际处理人、异常与管理员人工操作。</p></section>
+
+    <section id="summary"><h2>十三、核心业务规则</h2><ol class="rule-list"><li>不包含请假提交、审批或休假单联动。</li><li>按开始时间自动启用，按结束时间自动停用。</li><li>“代理已有待办”默认“是”，存量处理完全按配置执行。</li><li>范围默认“全部”，也可指定需求指派、用工需求审批。</li><li>两类业务可以设置不同代理人。</li><li>代理人不需确认且不允许拒绝。</li><li>无敏感审批排除；不限制原权限，也不授予永久权限。</li><li>委托人仍可处理，系统阻止重复提交。</li><li>代理人可以同时代理多名委托人。</li><li>结束时不保留未提交内容，未完成任务转回，已完成结果有效。</li><li>支持结束前提醒，所有操作完整留痕。</li></ol></section>
+
+    <section id="mvp"><h2>十四、MVP范围</h2><ul><li>代理的新增、查看、修改、取消和提前结束。</li><li>设置双方、有效期、“代理已有待办”和代理范围。</li><li>两类范围可设置不同代理人。</li><li>定时启用、按配置转移存量、新任务自动分配。</li><li>双方均可处理并进行并发控制。</li><li>到期自动结束、未完成任务自动转回。</li><li>生效、变更、结束、提醒和异常通知。</li><li>HR/管理员管理、异常重试和完整审计日志。</li></ul></section>
+
+    <footer>OTWS · 工作代理需求清单 · 最终版</footer>
+  </main>
+</div>
+</body>
+</html>
