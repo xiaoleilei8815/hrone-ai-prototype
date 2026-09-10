@@ -1,2 +1,6 @@
 .DS_Store
 .agents/
+# 临时副本目录不入库
+*_副本/
+*_backup/
+*copy*/
