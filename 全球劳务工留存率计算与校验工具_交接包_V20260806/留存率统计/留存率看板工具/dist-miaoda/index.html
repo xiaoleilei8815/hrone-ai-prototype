@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="data:," />
+    <title>全球劳务工留存率计算与校验台</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">OTWS / Supplier Portal</p>
+        <h1>全球劳务工留存率计算与校验台</h1>
+      </div>
+      <div class="topbar-actions">
+        <span class="privacy-note">数据仅在本机浏览器处理</span>
+        <button id="exportBtn" class="button secondary" type="button" disabled>导出留存率报表</button>
+        <a id="downloadReadyLink" class="button secondary download-ready-link hidden" href="#" download target="_blank" rel="noopener">下载已生成报表</a>
+        <button id="resetBtn" class="button ghost" type="button">清空数据</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="source-band" aria-labelledby="sourceTitle">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">01 数据源</p>
+            <h2 id="sourceTitle">上传OTWS导出文件</h2>
+          </div>
+          <p>主表决定统计队列，交叉表只做校验；考勤文件可多选并按月追加。</p>
+        </div>
+
+        <div class="upload-grid">
+          <label class="upload-control required" data-drop-target="cohortFile">
+            <span class="upload-kicker">必需</span>
+            <strong>首次派遣队列</strong>
+            <span>用工管理文件，需包含工号、首次/最晚派遣日期</span>
+            <span id="cohortFileName" class="file-name">尚未选择</span>
+            <input id="cohortFile" type="file" accept=".xlsx,.xls,.csv" />
+          </label>
+
+          <label class="upload-control" data-drop-target="latestFile">
+            <span class="upload-kicker optional">可选</span>
+            <strong>最晚派遣交叉表</strong>
+            <span>用于检查粗暴名单剔除误伤，不直接决定留存</span>
+            <span id="latestFileName" class="file-name">尚未选择</span>
+            <input id="latestFile" type="file" accept=".xlsx,.xls,.csv" />
+          </label>
+
+          <label class="upload-control attendance" data-drop-target="attendanceFiles">
+            <span class="upload-kicker">必需，可多选</span>
+            <strong>考勤记录</strong>
+            <span>上传覆盖观察窗口的全部月度考勤文件</span>
+            <span id="attendanceFileName" class="file-name">尚未选择</span>
+            <input id="attendanceFiles" type="file" accept=".xlsx,.xls,.csv" multiple />
+          </label>
+        </div>
+
+        <div class="source-actions">
+          <button id="loadBtn" class="button primary" type="button">读取并校验数据</button>
+          <div class="progress-block" aria-live="polite">
+            <div class="progress-track"><span id="progressBar"></span></div>
+            <span id="progressText">等待上传数据</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="parameter-band" aria-labelledby="parameterTitle">
+        <div class="section-heading compact">
+          <div>
+            <p class="step-label">02 统计口径</p>
+            <h2 id="parameterTitle">定义观察期截止日与考勤校验窗口</h2>
+          </div>
+          <p id="coverageHint">上传队列后将自动计算所需考勤覆盖范围。</p>
+        </div>
+
+        <div class="parameter-grid">
+          <div class="control-group">
+            <label for="scopeSelect">统计范围</label>
+            <select id="scopeSelect" disabled>
+              <option value="">全部已识别大区</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>首次派遣队列日期</label>
+            <div class="date-range">
+              <input id="cohortStart" type="date" aria-label="队列开始日期" />
+              <span>至</span>
+              <input id="cohortEnd" type="date" aria-label="队列结束日期" />
+            </div>
+          </div>
+
+          <div class="control-group wide">
+            <label>留存观察周期</label>
+            <div id="periodSegments" class="segmented" role="group" aria-label="留存观察周期">
+              <button type="button" data-days="7">7天</button>
+              <button type="button" data-days="14">两周</button>
+              <button type="button" data-days="30">一个月</button>
+              <button type="button" data-days="60">两个月</button>
+              <button type="button" data-days="90" class="active">三个月</button>
+              <button type="button" data-days="180">半年</button>
+              <button type="button" data-days="365">一年</button>
+              <button type="button" data-days="custom">自定义</button>
+            </div>
+            <div id="periodCustomWrap" class="custom-control hidden">
+              <input id="periodCustom" type="number" min="1" max="3650" value="90" />
+              <span>天后观察</span>
+            </div>
+          </div>
+
+          <div class="control-group wide">
+            <label>考勤校验窗口</label>
+            <div id="windowSegments" class="segmented" role="group" aria-label="考勤校验窗口">
+              <button type="button" data-days="1">仅截止日</button>
+              <button type="button" data-days="7">含截止日近7日</button>
+              <button type="button" data-days="14" class="active">含截止日近14日</button>
+              <button type="button" data-days="30">含截止日近30日</button>
+              <button type="button" data-days="custom">自定义</button>
+            </div>
+            <div id="windowCustomWrap" class="custom-control hidden">
+              <input id="windowCustom" type="number" min="1" max="365" value="14" />
+              <span>个自然日（含截止日）</span>
+            </div>
+          </div>
+
+          <div class="control-group action-group">
+            <label>当前计算</label>
+            <button id="calculateBtn" class="button primary" type="button" disabled>应用口径并计算</button>
+          </div>
+        </div>
+
+        <div class="formula-strip">
+          <span><strong>截止日：</strong><code>观察期截止日 = 首次派遣日 + N天</code></span>
+          <span><strong>校验期：</strong><code>截止日-(M-1) 至 截止日</code></span>
+          <span><strong>成熟度：</strong><code>考勤数据必须覆盖完整校验期</code></span>
+        </div>
+      </section>
+
+      <div id="systemMessage" class="system-message neutral" role="status">
+        上传数据后，程序会先检查字段、日期覆盖和重复工号，再开放看板。
+      </div>
+
+      <nav class="tabs" aria-label="结果视图">
+        <button type="button" class="active" data-tab="dashboard">看板</button>
+        <button type="button" data-tab="suppliers">供应商</button>
+        <button type="button" data-tab="people">人员明细</button>
+        <button type="button" data-tab="review">异常复核</button>
+        <button type="button" data-tab="workflow">工作流程</button>
+      </nav>
+
+      <section id="dashboardTab" class="tab-panel active" data-panel="dashboard">
+        <div class="kpi-strip">
+          <div><span>队列人数</span><strong id="kpiCohort">—</strong></div>
+          <div><span>成熟计分分母</span><strong id="kpiDenominator">—</strong></div>
+          <div><span>留存人数</span><strong id="kpiRetained">—</strong></div>
+          <div><span>未留存人数</span><strong id="kpiNotRetained">—</strong></div>
+          <div class="accent"><span>留存率</span><strong id="kpiRate">—</strong></div>
+          <div class="warning"><span>未成熟</span><strong id="kpiImmature">—</strong></div>
+          <div><span>需复核</span><strong id="kpiReview">—</strong></div>
+        </div>
+
+        <div id="maturityNotice" class="maturity-notice hidden"></div>
+
+        <div class="analysis-grid">
+          <section class="analysis-panel">
+            <div class="panel-heading">
+              <div><p class="step-label">运营区域比较</p><h3 id="countryChartTitle">成熟队列90天留存率</h3></div>
+              <span id="countryCount" class="panel-meta">0个运营区域</span>
+            </div>
+            <div id="countryBars" class="bar-chart empty-state">暂无结果</div>
+          </section>
+
+          <section class="analysis-panel">
+            <div class="panel-heading">
+              <div><p class="step-label">未留存驱动</p><h3>判定原因分布</h3></div>
+            </div>
+            <div id="reasonBars" class="reason-chart empty-state">暂无结果</div>
+          </section>
+        </div>
+
+        <section class="table-section">
+          <div class="panel-heading">
+            <div><p class="step-label">区域汇总</p><h3>结果与数据成熟度</h3></div>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>大区</th><th>国家</th><th>运营区域</th><th>队列</th><th>未成熟</th><th>计分分母</th><th>留存</th><th>未留存</th><th>留存率</th><th>95%CI</th><th>需复核</th><th>供应商数</th></tr></thead>
+              <tbody id="countryTableBody"><tr><td colspan="12" class="empty-cell">暂无结果</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="riskSummary" class="risk-summary">
+          <div><span>交叉表粗暴剔除误伤</span><strong id="riskBlind">—</strong></div>
+          <div><span>系统派遣覆盖截止日但无有效出勤</span><strong id="riskNoAttendance">—</strong></div>
+          <div><span>L&lt;E字段异常</span><strong id="riskLE">—</strong></div>
+          <div><span>全局考勤覆盖</span><strong id="riskCoverage">—</strong></div>
+        </section>
+      </section>
+
+      <section id="suppliersTab" class="tab-panel" data-panel="suppliers">
+        <div class="toolbar">
+          <select id="supplierCountryFilter" aria-label="按国家筛选"><option value="">全部国家</option></select>
+          <input id="supplierSearch" type="search" placeholder="搜索供应商名称" />
+          <select id="sampleFilter" aria-label="按样本筛选"><option value="">全部样本</option><option value="comparable">仅可比较（分母≥10）</option><option value="small">仅小样本</option></select>
+          <span id="supplierResultCount" class="toolbar-count">0条</span>
+        </div>
+        <div class="table-scroll tall">
+          <table id="supplierTable">
+            <thead><tr><th data-sort="globalRegion">大区</th><th data-sort="country">国家</th><th data-sort="region">运营区域</th><th data-sort="supplierName">供应商</th><th data-sort="cohort">队列</th><th data-sort="immature">未成熟</th><th data-sort="denominator">计分分母</th><th data-sort="retained">留存</th><th data-sort="notRetained">未留存</th><th data-sort="retentionRate">留存率</th><th>95%CI</th><th data-sort="manualReview">需复核</th><th data-sort="blindEliminationRisk">粗暴误伤</th><th>样本标记</th></tr></thead>
+            <tbody id="supplierTableBody"><tr><td colspan="14" class="empty-cell">暂无结果</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="peopleTab" class="tab-panel" data-panel="people">
+        <div class="toolbar multi">
+          <select id="peopleCountryFilter" aria-label="人员国家筛选"><option value="">全部国家</option></select>
+          <select id="peopleResultFilter" aria-label="人员结果筛选"><option value="">全部结果</option><option>留存</option><option>未留存</option><option>未成熟</option><option>待核验</option><option>豁免</option></select>
+          <select id="peopleReviewFilter" aria-label="复核筛选"><option value="">全部复核状态</option><option value="yes">仅需复核</option><option value="no">无需复核</option></select>
+          <input id="peopleSearch" type="search" placeholder="搜索工号、姓名或供应商" />
+          <span id="peopleResultCount" class="toolbar-count">0人</span>
+        </div>
+        <div class="table-scroll tall">
+          <table>
+            <thead><tr><th>大区</th><th>国家</th><th>运营区域</th><th>供应商</th><th>姓名</th><th>工号</th><th>首次派遣</th><th>观察期截止日</th><th>考勤校验期</th><th>最晚派遣</th><th>最近结束</th><th>有效出勤天数</th><th>模型判定</th><th>判定主因</th><th>需复核</th><th>人工调整</th></tr></thead>
+            <tbody id="peopleTableBody"><tr><td colspan="16" class="empty-cell">暂无结果</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button id="peoplePrev" class="button ghost" type="button">上一页</button>
+          <span id="peoplePageInfo">第0/0页</span>
+          <button id="peopleNext" class="button ghost" type="button">下一页</button>
+        </div>
+      </section>
+
+      <section id="reviewTab" class="tab-panel" data-panel="review">
+        <div class="review-intro">
+          <div><p class="step-label">人工举证入口</p><h2>只复核可能改变结论或归责的病例</h2></div>
+          <p>批准休假、区域未排班、派遣删除异常或截止日边界需要业务证据。改判会即时回写看板，并在导出报表中保留调整记录。</p>
+        </div>
+        <div class="table-scroll tall">
+          <table>
+            <thead><tr><th>大区</th><th>国家</th><th>运营区域</th><th>供应商</th><th>姓名/工号</th><th>观察期截止日</th><th>派遣/结束日期</th><th>校验期有效出勤</th><th>模型判定</th><th>复核原因</th><th>人工调整</th><th>备注</th></tr></thead>
+            <tbody id="reviewTableBody"><tr><td colspan="12" class="empty-cell">暂无需复核记录</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="workflowTab" class="tab-panel workflow-panel" data-panel="workflow">
+        <div class="workflow-intro">
+          <p class="step-label">计算与校验工作流</p>
+          <h2>没有程序时，也可以按这条证据链手工统计</h2>
+          <p>核心不是名单相减，而是对每个工号建立同一行证据，逐人判断后再汇总。</p>
+        </div>
+
+        <div class="flowchart" aria-label="留存率计算工作流程图">
+          <div class="flow-node source"><span>1</span><strong>准备数据源</strong><small>首次派遣主表、可选交叉表、覆盖校验期的考勤</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><span>2</span><strong>校验字段与唯一工号</strong><small>确认首次/最晚派遣、最近结束、供应商和日期覆盖</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><span>3</span><strong>确定队列与截止日</strong><small>截止日=首次派遣日+观察周期</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node gate"><span>4</span><strong>成熟度闸门</strong><small>考勤是否覆盖完整校验期</small></div>
+          <div class="flow-branch">
+            <div><b>否</b><span>未成熟，排除计分分母</span></div>
+            <div><b>是</b><span>进入系统与出勤校验</span></div>
+          </div>
+          <div class="flow-node decision"><span>5</span><strong>系统日期校验</strong><small>最晚派遣是否早于截止日？截止日前结束且无结束后有效出勤？</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node decision"><span>6</span><strong>实际出勤校验</strong><small>校验期内是否至少1天有效出勤</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node outcome"><span>7</span><strong>形成逐人结果</strong><small>留存 / 未留存 / 未成熟 / 待核验</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node"><span>8</span><strong>汇总与交叉验证</strong><small>大区×国家×运营区域×供应商、人数平衡、公式复算、异常抽样</small></div>
+        </div>
+
+        <div class="workflow-columns">
+          <section>
+            <h3>手工计算步骤</h3>
+            <ol>
+              <li>从用工管理导出首次派遣在目标区间内的唯一工号，并保留供应商、F、L、E。</li>
+              <li>在Excel逐人计算“观察期截止日=首次派遣日+观察周期”及校验期起点。</li>
+              <li>把各月考勤合并；按“工号+考勤日期”去重，有任一行时长&gt;0且已确认/已复核，即为有效出勤日。</li>
+              <li>若考勤数据没有覆盖完整窗口，标记未成熟，不可当作未留存。</li>
+              <li>若最晚派遣早于截止日，判未留存；若在截止日前结束且结束后无有效出勤，判未留存。</li>
+              <li>剩余人员检查校验期内有效出勤：有则留存，无则未留存并进入休假/未排班复核。</li>
+              <li>以首次派遣供应商归组，按留存人数÷成熟计分分母汇总。</li>
+            </ol>
+          </section>
+          <section>
+            <h3>必须完成的校验</h3>
+            <ul class="check-list">
+              <li>队列工号无重复，首次派遣日期全部落在目标区间。</li>
+              <li>所有成熟人员的观察期截止日和完整校验期均被考勤数据覆盖。</li>
+              <li>考勤覆盖不能只看全局最早/最晚日期，必须确认中间月份无漏传。</li>
+              <li>派遣考勤与串岗考勤同时纳入，不只筛“考勤状态=正常”。</li>
+              <li>供应商编码体系不一致时，以标准化名称校验，不能直接比较PS与S编码。</li>
+              <li>交叉表匹配人员不能整表剔除，必须比较其最晚派遣日与个人观察期截止日。</li>
+              <li>逐人结果合计=供应商合计=运营区域合计=国家合计=大区合计=成熟队列合计。</li>
+              <li>对派遣/结束日期冲突、截止日边界、无有效出勤但系统派遣覆盖截止日的人员抽样复核。</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="risk-register">
+          <h3>本规则仍然保留的业务风险</h3>
+          <div class="risk-grid">
+            <div><strong>毛留存而非责任留存</strong><span>未自动豁免我方减量、批准休假、雇主转换；需人工举证。</span></div>
+            <div><strong>首次派遣不必然等于首次到岗</strong><span>程序保留首次有效出勤及滞后天数，用于识别错位。</span></div>
+            <div><strong>边界日定义</strong><span>默认最晚派遣日等于截止日时视为覆盖截止日，结束日等于截止日不按“截止日前结束”处理。</span></div>
+            <div><strong>考勤缺失不等于离职</strong><span>只有数据成熟后才判断；系统派遣覆盖截止日但无出勤必须进入复核。</span></div>
+            <div><strong>中间漏传无法靠首尾日期自证</strong><span>程序会将整月缺档判为未成熟；使用者仍需确认单个文件不是部分日期导出。</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>浏览器本地计算，不上传员工数据。</span>
+      <span id="libraryStatus">Excel解析模块加载中</span>
+    </footer>
+
+    <script src="./vendor/xlsx.full.min.js"></script>
+    <script src="./vendor/xlsx-populate-no-encryption.min.js"></script>
+    <script src="./vendor/retention-report-template.js"></script>
+    <script src="./retention-engine.js"></script>
+    <script src="./report-exporter.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

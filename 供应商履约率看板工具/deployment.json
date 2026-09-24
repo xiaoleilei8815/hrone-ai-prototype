@@ -1,0 +1,12 @@
+{
+  "platform": "feishu_miaoda",
+  "app_id": "app_17agfbtrwqs",
+  "app_type": "html",
+  "name": "供应商履约率分析台",
+  "public_url": "https://ztn.feishuapp.com/app/app_17agfbtrwqs",
+  "management_url": "https://miaoda.feishu.cn/app/app_17agfbtrwqs",
+  "access_scope": "public",
+  "require_login": false,
+  "artifact_path": "dist",
+  "verified_on": "2026-08-04"
+}

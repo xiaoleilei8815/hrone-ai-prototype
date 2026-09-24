@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="OTWS供应商履约率原子级统计、交叉验证与严谨版报表导出工具"
+    />
+    <title>供应商履约率分析台</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">OT</div>
+          <div>
+            <h1>供应商履约率分析台</h1>
+            <p>原始接单兑现率为主，超发校正履约率为对照</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <span class="privacy-badge">
+            <span class="status-dot" aria-hidden="true"></span>
+            本地计算
+          </span>
+          <button
+            id="exportButton"
+            class="button button-primary"
+            type="button"
+            disabled
+            title="导出最终严谨版Excel报表"
+          >
+            <span class="button-icon" aria-hidden="true">⇩</span>
+            导出报表
+          </button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar" aria-label="数据源与统计状态">
+          <section class="sidebar-section">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">01</span>
+                <h2>上传数据源</h2>
+              </div>
+              <button
+                id="clearFilesButton"
+                class="icon-button"
+                type="button"
+                title="清空文件"
+                aria-label="清空文件"
+                disabled
+              >
+                ×
+              </button>
+            </div>
+            <label id="dropzone" class="dropzone" for="fileInput">
+              <input
+                id="fileInput"
+                type="file"
+                accept=".xlsx,.xls"
+                multiple
+              />
+              <span class="dropzone-icon" aria-hidden="true">↑</span>
+              <strong>选择或拖入用工需求池</strong>
+              <span>支持单月或连续多月的 Excel 文件</span>
+            </label>
+            <div id="fileSummary" class="file-summary" hidden>
+              <span id="fileCount">0 个文件</span>
+              <span id="fileSize">0 MB</span>
+            </div>
+            <div id="fileList" class="file-list" aria-live="polite"></div>
+            <button
+              id="analyzeButton"
+              class="button button-accent button-block"
+              type="button"
+              disabled
+            >
+              <span class="button-icon" aria-hidden="true">▶</span>
+              生成仪表盘
+            </button>
+          </section>
+
+          <section class="sidebar-section">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">02</span>
+                <h2>识别范围</h2>
+              </div>
+            </div>
+            <dl class="scope-list">
+              <div>
+                <dt>大区</dt>
+                <dd id="scopeMarket">待识别</dd>
+              </div>
+              <div>
+                <dt>运营区域</dt>
+                <dd id="scopeRegion">待识别</dd>
+              </div>
+              <div>
+                <dt>期间</dt>
+                <dd id="scopePeriod">待识别</dd>
+              </div>
+              <div>
+                <dt>供应商</dt>
+                <dd id="scopeSupplier">待识别</dd>
+              </div>
+              <div>
+                <dt>覆盖天数</dt>
+                <dd id="scopeCoverage">待识别</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="sidebar-section">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">03</span>
+                <h2>交叉验证</h2>
+              </div>
+              <span id="qualityBadge" class="quality-badge neutral">WAIT</span>
+            </div>
+            <div id="qualityMiniList" class="quality-mini-list">
+              <div class="quality-mini-row">
+                <span>三表月×区域</span>
+                <span>—</span>
+              </div>
+              <div class="quality-mini-row">
+                <span>原子发单/派遣</span>
+                <span>—</span>
+              </div>
+              <div class="quality-mini-row">
+                <span>责任闭合</span>
+                <span>—</span>
+              </div>
+            </div>
+          </section>
+
+          <div id="statusPanel" class="status-panel" role="status" aria-live="polite">
+            <span class="status-panel-dot" aria-hidden="true"></span>
+            <span id="statusText">等待上传源文件</span>
+          </div>
+        </aside>
+
+        <main class="main-content">
+          <section id="emptyState" class="empty-state">
+            <div class="empty-visual" aria-hidden="true">
+              <span>需求</span>
+              <span>发单</span>
+              <span>派遣</span>
+            </div>
+            <h2>上传任意连续时间区间的用工需求池</h2>
+            <p>系统按文件实际日期逐日展开，并完成三表对账后生成结果。</p>
+          </section>
+
+          <section id="dashboard" class="dashboard" hidden>
+            <div class="dashboard-heading">
+              <div>
+                <span id="reportEyebrow" class="report-eyebrow">分析结果</span>
+                <h2 id="reportTitle">供应商履约率报表</h2>
+                <p id="reportMeta"></p>
+              </div>
+              <div class="dashboard-controls">
+                <label>
+                  <span>大区</span>
+                  <select id="marketFilter"></select>
+                </label>
+                <label>
+                  <span>运营区域</span>
+                  <select id="regionFilter"></select>
+                </label>
+                <label>
+                  <span>工种</span>
+                  <select id="jobFilter"></select>
+                </label>
+              </div>
+            </div>
+
+            <nav class="tabs" aria-label="分析视图">
+              <button class="tab is-active" data-tab="overview" type="button">总览</button>
+              <button class="tab" data-tab="suppliers" type="button">供应商</button>
+              <button class="tab" data-tab="warehouse" type="button">仓库与HR</button>
+              <button class="tab" data-tab="quality" type="button">数据质量</button>
+              <button class="tab" data-tab="method" type="button">统计口径</button>
+            </nav>
+
+            <section id="tab-overview" class="tab-panel is-active">
+              <div id="kpiGrid" class="kpi-grid"></div>
+              <div class="analytics-grid analytics-grid-primary">
+                <article class="panel panel-wide">
+                  <div class="panel-heading">
+                    <div>
+                    <h3>统计期月度趋势</h3>
+                      <p>供应商履约、仓库保障与发单覆盖</p>
+                    </div>
+                    <div id="trendLegend" class="chart-legend"></div>
+                  </div>
+                  <div class="chart-frame">
+                    <canvas id="trendChart" aria-label="月度履约率趋势图"></canvas>
+                  </div>
+                </article>
+
+                <article class="panel">
+                  <div class="panel-heading">
+                    <div>
+                      <h3>发单配置质量</h3>
+                      <p>真实需求、少发与超发的人日结构</p>
+                    </div>
+                  </div>
+                  <div id="allocationChart" class="allocation-chart"></div>
+                </article>
+              </div>
+
+              <div class="analytics-grid">
+                <article class="panel">
+                  <div class="panel-heading">
+                    <div>
+                      <h3>区域履约比较</h3>
+                      <p>原始月均与超发校正月均</p>
+                    </div>
+                  </div>
+                  <div id="regionBars" class="region-bars"></div>
+                </article>
+
+                <article class="panel">
+                  <div class="panel-heading">
+                    <div>
+                      <h3>供应商责任校正分布</h3>
+                      <p>横轴原始月均，纵轴校正月均，点大小为发单量</p>
+                    </div>
+                  </div>
+                  <div class="chart-frame chart-frame-scatter">
+                    <canvas id="supplierScatter" aria-label="供应商履约率散点图"></canvas>
+                  </div>
+                </article>
+              </div>
+
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <h3>供应商统计期表现</h3>
+                    <p id="supplierPreviewMeta"></p>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>区域</th>
+                        <th>供应商</th>
+                        <th>原始月均</th>
+                        <th>校正月均</th>
+                        <th>变化</th>
+                        <th>累计发单</th>
+                        <th>释放责任</th>
+                      </tr>
+                    </thead>
+                    <tbody id="supplierPreviewBody"></tbody>
+                  </table>
+                </div>
+              </article>
+            </section>
+
+            <section id="tab-suppliers" class="tab-panel">
+              <div class="view-toolbar">
+                <div class="segmented-control" aria-label="供应商指标">
+                  <button class="is-active" data-supplier-metric="raw" type="button">
+                    原始兑现率
+                  </button>
+                  <button data-supplier-metric="adjusted" type="button">
+                    超发校正率
+                  </button>
+                </div>
+                <label class="search-control">
+                  <span aria-hidden="true">⌕</span>
+                  <input id="supplierSearch" type="search" placeholder="搜索供应商" />
+                </label>
+              </div>
+              <article class="panel table-panel">
+                <div class="table-wrap table-wrap-tall">
+                  <table>
+                    <thead id="supplierTableHead"></thead>
+                    <tbody id="supplierTableBody"></tbody>
+                  </table>
+                </div>
+              </article>
+            </section>
+
+            <section id="tab-warehouse" class="tab-panel">
+              <div id="warehouseKpis" class="kpi-grid kpi-grid-compact"></div>
+              <article class="panel table-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h3>仓库保障与HR发单质量</h3>
+                    <p>仓库满足率不用于替代供应商履约率</p>
+                  </div>
+                </div>
+                <div class="table-wrap table-wrap-tall">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>区域</th>
+                        <th>层级</th>
+                        <th>工种</th>
+                        <th>月份</th>
+                        <th>真实需求</th>
+                        <th>总发单</th>
+                        <th>总派遣</th>
+                        <th>覆盖率</th>
+                        <th>仓库满足率</th>
+                        <th>超发</th>
+                        <th>少发</th>
+                      </tr>
+                    </thead>
+                    <tbody id="warehouseTableBody"></tbody>
+                  </table>
+                </div>
+              </article>
+            </section>
+
+            <section id="tab-quality" class="tab-panel">
+              <div id="qualityCheckGrid" class="quality-check-grid"></div>
+              <div class="analytics-grid">
+                <article class="panel">
+                  <div class="panel-heading">
+                    <div>
+                      <h3>异常量化</h3>
+                      <p>用于定位数据与发单配置风险</p>
+                    </div>
+                  </div>
+                  <div id="anomalyList" class="anomaly-list"></div>
+                </article>
+                <article class="panel">
+                  <div class="panel-heading">
+                    <div>
+                      <h3>文件覆盖</h3>
+                    <p>源文件实际日期覆盖情况</p>
+                    </div>
+                  </div>
+                  <div id="coveragePanel" class="coverage-panel"></div>
+                </article>
+              </div>
+              <article class="panel table-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h3>三表月×区域对账</h3>
+                    <p>基本信息、需求详情、发单详情</p>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>月份</th>
+                        <th>区域</th>
+                        <th>基本需求</th>
+                        <th>详情需求</th>
+                        <th>基本发单</th>
+                        <th>详情发单</th>
+                        <th>供应商发单</th>
+                        <th>基本派遣</th>
+                        <th>供应商派遣</th>
+                        <th>状态</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reconciliationBody"></tbody>
+                  </table>
+                </div>
+              </article>
+            </section>
+
+            <section id="tab-method" class="tab-panel">
+              <div id="methodContent" class="method-content"></div>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="alert" hidden></div>
+    <a id="downloadLink" class="download-ready" hidden>报表已生成，点击下载</a>
+
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="vendor/xlsx-populate-no-encryption.min.js"></script>
+    <script src="vendor/performance-report-template.js"></script>
+    <script src="fulfillment-engine.js"></script>
+    <script src="report-exporter.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
