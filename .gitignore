@@ -6,6 +6,8 @@
 *copy*/
 # 压缩包副本不入库
 *.zip
+# 页面修改前的临时备份快照不入库（如 labor-funnel-prototype-v2-backup-2026-10-08.html）
+*-backup-*.html
 # 与原型无关的素材输出目录（31MB AI 图片生成结果）不入库
 output/
 # 含真实员工姓名/工号的组织明细表，公开仓库不入库（原型页面不依赖它）
