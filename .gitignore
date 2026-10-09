@@ -8,6 +8,9 @@
 *.zip
 # 页面修改前的临时备份快照不入库（如 labor-funnel-prototype-v2-backup-2026-10-08.html）
 *-backup-*.html
+# 文件名含「副本」的临时副本 HTML 不入库
+# （如 message-reminder-prototype/消息提醒配置-副本-20261009.html，零引用、改动前快照）
+*副本*.html
 # 与原型无关的素材输出目录（31MB AI 图片生成结果）不入库
 output/
 # 含真实员工姓名/工号的组织明细表，公开仓库不入库（原型页面不依赖它）
