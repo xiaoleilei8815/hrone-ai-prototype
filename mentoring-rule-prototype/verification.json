@@ -1,0 +1,45 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "tree": true,
+      "cascade": true,
+      "partial": true,
+      "search": true,
+      "save": true,
+      "persistence": true,
+      "noModalOverflow": true
+    },
+    {
+      "width": 1280,
+      "tree": true,
+      "cascade": true,
+      "partial": true,
+      "search": true,
+      "save": true,
+      "persistence": true,
+      "noModalOverflow": true
+    },
+    {
+      "width": 708,
+      "tree": true,
+      "cascade": true,
+      "partial": true,
+      "search": true,
+      "save": true,
+      "persistence": true,
+      "noModalOverflow": true
+    },
+    {
+      "width": 514,
+      "tree": true,
+      "cascade": true,
+      "partial": true,
+      "search": true,
+      "save": true,
+      "persistence": true,
+      "noModalOverflow": true
+    }
+  ],
+  "errors": []
+}
