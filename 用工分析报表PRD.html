@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>用工分析报表产品需求文档</title>
+<style>
+:root{--ink:#172033;--muted:#66758c;--line:#d9e1ec;--blue:#1769e0;--navy:#1f4e78;--soft:#f3f6fa;--paper:#fff;--bg:#eef2f7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.75}
+.top{position:sticky;top:0;z-index:20;height:56px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 28px;gap:18px}.brand{font-weight:800;font-size:17px}.meta{color:var(--muted);font-size:13px;margin-left:auto}.layout{max-width:1460px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px;padding:24px}
+nav{position:sticky;top:80px;align-self:start;max-height:calc(100vh - 104px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}nav strong{display:block;padding:6px 10px 10px}nav a{display:block;color:#42526b;text-decoration:none;padding:7px 10px;border-radius:7px;font-size:13px}nav a:hover{background:#edf4ff;color:var(--blue)}
+main{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:44px 54px;box-shadow:0 8px 28px rgba(31,78,120,.06);min-width:0}h1,h2,h3{color:#000;line-height:1.35;scroll-margin-top:76px}h1{font-size:30px;margin:0 0 20px;padding-bottom:14px;border-bottom:2px solid #8eb7ef}h2{font-size:22px;margin:42px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line)}h3{font-size:17px;margin:28px 0 10px}.anchor{opacity:0;text-decoration:none;color:#9aacc1;font-size:.7em;margin-left:8px}h1:hover .anchor,h2:hover .anchor,h3:hover .anchor{opacity:1}p{margin:8px 0 12px}ul,ol{padding-left:24px;margin:8px 0 18px}li{margin:4px 0}
+.table-wrap{overflow:auto;margin:12px 0 24px;border:1px solid var(--line);border-radius:9px}table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px;line-height:1.5}thead th{position:sticky;top:0;background:var(--navy);color:#fff;text-align:left;font-weight:700}th,td{padding:10px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}th:last-child,td:last-child{border-right:0}tbody tr:nth-child(even){background:var(--soft)}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f4f6f8;border-radius:4px;padding:1px 5px;font-size:.92em}
+.backtop{position:fixed;right:22px;bottom:20px;background:var(--navy);color:#fff;text-decoration:none;border-radius:999px;padding:9px 13px;font-size:13px;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+@media(max-width:900px){.layout{display:block;padding:12px}nav{display:none}main{padding:28px 20px;border-radius:10px}.meta{display:none}.top{padding:0 16px}h1{font-size:25px}h2{font-size:20px}}
+@media print{body{background:#fff;font-size:10.5pt}.top,nav,.backtop,.anchor{display:none}.layout{display:block;padding:0;max-width:none}main{border:0;box-shadow:none;padding:0}h1,h2,h3{break-after:avoid}table{min-width:0;font-size:8pt}.table-wrap{overflow:visible;break-inside:avoid;border-radius:0}tr{break-inside:avoid}a{color:inherit;text-decoration:none}@page{size:A4;margin:16mm}}
+</style>
+</head>
+<body id="top">
+<header class="top"><span class="brand">用工分析报表 PRD</span><span class="meta">版本 1.0 · 2026 年 10 月 10 日</span></header>
+<div class="layout"><nav aria-label="文档目录"><strong>目录</strong><a href="#业务背景与目标">业务背景与目标</a><a href="#角色和权限">角色和权限</a><a href="#页面结构与用户旅程">页面结构与用户旅程</a><a href="#筛选与查询">筛选与查询</a><a href="#指标总览">指标总览</a><a href="#履约漏斗与流失分析">履约漏斗与流失分析</a><a href="#对比分析图">对比分析图</a><a href="#对比数据明细">对比数据明细</a><a href="#规则配置">规则配置</a><a href="#导出图片">导出图片</a><a href="#数据口径与公式">数据口径与公式</a><a href="#接口契约">接口契约</a><a href="#状态与异常处理">状态与异常处理</a><a href="#非功能要求">非功能要求</a><a href="#测试验收标准">测试验收标准</a><a href="#发布与数据核验">发布与数据核验</a><a href="#已确认决策与保守假设">已确认决策与保守假设</a><a href="#评审结论">评审结论</a></nav><main><h1 id="用工分析报表产品需求文档">用工分析报表产品需求文档<a class="anchor" href="#用工分析报表产品需求文档" aria-label="链接到本节">#</a></h1><p>供前端开发 后端开发与测试验收使用</p>
+<p>版本 1.0<br>文档日期 2026 年 10 月 10 日<br>适用终端 PC Portal<br>原型基线 labor funnel prototype v2</p>
+<p>本 PRD 固化当前已确认原型的业务口径、交互行为、权限边界、接口契约和测试标准。研发实现必须以本文件与已确认高保真原型共同作为验收依据；如两者不一致，以本 PRD 的业务规则为准，视觉布局以原型为准。</p>
+<p>已确认决策：统计规则与豁免规则按租户全局生效；配置入口接入现有菜单与按钮权限体系；导出图片包含完整报表内容，不含 Portal 顶部菜单。</p>
+<h2 id="文档控制">文档控制<a class="anchor" href="#文档控制" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品名称</td>
+<td>用工分析报表</td>
+</tr>
+<tr>
+<td>所属模块</td>
+<td>用工管理</td>
+</tr>
+<tr>
+<td>页面入口</td>
+<td>用工管理 &gt; 用工分析报表</td>
+</tr>
+<tr>
+<td>目标读者</td>
+<td>产品、前端、后端、数据研发、测试、实施与运维</td>
+</tr>
+<tr>
+<td>数据时效</td>
+<td>T+1，页面展示数据统计截止日期</td>
+</tr>
+<tr>
+<td>配置范围</td>
+<td>租户全局</td>
+</tr>
+<tr>
+<td>权限机制</td>
+<td>复用现有菜单权限与按钮权限</td>
+</tr>
+<tr>
+<td>非本期范围</td>
+<td>移动端、人员明细下钻、业务单据写回、Excel 与 PDF 导出</td>
+</tr>
+</tbody></table>
+<h2 id="产品结论">产品结论<a class="anchor" href="#产品结论" aria-label="链接到本节">#</a></h2><p>本页面面向具备用工分析权限的管理者，提供从需求、发单、派遣、到场、试工、出勤到留存的完整履约分析。用户在一个页面内完成日期与组织筛选、整体指标判断、流失定位、分维度对比和明细核验。系统自动聚合人数和比例，不提供人工修改业务数据的能力。</p>
+<p>前端必须保证筛选、图表、表格与导出使用同一查询上下文；后端必须保证所有汇总比例由汇总人数相除，不允许先计算单行比例再取平均；测试必须同时验证人数、分母、汇总、边界值和权限。</p>
+<h1 id="业务背景与目标">业务背景与目标<a class="anchor" href="#业务背景与目标" aria-label="链接到本节">#</a></h1><h2 id="业务问题">业务问题<a class="anchor" href="#业务问题" aria-label="链接到本节">#</a></h2><ul>
+<li>管理者需要同时判断整体需求是否满足、人员在哪个履约环节流失，以及不同组织、供应商和工种之间的履约差异。</li>
+<li>原始业务数据跨需求、发单、派遣、到场、试工、出勤与在职记录，若各模块分别统计，容易出现时间范围、去重和分母不一致。</li>
+<li>报表需要明确展示计算口径，并允许授权人员维护租户级统计规则和需求满足率豁免规则。</li>
+</ul>
+<h2 id="产品目标">产品目标<a class="anchor" href="#产品目标" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>目标</th>
+<th>验收指标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OBJ-01</td>
+<td>统一履约口径</td>
+<td>同一筛选条件下，指标卡、漏斗、图表、表格和导出结果完全一致</td>
+</tr>
+<tr>
+<td>OBJ-02</td>
+<td>快速定位流失</td>
+<td>用户可从漏斗识别最大流失环节，并切换维度定位组织、供应商或工种</td>
+</tr>
+<tr>
+<td>OBJ-03</td>
+<td>支持横向比较</td>
+<td>按组织、供应商、工种、供应商＋工种展示人数规模与转化比例</td>
+</tr>
+<tr>
+<td>OBJ-04</td>
+<td>提供验收基线</td>
+<td>每个公式、字段、状态和权限均有明确预期结果</td>
+</tr>
+</tbody></table>
+<h2 id="范围边界">范围边界<a class="anchor" href="#范围边界" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>范围内</th>
+<th>范围外</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PC Portal 中的用工分析报表页面</td>
+<td>移动端专用页面</td>
+</tr>
+<tr>
+<td>租户授权范围内的聚合分析</td>
+<td>员工个人明细及人员画像</td>
+</tr>
+<tr>
+<td>统计规则与豁免规则配置</td>
+<td>修改需求、发单、派遣或出勤业务单据</td>
+</tr>
+<tr>
+<td>PNG 全报表导出</td>
+<td>Excel、PDF 或定时邮件导出</td>
+</tr>
+<tr>
+<td>组织、供应商、工种维度下钻与对比</td>
+<td>跨租户数据比较</td>
+</tr>
+</tbody></table>
+<h1 id="角色和权限">角色和权限<a class="anchor" href="#角色和权限" aria-label="链接到本节">#</a></h1><p>页面复用现有权限系统。权限由租户管理员在现有权限配置功能中分配，本项目不新增权限管理页面。后端必须在接口层校验权限，前端隐藏无权限入口；仅隐藏按钮不能作为安全控制。</p>
+<table>
+<thead>
+<tr>
+<th>权限编码建议</th>
+<th>类型</th>
+<th>允许动作</th>
+<th>无权限表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>labor_analysis_report_view</td>
+<td>菜单</td>
+<td>进入页面、查询、查看图表和明细</td>
+<td>不显示菜单；深链接返回无权限页</td>
+</tr>
+<tr>
+<td>labor_analysis_report_export</td>
+<td>按钮</td>
+<td>导出完整报表图片</td>
+<td>不显示导出按钮；接口拒绝时提示无权限</td>
+</tr>
+<tr>
+<td>labor_analysis_statistics_config</td>
+<td>按钮</td>
+<td>查看并保存统计规则</td>
+<td>不显示统计规则配置按钮</td>
+</tr>
+<tr>
+<td>labor_analysis_exemption_config</td>
+<td>按钮</td>
+<td>查看并保存豁免规则</td>
+<td>不显示豁免规则按钮</td>
+</tr>
+</tbody></table>
+<h2 id="数据权限">数据权限<a class="anchor" href="#数据权限" aria-label="链接到本节">#</a></h2><ul>
+<li>用户只能查询现有组织数据权限覆盖的区域、物理仓和组。组织选择器不展示无权限节点。</li>
+<li>供应商与工种数据由用户可见组织范围内的数据聚合得到，切换维度不得扩大数据范围。</li>
+<li>租户级规则对所有报表查看者生效，但只有取得相应按钮权限的用户可修改。</li>
+<li>规则保存记录租户、操作者、时间、修改前值和修改后值。</li>
+</ul>
+<h1 id="页面结构与用户旅程">页面结构与用户旅程<a class="anchor" href="#页面结构与用户旅程" aria-label="链接到本节">#</a></h1><table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>区域</th>
+<th>用户动作</th>
+<th>系统动作</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Portal 导航</td>
+<td>打开用工分析报表</td>
+<td>校验菜单权限，创建或复用页面标签</td>
+<td>显示报表</td>
+</tr>
+<tr>
+<td>2</td>
+<td>顶部筛选</td>
+<td>选择日期、组织、工种并查询</td>
+<td>校验条件并按数据权限聚合</td>
+<td>刷新全页面</td>
+</tr>
+<tr>
+<td>3</td>
+<td>指标总览</td>
+<td>查看满足率、人数、缺口、派遣率、留存</td>
+<td>计算当前值及可用环比</td>
+<td>判断整体表现</td>
+</tr>
+<tr>
+<td>4</td>
+<td>履约漏斗</td>
+<td>查看阶段人数和流失构成</td>
+<td>计算转化与流失</td>
+<td>定位最大流失环节</td>
+</tr>
+<tr>
+<td>5</td>
+<td>对比分析</td>
+<td>切换维度并下钻组织</td>
+<td>同步图表和明细维度</td>
+<td>比较对象差异</td>
+</tr>
+<tr>
+<td>6</td>
+<td>对比明细</td>
+<td>排序、切层级、核对公式</td>
+<td>使用同一数据集生成表格</td>
+<td>获得可核验明细</td>
+</tr>
+<tr>
+<td>7</td>
+<td>导出</td>
+<td>点击导出图片</td>
+<td>渲染完整报表并生成 PNG</td>
+<td>浏览器下载图片</td>
+</tr>
+<tr>
+<td>8</td>
+<td>规则配置</td>
+<td>授权用户修改并保存</td>
+<td>持久化租户配置并记录审计</td>
+<td>后续查询按新规则计算</td>
+</tr>
+</tbody></table>
+<h2 id="页面布局">页面布局<a class="anchor" href="#页面布局" aria-label="链接到本节">#</a></h2><ol>
+<li>Portal 顶部菜单和页面标签沿用现有框架，页面标题为“用工分析报表”。</li>
+<li>标题右侧依次展示“导出图片”“统计规则配置”“需求满足率豁免规则”，按钮由按钮权限控制。</li>
+<li>业务内容依次为筛选区、指标总览、履约漏斗、对比分析图、对比数据明细和指标口径。</li>
+<li>页面使用一个主垂直滚动容器；窄屏时指标卡横向滚动，宽表格在自身容器内横向滚动。</li>
+</ol>
+<h1 id="筛选与查询">筛选与查询<a class="anchor" href="#筛选与查询" aria-label="链接到本节">#</a></h1><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>控件</th>
+<th>规则</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FIL-01</td>
+<td>日期快捷项</td>
+<td>平铺按天、按周、按月、自定义；快捷项自动计算起止日期</td>
+<td>按月</td>
+</tr>
+<tr>
+<td>FIL-02</td>
+<td>起止日期</td>
+<td>包含首尾日期；结束不得早于开始</td>
+<td>当月 1 日至月末</td>
+</tr>
+<tr>
+<td>FIL-03</td>
+<td>组织</td>
+<td>树形多选，层级为区域、物理仓、组，支持父子全选和半选</td>
+<td>全部区域</td>
+</tr>
+<tr>
+<td>FIL-04</td>
+<td>工种</td>
+<td>单选；由当前组织范围内存在的工种生成</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>FIL-05</td>
+<td>查询</td>
+<td>唯一主操作，刷新全部报表区域</td>
+<td>无</td>
+</tr>
+<tr>
+<td>FIL-06</td>
+<td>重置</td>
+<td>恢复日期、组织和工种默认值并刷新</td>
+<td>无</td>
+</tr>
+<tr>
+<td>FIL-07</td>
+<td>截止提示</td>
+<td>展示 T+1 数据统计截至 MM-DD</td>
+<td>取接口 dataAsOf</td>
+</tr>
+</tbody></table>
+<h2 id="筛选交互规则">筛选交互规则<a class="anchor" href="#筛选交互规则" aria-label="链接到本节">#</a></h2><ul>
+<li>按天时开始日期等于结束日期；按周为自然周周一至周日；按月为自然月；直接修改日期后快捷项自动切为自定义。</li>
+<li>组织变化后重新过滤工种。若已选工种不在新范围内，自动恢复“全部”并提示筛选已调整。</li>
+<li>查询期间按钮进入加载状态并禁止重复提交。成功后所有模块使用同一 queryId 或数据版本。</li>
+<li>日期无效时不请求接口，显示“请选择有效的需求日期范围，结束日期不能早于开始日期”。</li>
+</ul>
+<h1 id="指标总览">指标总览<a class="anchor" href="#指标总览" aria-label="链接到本节">#</a></h1><table>
+<thead>
+<tr>
+<th>卡片</th>
+<th>主值</th>
+<th>辅助信息</th>
+<th>环比格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求满足率</td>
+<td>百分比，1 位小数</td>
+<td>可展开计算说明</td>
+<td>较上月或周 上升或下降 X.X%</td>
+</tr>
+<tr>
+<td>仓库需求人数</td>
+<td>人数，千分位</td>
+<td>无</td>
+<td>上升或下降 X.X%（X 人）</td>
+</tr>
+<tr>
+<td>试工通过人数</td>
+<td>人数，千分位</td>
+<td>无</td>
+<td>上升或下降 X.X%（X 人）</td>
+</tr>
+<tr>
+<td>当前需求缺口</td>
+<td>人数，千分位</td>
+<td>其中结果未登记 X 人；可展开公式</td>
+<td>上升或下降 X.X%（X 人）</td>
+</tr>
+<tr>
+<td>线上派遣率</td>
+<td>百分比，1 位小数</td>
+<td>可展开计算说明</td>
+<td>上升或下降 X.X%</td>
+</tr>
+<tr>
+<td>7 日留存率</td>
+<td>百分比或—</td>
+<td>留存人数与满观察期人数</td>
+<td>上升或下降 X.X%</td>
+</tr>
+<tr>
+<td>30 日留存率</td>
+<td>百分比或—</td>
+<td>留存人数与满观察期人数</td>
+<td>上升或下降 X.X%</td>
+</tr>
+</tbody></table>
+<h2 id="环比规则">环比规则<a class="anchor" href="#环比规则" aria-label="链接到本节">#</a></h2><ul>
+<li>仅按周和按月展示环比。自定义与按天不展示。</li>
+<li>当前周期若受数据截止日影响，上一周期取相同已过天数。例如本月统计到 14 日，上月只统计 1 至 14 日。</li>
+<li>上涨使用绿色，下降使用红色，持平使用中性色。上一周期为 0 或无数据时显示—。</li>
+<li>比率型变化使用“%”，不使用“个百分点”；数值型同时展示百分比变化和人数差值。</li>
+</ul>
+<h1 id="履约漏斗与流失分析">履约漏斗与流失分析<a class="anchor" href="#履约漏斗与流失分析" aria-label="链接到本节">#</a></h1><h2 id="漏斗阶段">漏斗阶段<a class="anchor" href="#漏斗阶段" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>人数口径</th>
+<th>环节转化率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>仓库需求</td>
+<td>审批通过且未取消的需求人数</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>发单</td>
+<td>最新有效分配人数合计</td>
+<td>发单 ÷ 仓库需求</td>
+</tr>
+<tr>
+<td>线上派遣</td>
+<td>满足当前线上派遣口径的人员数</td>
+<td>线上派遣 ÷ 发单</td>
+</tr>
+<tr>
+<td>需求日到场</td>
+<td>需求日完成现场签到人数</td>
+<td>到场 ÷ 线上派遣</td>
+</tr>
+<tr>
+<td>试工通过</td>
+<td>需求日试工通过人数</td>
+<td>试工通过 ÷ 到场</td>
+</tr>
+<tr>
+<td>需求日出勤</td>
+<td>仓库确认实际上岗人数</td>
+<td>出勤 ÷ 试工通过</td>
+</tr>
+</tbody></table>
+<h2 id="流失拆解">流失拆解<a class="anchor" href="#流失拆解" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>流失项</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未发单</td>
+<td>仓库需求 − 发单</td>
+</tr>
+<tr>
+<td>未派遣</td>
+<td>发单 − 总派遣</td>
+</tr>
+<tr>
+<td>未到场</td>
+<td>线上派遣 − 到场</td>
+</tr>
+<tr>
+<td>试工未通过</td>
+<td>到场 − 试工通过 − 结果未登记</td>
+</tr>
+<tr>
+<td>未出勤</td>
+<td>试工通过 − 出勤</td>
+</tr>
+</tbody></table>
+<p>“结果未登记”不在漏斗下方流失标签与右侧流失柱图中展示，但作为需求缺口卡片的辅助信息，并参与试工未通过计算。总流失等于仓库需求减需求日出勤。右侧按流失人数从高到低展示，并标记最大流失环节及占比。</p>
+<h1 id="对比分析图">对比分析图<a class="anchor" href="#对比分析图" aria-label="链接到本节">#</a></h1><h2 id="维度">维度<a class="anchor" href="#维度" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>对象</th>
+<th>组织下钻</th>
+<th>横轴标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>按组织</td>
+<td>区域、物理仓或组</td>
+<td>逐级下钻到组，每张图独立保存层级</td>
+<td>当前层级名称</td>
+</tr>
+<tr>
+<td>按供应商</td>
+<td>供应商</td>
+<td>不下钻</td>
+<td>供应商名称</td>
+</tr>
+<tr>
+<td>按工种</td>
+<td>工种</td>
+<td>不下钻</td>
+<td>工种名称</td>
+</tr>
+<tr>
+<td>供应商＋工种</td>
+<td>供应商与工种组合</td>
+<td>不下钻</td>
+<td>供应商名称/工种，自动换行完整展示</td>
+</tr>
+</tbody></table>
+<h2 id="图表布局和交互">图表布局和交互<a class="anchor" href="#图表布局和交互" aria-label="链接到本节">#</a></h2><ul>
+<li>每个指标使用独立组合图。柱形读取左轴人数，折线读取右轴比例；比例由当前对象汇总人数相除。</li>
+<li>统计对象超过 10 个时每行 1 张图，不超过 10 个时每行 2 张图。</li>
+<li>图例支持点击隐藏或显示柱、折线或对象系列；鼠标悬停和键盘聚焦显示精确人数与比例。</li>
+<li>按组织时显示“点击具体的组织可下钻查看下级数据”。点击柱、折线点或组织名均可下钻；返回上一级只影响当前图。</li>
+<li>无数据时显示“当前范围没有可对比数据，请调整顶部筛选”，不绘制全 0 坐标轴。</li>
+</ul>
+<h2 id="指标集合">指标集合<a class="anchor" href="#指标集合" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>柱形人数</th>
+<th>折线比例</th>
+<th>适用维度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求满足率</td>
+<td>试工通过人数</td>
+<td>组织和工种为试工通过 ÷ 仓库需求；供应商相关为试工通过 ÷ 发单</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>发单率</td>
+<td>发单人数</td>
+<td>发单 ÷ 仓库需求</td>
+<td>组织、工种</td>
+</tr>
+<tr>
+<td>需求贡献率</td>
+<td>试工通过人数</td>
+<td>当前对象试工通过 ÷ 所有供应商对象试工通过</td>
+<td>供应商、供应商＋工种</td>
+</tr>
+<tr>
+<td>派遣率</td>
+<td>线上派遣人数</td>
+<td>线上派遣 ÷ 发单</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>线上派遣率</td>
+<td>线上派遣人数</td>
+<td>线上派遣 ÷ 当前线上派遣分母</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>到场率</td>
+<td>到场人数</td>
+<td>到场 ÷ 线上派遣</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>试工通过率</td>
+<td>试工通过人数</td>
+<td>试工通过 ÷ 到场</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>留存率</td>
+<td>持续在职人数</td>
+<td>持续在职 ÷ 已满观察期的试工通过人数</td>
+<td>全部</td>
+</tr>
+</tbody></table>
+<h1 id="对比数据明细">对比数据明细<a class="anchor" href="#对比数据明细" aria-label="链接到本节">#</a></h1><p>明细维度与对比分析图双向同步。在任一区域切换“按组织、按供应商、按工种、供应商＋工种”，另一处立即切换并刷新。</p>
+<h2 id="通用规则">通用规则<a class="anchor" href="#通用规则" aria-label="链接到本节">#</a></h2><ul>
+<li>排序包括满足率从高到低、满足率从低到高、缺口从高到低、缺口从低到高；默认缺口从高到低。</li>
+<li>按组织提供区、物理仓、组三个层级，不提供归属大区。默认物理仓；切换层级不改变顶部筛选。</li>
+<li>人数使用千分位，比例保留 1 位小数，分母为 0 显示—。</li>
+<li>“缺口计算说明”可展开，内容随当前维度变化。</li>
+</ul>
+<h2 id="列定义">列定义<a class="anchor" href="#列定义" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>列顺序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>按组织</td>
+<td>组织层级列、需求、发单、线上派遣、到场、试工通过、出勤、发单率、派遣率、线上派遣率、到场率、试工通过率、需求满足率、缺口</td>
+</tr>
+<tr>
+<td>按工种</td>
+<td>工种、服务区域、需求、发单、线上派遣、到场、试工通过、出勤、发单率、派遣率、线上派遣率、到场率、试工通过率、需求满足率、缺口</td>
+</tr>
+<tr>
+<td>按供应商</td>
+<td>供应商、服务区域、发单、线上派遣、到场、试工通过、出勤、派遣率、线上派遣率、到场率、试工通过率、需求贡献率、需求满足率、缺口</td>
+</tr>
+<tr>
+<td>供应商＋工种</td>
+<td>供应商、服务区域、工种、发单、线上派遣、到场、试工通过、出勤、派遣率、线上派遣率、到场率、试工通过率、需求贡献率、需求满足率、缺口</td>
+</tr>
+</tbody></table>
+<h1 id="规则配置">规则配置<a class="anchor" href="#规则配置" aria-label="链接到本节">#</a></h1><h2 id="通用规则-1">通用规则<a class="anchor" href="#通用规则-1" aria-label="链接到本节">#</a></h2><ul>
+<li>两类配置均按租户全局生效。保存后，新查询立即使用新规则；已打开页面在下一次查询时获取最新配置。</li>
+<li>只有相应按钮权限的用户可操作。后端校验权限并写入审计日志。</li>
+<li>弹窗打开时读取当前生效配置；取消不保存；保存成功关闭并提示；失败保留输入并展示原因。</li>
+<li>并发修改采用版本号控制。版本冲突提示“配置已被其他用户更新，请刷新后重试”。</li>
+</ul>
+<h2 id="统计规则配置">统计规则配置<a class="anchor" href="#统计规则配置" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>影响范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求满足率</td>
+<td>试工通过 ÷ 仓库需求；需求日出勤 ÷ 仓库需求</td>
+<td>试工通过</td>
+<td>仅整体、组织和工种；供应商相关始终为试工通过 ÷ 发单</td>
+</tr>
+<tr>
+<td>线上派遣率</td>
+<td>首次派遣且创建人不等于供应商；所有派遣中创建人不等于供应商</td>
+<td>首次派遣口径</td>
+<td>线上派遣率卡片、图表和表格</td>
+</tr>
+</tbody></table>
+<h2 id="需求满足率豁免规则">需求满足率豁免规则<a class="anchor" href="#需求满足率豁免规则" aria-label="链接到本节">#</a></h2><ul>
+<li>每条规则包含区域多选、工种多选和豁免天数，天数为 1 至 365 的整数。</li>
+<li>任意区域＋工种组合只能命中一条规则。重复时禁止保存并指出冲突组合。</li>
+<li>当查询日期范围超过豁免天数时，该组合的仓库需求人数取豁免天数窗口内的最大需求人数；未命中时按完整范围汇总。</li>
+<li>支持新增和删除。每条规则至少选择一个区域和一个工种。</li>
+</ul>
+<h1 id="导出图片">导出图片<a class="anchor" href="#导出图片" aria-label="链接到本节">#</a></h1><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EXP-01</td>
+<td>PNG 格式，文件名为“用工分析报表_开始日期_结束日期.png”</td>
+</tr>
+<tr>
+<td>EXP-02</td>
+<td>包含标题、当前筛选、截止提示、指标、漏斗、对比图、明细和指标口径</td>
+</tr>
+<tr>
+<td>EXP-03</td>
+<td>不包含 Portal 顶部菜单、页面标签、弹窗、Toast 和图表浮层</td>
+</tr>
+<tr>
+<td>EXP-04</td>
+<td>使用当前已查询结果，不重新查询；生成期间按钮禁用并显示“生成中”</td>
+</tr>
+<tr>
+<td>EXP-05</td>
+<td>横向滚动区域导出完整内容，不只截取当前视口</td>
+</tr>
+<tr>
+<td>EXP-06</td>
+<td>成功自动下载并提示；失败恢复按钮并提示重试</td>
+</tr>
+</tbody></table>
+<h1 id="数据口径与公式">数据口径与公式<a class="anchor" href="#数据口径与公式" aria-label="链接到本节">#</a></h1><h2 id="时间与去重">时间与去重<a class="anchor" href="#时间与去重" aria-label="链接到本节">#</a></h2><ul>
+<li>需求日期范围用于锁定需求批次，之后追踪这些批次的全部履约结果，首尾日期均包含。</li>
+<li>人员按需求批次 ID＋工号去重。缺少工号的数据进入数据质量清单，不得静默重复计数。</li>
+<li>试工结果允许后续补录，无登记时限。结果未登记不得计为试工失败。</li>
+<li>发单按批次与供应商的最新有效分配版本统计；撤回、作废和被替代版本不重复计数。</li>
+</ul>
+<h2 id="核心公式">核心公式<a class="anchor" href="#核心公式" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>公式</th>
+<th>边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发单率</td>
+<td>发单 ÷ 仓库需求</td>
+<td>分母 0 显示—</td>
+</tr>
+<tr>
+<td>派遣率</td>
+<td>线上派遣 ÷ 发单</td>
+<td>分母 0 显示—</td>
+</tr>
+<tr>
+<td>线上派遣率</td>
+<td>1 − 线下派遣 ÷ 总派遣</td>
+<td>分母 0 显示—</td>
+</tr>
+<tr>
+<td>到场率</td>
+<td>到场 ÷ 线上派遣</td>
+<td>分母 0 显示—</td>
+</tr>
+<tr>
+<td>试工通过率</td>
+<td>试工通过 ÷ 到场</td>
+<td>分母 0 显示—</td>
+</tr>
+<tr>
+<td>出勤率</td>
+<td>出勤 ÷ 试工通过</td>
+<td>分母 0 显示—</td>
+</tr>
+<tr>
+<td>组织和工种满足率</td>
+<td>配置指定人数 ÷ 仓库需求</td>
+<td>指定人数为通过或出勤</td>
+</tr>
+<tr>
+<td>供应商相关满足率</td>
+<td>试工通过 ÷ 发单</td>
+<td>不考虑责任因子</td>
+</tr>
+<tr>
+<td>需求贡献率</td>
+<td>当前供应商对象通过 ÷ 所有供应商对象通过</td>
+<td>当前筛选范围</td>
+</tr>
+<tr>
+<td>组织和工种缺口</td>
+<td>仓库需求 − 配置指定人数</td>
+<td>最小为 0</td>
+</tr>
+<tr>
+<td>供应商相关缺口</td>
+<td>max(0，发单 − 试工通过)</td>
+<td>不考虑责任因子</td>
+</tr>
+<tr>
+<td>试工未通过</td>
+<td>到场 − 试工通过 − 结果未登记</td>
+<td>最小为 0</td>
+</tr>
+<tr>
+<td>留存率</td>
+<td>观察点持续在职 ÷ 已满观察期的试工通过人数</td>
+<td>未满周期不进分母</td>
+</tr>
+</tbody></table>
+<h2 id="留存口径">留存口径<a class="anchor" href="#留存口径" aria-label="链接到本节">#</a></h2><ul>
+<li>固定周期为 7 日、30 日、3 个自然月、6 个自然月；自定义周期为 1 至 3650 天。</li>
+<li>观察起点为试工通过日。自然月遇目标月份无对应日时取月末。</li>
+<li>期间离职或离职后重新入职者不算连续留存。</li>
+<li>未满周期和缺少试工通过日期者不进入分母。生产环境单列缺失日期人数。</li>
+</ul>
+<h1 id="接口契约">接口契约<a class="anchor" href="#接口契约" aria-label="链接到本节">#</a></h1><p>接口路径为建议命名，研发可按现有网关规范调整，但字段语义、权限与错误码必须保持一致。所有接口携带租户、用户身份和数据权限上下文。</p>
+<h2 id="查询请求">查询请求<a class="anchor" href="#查询请求" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>startDate</td>
+<td>date</td>
+<td>是</td>
+<td>需求日期开始，YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>date</td>
+<td>是</td>
+<td>需求日期结束，YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>orgIds</td>
+<td>string[]</td>
+<td>否</td>
+<td>最小组织节点 ID；空表示全部授权组织</td>
+</tr>
+<tr>
+<td>jobTypeId</td>
+<td>string</td>
+<td>否</td>
+<td>工种 ID；空表示全部</td>
+</tr>
+<tr>
+<td>dimension</td>
+<td>enum</td>
+<td>是</td>
+<td>ORG、SUPPLIER、JOB、SUPPLIER_JOB</td>
+</tr>
+<tr>
+<td>orgLevel</td>
+<td>enum</td>
+<td>条件</td>
+<td>REGION、WAREHOUSE、GROUP</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>enum</td>
+<td>否</td>
+<td>RATE_DESC、RATE_ASC、GAP_DESC、GAP_ASC</td>
+</tr>
+<tr>
+<td>configVersion</td>
+<td>string</td>
+<td>否</td>
+<td>前端已知配置版本</td>
+</tr>
+</tbody></table>
+<h2 id="建议接口">建议接口<a class="anchor" href="#建议接口" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>方法与路径</th>
+<th>权限</th>
+<th>用途</th>
+<th>关键响应</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET /api/labor-analysis/config</td>
+<td>查看报表</td>
+<td>获取租户配置</td>
+<td>statisticsRule、exemptionRules、version</td>
+</tr>
+<tr>
+<td>PUT /api/labor-analysis/config/statistics</td>
+<td>统计规则按钮</td>
+<td>保存统计规则</td>
+<td>version、updatedBy、updatedAt</td>
+</tr>
+<tr>
+<td>PUT /api/labor-analysis/config/exemptions</td>
+<td>豁免规则按钮</td>
+<td>保存豁免规则</td>
+<td>version、conflicts</td>
+</tr>
+<tr>
+<td>POST /api/labor-analysis/query</td>
+<td>查看报表</td>
+<td>返回全页面统一数据</td>
+<td>queryId、dataAsOf、summary、funnel、comparison、detail</td>
+</tr>
+<tr>
+<td>POST /api/labor-analysis/drilldown</td>
+<td>查看报表</td>
+<td>获取组织下钻数据</td>
+<td>parentPath、level、items</td>
+</tr>
+<tr>
+<td>POST /api/labor-analysis/export-context</td>
+<td>导出按钮</td>
+<td>记录导出审计</td>
+<td>exportId、queryId、createdAt</td>
+</tr>
+</tbody></table>
+<h2 id="响应约束">响应约束<a class="anchor" href="#响应约束" aria-label="链接到本节">#</a></h2><ul>
+<li>queryId 唯一标识本次聚合。summary、funnel、comparison 和 detail 来自同一 queryId。</li>
+<li>dataAsOf 由服务端返回，前端不得写死；configVersion 表示本次计算使用的配置版本。</li>
+<li>人数为整数。比例返回 numerator、denominator 和 rate，前端显示时四舍五入至 1 位小数。</li>
+<li>返回对象 ID 和名称。交互与下钻使用 ID，不以名称作为唯一键。</li>
+<li>聚合接口必须返回分子与分母，禁止只返回最终百分比。</li>
+</ul>
+<h2 id="错误码">错误码<a class="anchor" href="#错误码" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>HTTP</th>
+<th>业务码</th>
+<th>场景</th>
+<th>前端处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>400</td>
+<td>INVALID_DATE_RANGE</td>
+<td>日期范围错误</td>
+<td>筛选区展示校验信息</td>
+</tr>
+<tr>
+<td>400</td>
+<td>DUPLICATE_EXEMPTION</td>
+<td>区域＋工种重复</td>
+<td>保留输入并标出冲突</td>
+</tr>
+<tr>
+<td>403</td>
+<td>PERMISSION_DENIED</td>
+<td>无菜单或按钮权限</td>
+<td>无权限页或提示</td>
+</tr>
+<tr>
+<td>409</td>
+<td>CONFIG_VERSION_CONFLICT</td>
+<td>配置被他人修改</td>
+<td>提示刷新后重试</td>
+</tr>
+<tr>
+<td>422</td>
+<td>INVALID_EXEMPTION_DAYS</td>
+<td>豁免天数非法</td>
+<td>定位对应规则行</td>
+</tr>
+<tr>
+<td>500</td>
+<td>AGGREGATION_FAILED</td>
+<td>聚合失败</td>
+<td>显示失败态与重试</td>
+</tr>
+</tbody></table>
+<h1 id="状态与异常处理">状态与异常处理<a class="anchor" href="#状态与异常处理" aria-label="链接到本节">#</a></h1><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>触发条件</th>
+<th>页面表现</th>
+<th>恢复</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首次加载</td>
+<td>配置或数据未返回</td>
+<td>筛选框架可见，内容显示骨架</td>
+<td>成功后替换</td>
+</tr>
+<tr>
+<td>查询中</td>
+<td>点击查询</td>
+<td>主按钮加载并禁用，保留上次结果</td>
+<td>成功刷新或失败恢复</td>
+</tr>
+<tr>
+<td>无数据</td>
+<td>有效条件无记录</td>
+<td>指标显示—或 0，图表和表格显示空状态</td>
+<td>调整筛选</td>
+</tr>
+<tr>
+<td>无分母</td>
+<td>比例分母为 0</td>
+<td>对应比例显示—</td>
+<td>无需处理</td>
+</tr>
+<tr>
+<td>查询失败</td>
+<td>超时或服务异常</td>
+<td>数据加载失败并提供重试</td>
+<td>使用原条件重试</td>
+</tr>
+<tr>
+<td>配置失败</td>
+<td>校验、权限、冲突或网络错误</td>
+<td>弹窗不关闭并显示原因</td>
+<td>修正或刷新</td>
+</tr>
+<tr>
+<td>导出失败</td>
+<td>Canvas 或下载失败</td>
+<td>按钮恢复并提示失败</td>
+<td>重新导出</td>
+</tr>
+<tr>
+<td>权限变化</td>
+<td>页面打开后权限被收回</td>
+<td>下次请求返回 403 并关闭不可访问标签</td>
+<td>联系管理员</td>
+</tr>
+</tbody></table>
+<h1 id="非功能要求">非功能要求<a class="anchor" href="#非功能要求" aria-label="链接到本节">#</a></h1><h2 id="性能与兼容性">性能与兼容性<a class="anchor" href="#性能与兼容性" aria-label="链接到本节">#</a></h2><ul>
+<li>常规查询 95 分位 3 秒内完成；首屏骨架 300 毫秒内出现。</li>
+<li>支持现行 PC 浏览器基线，至少验证 Chrome 最新两个稳定版本及 1280、1440 像素宽度。</li>
+<li>明细建议最多返回 500 行；超过上限返回 total 与 truncated，前端提示缩小范围。</li>
+<li>所有按钮、图例和可下钻图形支持键盘聚焦与 Enter 或 Space 触发。</li>
+</ul>
+<h2 id="安全与审计">安全与审计<a class="anchor" href="#安全与审计" aria-label="链接到本节">#</a></h2><ul>
+<li>所有查询强制叠加租户和用户数据权限，客户端组织 ID 不得绕过权限。</li>
+<li>配置保存记录操作者、时间、来源 IP、前后值、版本和结果。</li>
+<li>导出权限与查看权限分离，导出事件写入审计日志。</li>
+</ul>
+<h1 id="测试验收标准">测试验收标准<a class="anchor" href="#测试验收标准" aria-label="链接到本节">#</a></h1><p>以下用例为最低验收集。测试使用固定数据集核对分子、分母、汇总值和显示值。核心公式、权限隔离或跨模块一致性失败均阻断上线。</p>
+<h2 id="核心功能用例">核心功能用例<a class="anchor" href="#核心功能用例" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>用例</th>
+<th>操作</th>
+<th>预期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TC-01 默认加载</td>
+<td>有查看权限进入页面</td>
+<td>默认按月、全部区域、全部工种，显示截止日期并加载全部模块</td>
+</tr>
+<tr>
+<td>TC-02 日期校验</td>
+<td>结束早于开始后查询</td>
+<td>不请求接口，显示错误</td>
+</tr>
+<tr>
+<td>TC-03 周期环比</td>
+<td>本月数据截止 14 日</td>
+<td>上月只比较 1 至 14 日，文案格式正确</td>
+</tr>
+<tr>
+<td>TC-04 组织权限</td>
+<td>用户仅有部分仓权限</td>
+<td>选择器与数据均不包含无权限仓</td>
+</tr>
+<tr>
+<td>TC-05 数据一致性</td>
+<td>选择条件后查询</td>
+<td>卡片、漏斗、图表、明细和导出使用相同 queryId</td>
+</tr>
+<tr>
+<td>TC-06 重置</td>
+<td>修改条件后重置</td>
+<td>恢复默认并刷新</td>
+</tr>
+<tr>
+<td>TC-07 漏斗守恒</td>
+<td>使用固定数据集</td>
+<td>各流失项和总流失成立；结果未登记不单独展示</td>
+</tr>
+<tr>
+<td>TC-08 维度同步</td>
+<td>在图表或明细切换维度</td>
+<td>另一处同步切换且数据一致</td>
+</tr>
+<tr>
+<td>TC-09 组织下钻</td>
+<td>点击区域、仓、组</td>
+<td>逐级到组；返回只影响当前图</td>
+</tr>
+<tr>
+<td>TC-10 图表布局</td>
+<td>准备 10 与 11 个对象</td>
+<td>10 个时每行两图；11 个时每行一图</td>
+</tr>
+<tr>
+<td>TC-11 横轴完整</td>
+<td>供应商＋工种长名称</td>
+<td>自动换行并完整展示</td>
+</tr>
+<tr>
+<td>TC-12 明细排序</td>
+<td>选择四种排序</td>
+<td>按显示口径稳定排序</td>
+</tr>
+<tr>
+<td>TC-13 空数据</td>
+<td>查询无记录范围</td>
+<td>显示空状态，不画全零折线</td>
+</tr>
+<tr>
+<td>TC-14 导出完整</td>
+<td>页面有横向滚动内容</td>
+<td>PNG 完整且不含 Portal 顶部菜单</td>
+</tr>
+</tbody></table>
+<h2 id="公式与边界用例">公式与边界用例<a class="anchor" href="#公式与边界用例" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>用例</th>
+<th>数据</th>
+<th>预期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TC-15 供应商满足率</td>
+<td>发单 100，通过 72</td>
+<td>72.0%，不使用责任因子</td>
+</tr>
+<tr>
+<td>TC-16 供应商缺口</td>
+<td>发单 100，通过 72</td>
+<td>28</td>
+</tr>
+<tr>
+<td>TC-17 超额通过</td>
+<td>发单 100，通过 105</td>
+<td>缺口 0，满足率显示 105.0%</td>
+</tr>
+<tr>
+<td>TC-18 需求贡献率</td>
+<td>三家通过 40、35、25</td>
+<td>40.0%、35.0%、25.0%，合计 100.0%</td>
+</tr>
+<tr>
+<td>TC-19 组织满足率</td>
+<td>需求 100，通过 70，出勤 60</td>
+<td>通过口径 70.0%，出勤口径 60.0%</td>
+</tr>
+<tr>
+<td>TC-20 汇总比例</td>
+<td>两行 1/2 与 9/10</td>
+<td>汇总 10/12=83.3%，不得平均为 70.0%</td>
+</tr>
+<tr>
+<td>TC-21 分母为零</td>
+<td>发单 0</td>
+<td>派遣率和供应商满足率显示—</td>
+</tr>
+<tr>
+<td>TC-22 试工未通过</td>
+<td>到场 100，通过 70，未登记 10</td>
+<td>20</td>
+</tr>
+<tr>
+<td>TC-23 留存未满周期</td>
+<td>人员未达到观察点</td>
+<td>不进分母，显示—</td>
+</tr>
+<tr>
+<td>TC-24 豁免重复</td>
+<td>区域＋工种重复</td>
+<td>禁止保存并指出组合</td>
+</tr>
+</tbody></table>
+<h2 id="权限与异常用例">权限与异常用例<a class="anchor" href="#权限与异常用例" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>用例</th>
+<th>操作</th>
+<th>预期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TC-25 无菜单权限</td>
+<td>直接访问 URL</td>
+<td>返回无权限页，不泄露数据</td>
+</tr>
+<tr>
+<td>TC-26 无导出权限</td>
+<td>有查看无导出</td>
+<td>不显示按钮；伪造请求返回 403</td>
+</tr>
+<tr>
+<td>TC-27 无配置权限</td>
+<td>无配置按钮权限</td>
+<td>不显示按钮；保存接口返回 403</td>
+</tr>
+<tr>
+<td>TC-28 全局生效</td>
+<td>管理员保存，另一用户查询</td>
+<td>使用新配置，configVersion 更新</td>
+</tr>
+<tr>
+<td>TC-29 配置并发</td>
+<td>两人保存同一旧版本</td>
+<td>第二次返回 409，不覆盖新值</td>
+</tr>
+<tr>
+<td>TC-30 查询失败</td>
+<td>模拟接口 500</td>
+<td>保留筛选，展示重试，不把旧数据冒充新结果</td>
+</tr>
+<tr>
+<td>TC-31 导出失败</td>
+<td>模拟 Canvas 失败</td>
+<td>按钮恢复并提示失败</td>
+</tr>
+</tbody></table>
+<h1 id="发布与数据核验">发布与数据核验<a class="anchor" href="#发布与数据核验" aria-label="链接到本节">#</a></h1><ol>
+<li>数据研发提供固定验收数据集及逐层汇总结果，产品、后端和测试共同确认核心公式。</li>
+<li>后端先上线聚合与租户配置接口，完成权限、审计、限流和监控。</li>
+<li>前端联调后对 1280 与 1440 像素执行视觉回归，对所有维度执行交互回归。</li>
+<li>灰度期间抽取至少 3 个租户，对比原始业务单据与报表结果，差异必须解释并归档。</li>
+<li>上线后监控查询成功率、95 分位耗时、配置保存失败率和导出失败率。</li>
+</ol>
+<h2 id="上线门槛">上线门槛<a class="anchor" href="#上线门槛" aria-label="链接到本节">#</a></h2><ul>
+<li>核心公式、供应商不使用责任因子、租户全局配置和权限隔离用例全部通过。</li>
+<li>同一 queryId 下卡片、漏斗、图表、明细和导出一致。</li>
+<li>无 P0 或 P1 缺陷；P2 缺陷有修复计划并经产品确认不影响核心判断。</li>
+<li>配置审计、接口监控和回滚方案可用。</li>
+</ul>
+<h1 id="已确认决策与保守假设">已确认决策与保守假设<a class="anchor" href="#已确认决策与保守假设" aria-label="链接到本节">#</a></h1><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>已确认</td>
+<td>两类规则按租户全局生效</td>
+</tr>
+<tr>
+<td>已确认</td>
+<td>菜单权限和三个页面按钮权限复用现有权限能力</td>
+</tr>
+<tr>
+<td>已确认</td>
+<td>导出完整报表内容，不含 Portal 顶部菜单</td>
+</tr>
+<tr>
+<td>已确认</td>
+<td>供应商和供应商＋工种不考虑责任因子</td>
+</tr>
+<tr>
+<td>保守假设</td>
+<td>查询接口一次返回全页面数据；若拆分接口，必须保留 queryId 和一致性快照</td>
+</tr>
+<tr>
+<td>保守假设</td>
+<td>移动端、Excel/PDF 导出、人员明细不属于本期</td>
+</tr>
+<tr>
+<td>保守假设</td>
+<td>供应商通过高于发单时，满足率显示真实比例，缺口仍为 0</td>
+</tr>
+</tbody></table>
+<h1 id="评审结论">评审结论<a class="anchor" href="#评审结论" aria-label="链接到本节">#</a></h1><p>本 PRD 已覆盖页面、交互、权限、数据口径、接口契约、异常处理和测试标准。工程实现仍以已确认的高保真原型作为视觉与交互基线。原型与本 PRD 同时确认后，可进入研发排期和技术设计。</p>
+</main></div>
+<a class="backtop" href="#top">返回顶部</a>
+<script>
+document.querySelectorAll('table').forEach(table=>{const wrap=document.createElement('div');wrap.className='table-wrap';table.parentNode.insertBefore(wrap,table);wrap.appendChild(table)});
+</script>
+</body></html>
