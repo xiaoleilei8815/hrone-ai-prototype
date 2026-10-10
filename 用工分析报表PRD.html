@@ -18,7 +18,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </head>
 <body id="top">
 <header class="top"><span class="brand">用工分析报表 PRD</span><span class="meta">版本 1.0 · 2026 年 10 月 10 日</span></header>
-<div class="layout"><nav aria-label="文档目录"><strong>目录</strong><a href="#业务背景与目标">业务背景与目标</a><a href="#角色和权限">角色和权限</a><a href="#页面结构与用户旅程">页面结构与用户旅程</a><a href="#筛选与查询">筛选与查询</a><a href="#指标总览">指标总览</a><a href="#履约漏斗与流失分析">履约漏斗与流失分析</a><a href="#对比分析图">对比分析图</a><a href="#对比数据明细">对比数据明细</a><a href="#规则配置">规则配置</a><a href="#导出图片">导出图片</a><a href="#数据口径与公式">数据口径与公式</a><a href="#接口契约">接口契约</a><a href="#状态与异常处理">状态与异常处理</a><a href="#非功能要求">非功能要求</a><a href="#测试验收标准">测试验收标准</a><a href="#发布与数据核验">发布与数据核验</a><a href="#已确认决策与保守假设">已确认决策与保守假设</a><a href="#评审结论">评审结论</a></nav><main><h1 id="用工分析报表产品需求文档">用工分析报表产品需求文档<a class="anchor" href="#用工分析报表产品需求文档" aria-label="链接到本节">#</a></h1><p>供前端开发 后端开发与测试验收使用</p>
+<div class="layout"><nav aria-label="文档目录"><strong>目录</strong><a href="#业务背景与目标">业务背景与目标</a><a href="#角色和权限">角色和权限</a><a href="#页面结构与用户旅程">页面结构与用户旅程</a><a href="#筛选与查询">筛选与查询</a><a href="#指标总览">指标总览</a><a href="#履约漏斗与流失分析">履约漏斗与流失分析</a><a href="#对比分析图">对比分析图</a><a href="#对比数据明细">对比数据明细</a><a href="#规则配置">规则配置</a><a href="#导出图片">导出图片</a><a href="#数据口径与公式">数据口径与公式</a><a href="#底层数据表设计与计算示例">底层数据表设计与计算示例</a><a href="#接口契约">接口契约</a><a href="#状态与异常处理">状态与异常处理</a><a href="#非功能要求">非功能要求</a><a href="#测试验收标准">测试验收标准</a><a href="#发布与数据核验">发布与数据核验</a><a href="#已确认决策与保守假设">已确认决策与保守假设</a><a href="#评审结论">评审结论</a></nav><main><h1 id="用工分析报表产品需求文档">用工分析报表产品需求文档<a class="anchor" href="#用工分析报表产品需求文档" aria-label="链接到本节">#</a></h1><p>供前端开发 后端开发与测试验收使用</p>
 <p>版本 1.0<br>文档日期 2026 年 10 月 10 日<br>适用终端 PC Portal<br>原型基线 labor funnel prototype v2</p>
 <p>本 PRD 固化当前已确认原型的业务口径、交互行为、权限边界、接口契约和测试标准。研发实现必须以本文件与已确认高保真原型共同作为验收依据；如两者不一致，以本 PRD 的业务规则为准，视觉布局以原型为准。</p>
 <p>已确认决策：统计规则与豁免规则按租户全局生效；配置入口接入现有菜单与按钮权限体系；导出图片包含完整报表内容，不含 Portal 顶部菜单。</p>
@@ -328,7 +328,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <tr>
 <td>当前需求缺口</td>
 <td>人数，千分位</td>
-<td>其中结果未登记 X 人；可展开公式</td>
+<td>可展开计算公式</td>
 <td>上升或下降 X.X%（X 人）</td>
 </tr>
 <tr>
@@ -408,7 +408,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>未派遣</td>
-<td>发单 − 总派遣</td>
+<td>发单 − 线上派遣</td>
 </tr>
 <tr>
 <td>未到场</td>
@@ -416,14 +416,14 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>试工未通过</td>
-<td>到场 − 试工通过 − 结果未登记</td>
+<td>到场 − 试工通过</td>
 </tr>
 <tr>
 <td>未出勤</td>
 <td>试工通过 − 出勤</td>
 </tr>
 </tbody></table>
-<p>“结果未登记”不在漏斗下方流失标签与右侧流失柱图中展示，但作为需求缺口卡片的辅助信息，并参与试工未通过计算。总流失等于仓库需求减需求日出勤。右侧按流失人数从高到低展示，并标记最大流失环节及占比。</p>
+<p>总流失等于仓库需求减需求日出勤。右侧按流失人数从高到低展示，并标记最大流失环节及占比。</p>
 <h1 id="对比分析图">对比分析图<a class="anchor" href="#对比分析图" aria-label="链接到本节">#</a></h1><h2 id="维度">维度<a class="anchor" href="#维度" aria-label="链接到本节">#</a></h2><table>
 <thead>
 <tr>
@@ -623,7 +623,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <h1 id="数据口径与公式">数据口径与公式<a class="anchor" href="#数据口径与公式" aria-label="链接到本节">#</a></h1><h2 id="时间与去重">时间与去重<a class="anchor" href="#时间与去重" aria-label="链接到本节">#</a></h2><ul>
 <li>需求日期范围用于锁定需求批次，之后追踪这些批次的全部履约结果，首尾日期均包含。</li>
 <li>人员按需求批次 ID＋工号去重。缺少工号的数据进入数据质量清单，不得静默重复计数。</li>
-<li>试工结果允许后续补录，无登记时限。结果未登记不得计为试工失败。</li>
+<li>试工通过人数仅统计结果明确为“通过”的人员；其余到场人员归入试工未通过流失项。</li>
 <li>发单按批次与供应商的最新有效分配版本统计；撤回、作废和被替代版本不重复计数。</li>
 </ul>
 <h2 id="核心公式">核心公式<a class="anchor" href="#核心公式" aria-label="链接到本节">#</a></h2><table>
@@ -691,7 +691,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>试工未通过</td>
-<td>到场 − 试工通过 − 结果未登记</td>
+<td>到场 − 试工通过</td>
 <td>最小为 0</td>
 </tr>
 <tr>
@@ -706,6 +706,701 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <li>期间离职或离职后重新入职者不算连续留存。</li>
 <li>未满周期和缺少试工通过日期者不进入分母。生产环境单列缺失日期人数。</li>
 </ul>
+<h1 id="底层数据表设计与计算示例">底层数据表设计与计算示例<a class="anchor" href="#底层数据表设计与计算示例" aria-label="链接到本节">#</a></h1><h2 id="数据分层和表关系">数据分层和表关系<a class="anchor" href="#数据分层和表关系" aria-label="链接到本节">#</a></h2><p>报表建议采用“业务明细层、日汇总事实层、维度层、规则配置层”四层结构。业务明细层保留可追溯的需求、发单、派遣、到场、试工、出勤和在职事件；日汇总事实层承载报表查询；维度层提供组织、工种、供应商和人员的统一编码；规则配置层保存租户级统计口径和豁免日期。所有事实记录必须携带 tenant_id，任何查询先按租户和用户数据权限过滤，再进行聚合。</p>
+<table>
+<thead>
+<tr>
+<th>表名建议</th>
+<th>粒度</th>
+<th>主键或唯一键</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dwd_labor_demand_order</td>
+<td>一条需求单</td>
+<td>tenant_id＋demand_id</td>
+<td>需求单基础信息和有效状态</td>
+</tr>
+<tr>
+<td>dwd_labor_supplier_order_version</td>
+<td>需求单＋供应商＋发单版本</td>
+<td>tenant_id＋demand_id＋supplier_id＋version_no</td>
+<td>保存发单版本，识别最新有效分配</td>
+</tr>
+<tr>
+<td>dwd_labor_worker_event</td>
+<td>需求单＋人员＋事件</td>
+<td>tenant_id＋demand_id＋worker_no＋event_type＋event_time</td>
+<td>保存派遣、到场、试工、出勤、离职等事件</td>
+</tr>
+<tr>
+<td>dws_labor_fulfillment_daily</td>
+<td>需求单＋组织＋工种＋业务日期</td>
+<td>tenant_id＋demand_id＋org_group_id＋job_type_id＋biz_date</td>
+<td>报表核心日事实表</td>
+</tr>
+<tr>
+<td>dim_org</td>
+<td>组织节点</td>
+<td>tenant_id＋org_id</td>
+<td>区域、物理仓、组及上下级关系</td>
+</tr>
+<tr>
+<td>dim_job_type</td>
+<td>工种</td>
+<td>tenant_id＋job_type_id</td>
+<td>工种编码与名称</td>
+</tr>
+<tr>
+<td>dim_supplier</td>
+<td>供应商</td>
+<td>tenant_id＋supplier_id</td>
+<td>供应商编码、名称和服务范围</td>
+</tr>
+<tr>
+<td>cfg_labor_statistics_rule</td>
+<td>租户</td>
+<td>tenant_id</td>
+<td>满足率与线上派遣率全局口径</td>
+</tr>
+<tr>
+<td>cfg_labor_exemption_rule</td>
+<td>租户＋区域＋工种</td>
+<td>tenant_id＋region_id＋job_type_id</td>
+<td>保存豁免日期或豁免天数配置</td>
+</tr>
+<tr>
+<td>aud_labor_rule_change</td>
+<td>一次配置变更</td>
+<td>change_id</td>
+<td>保存配置修改前后值和操作者</td>
+</tr>
+</tbody></table>
+<h2 id="核心日事实表字段">核心日事实表字段<a class="anchor" href="#核心日事实表字段" aria-label="链接到本节">#</a></h2><p>表名建议为 dws_labor_fulfillment_daily。该表每天按需求单、最小组织和工种生成一行。人数均为当日发生量，不保存前端显示比例；所有比例由查询服务按筛选范围汇总分子和分母后计算。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tenant_id</td>
+<td>bigint</td>
+<td>是</td>
+<td>租户 ID</td>
+</tr>
+<tr>
+<td>demand_id</td>
+<td>varchar(64)</td>
+<td>是</td>
+<td>需求编号，例如 R001</td>
+</tr>
+<tr>
+<td>region_id / region_name</td>
+<td>varchar</td>
+<td>是</td>
+<td>区域编码与名称</td>
+</tr>
+<tr>
+<td>warehouse_id / warehouse_name</td>
+<td>varchar</td>
+<td>是</td>
+<td>物理仓编码与名称</td>
+</tr>
+<tr>
+<td>org_group_id / org_group_name</td>
+<td>varchar</td>
+<td>是</td>
+<td>最小组织组编码与名称</td>
+</tr>
+<tr>
+<td>job_type_id / job_type_name</td>
+<td>varchar</td>
+<td>是</td>
+<td>工种编码与名称</td>
+</tr>
+<tr>
+<td>biz_date</td>
+<td>date</td>
+<td>是</td>
+<td>需求业务日期</td>
+</tr>
+<tr>
+<td>daily_demand_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日有效需求人数</td>
+</tr>
+<tr>
+<td>ordered_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日最新有效发单人数</td>
+</tr>
+<tr>
+<td>total_dispatched_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日总派遣人数，含线上和线下</td>
+</tr>
+<tr>
+<td>online_dispatched_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日线上派遣人数</td>
+</tr>
+<tr>
+<td>arrived_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日到场人数</td>
+</tr>
+<tr>
+<td>trial_passed_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日试工通过人数</td>
+</tr>
+<tr>
+<td>attendance_count</td>
+<td>integer</td>
+<td>是</td>
+<td>当日实际出勤人数</td>
+</tr>
+<tr>
+<td>no_exemption_weight</td>
+<td>decimal(6,4)</td>
+<td>是</td>
+<td>无豁免时固定为 1</td>
+</tr>
+<tr>
+<td>exemption_weight</td>
+<td>decimal(6,4)</td>
+<td>是</td>
+<td>命中豁免日期时为 1，其余日期为 0；未命中有效豁免时为 1</td>
+</tr>
+<tr>
+<td>data_as_of</td>
+<td>date</td>
+<td>是</td>
+<td>T+1 数据统计截止日期</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>timestamp</td>
+<td>是</td>
+<td>最后更新时间</td>
+</tr>
+</tbody></table>
+<h2 id="权重生成规则">权重生成规则<a class="anchor" href="#权重生成规则" aria-label="链接到本节">#</a></h2><ol>
+<li>无豁免时，查询日期范围内每一天的 no_exemption_weight 和 exemption_weight 均为 1。</li>
+<li>查询范围命中区域＋工种的豁免配置，并且配置的豁免日期落在需求日期范围内时，仅豁免日期当天 exemption_weight 为 1，其余日期为 0。</li>
+<li>豁免日期不在需求日期范围内时，相当于无豁免，查询范围内所有日期的 exemption_weight 均为 1。</li>
+<li>豁免后的需求人数使用 <code>Σ（daily_demand_count × exemption_weight）</code>；无豁免需求人数使用 <code>Σ（daily_demand_count × no_exemption_weight）</code>。</li>
+<li>权重由数据服务根据租户、区域、工种、需求开始日期和豁免配置生成。前端不得自行计算或修改权重。</li>
+<li>同一需求日期只能命中一条区域＋工种规则。配置冲突时禁止保存，避免多次加权。</li>
+</ol>
+<h2 id="完整日事实示例">完整日事实示例<a class="anchor" href="#完整日事实示例" aria-label="链接到本节">#</a></h2><p>以下示例假设 R001 属于新泽西区、1 号仓、入库组，工种为操作工，需求范围为 10 月 1 日至 10 月 7 日。该组合配置“需求开始后的第 3 天”为豁免日期，因此 10 月 3 日权重为 1，其余日期为 0。人数列为当日发生量。</p>
+<table>
+<thead>
+<tr>
+<th>需求编号</th>
+<th>区</th>
+<th>物理仓</th>
+<th>组</th>
+<th>工种</th>
+<th>日期</th>
+<th align="right">当日需求</th>
+<th align="right">已发单</th>
+<th align="right">总派遣</th>
+<th align="right">线上派遣</th>
+<th align="right">到场</th>
+<th align="right">试工通过</th>
+<th align="right">当日出勤</th>
+<th align="right">无豁免权重</th>
+<th align="right">有豁免权重</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/01</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/02</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/03</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/04</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">9</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/05</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/06</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>R001</td>
+<td>新泽西区</td>
+<td>1号仓</td>
+<td>入库组</td>
+<td>操作工</td>
+<td>10/07</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>汇总</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td align="right">70</td>
+<td align="right">70</td>
+<td align="right">46</td>
+<td align="right">17</td>
+<td align="right">12</td>
+<td align="right">8</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+<h2 id="需求人数和缺口计算示例">需求人数和缺口计算示例<a class="anchor" href="#需求人数和缺口计算示例" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>计算项</th>
+<th>计算过程</th>
+<th align="right">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无豁免需求人数</td>
+<td>10×1＋10×1＋10×1＋10×1＋10×1＋10×1＋10×1</td>
+<td align="right">70</td>
+</tr>
+<tr>
+<td>有豁免需求人数</td>
+<td>10×0＋10×0＋10×1＋10×0＋10×0＋10×0＋10×0</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>豁免日期不在范围内</td>
+<td>所有日期权重恢复为 1，与无豁免算法相同</td>
+<td align="right">70</td>
+</tr>
+<tr>
+<td>无豁免需求缺口</td>
+<td>max(0，70−8)</td>
+<td align="right">62</td>
+</tr>
+<tr>
+<td>有豁免需求缺口</td>
+<td>max(0，10−8)</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>出勤口径下有豁免缺口</td>
+<td>max(0，10−7)</td>
+<td align="right">3</td>
+</tr>
+</tbody></table>
+<h2 id="漏斗和比率计算示例">漏斗和比率计算示例<a class="anchor" href="#漏斗和比率计算示例" aria-label="链接到本节">#</a></h2><p>本例除“需求满足率”和“需求缺口”的需求分母使用加权需求人数外，发单、派遣、到场、试工、出勤均按查询范围内当日发生量求和。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>分子与分母</th>
+<th>计算过程</th>
+<th align="right">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发单人数</td>
+<td>Σ 已发单</td>
+<td>10＋10＋10＋10＋10＋10＋10</td>
+<td align="right">70</td>
+</tr>
+<tr>
+<td>总派遣人数</td>
+<td>Σ 总派遣</td>
+<td>1＋2＋4＋9＋10＋10＋10</td>
+<td align="right">46</td>
+</tr>
+<tr>
+<td>线上派遣人数</td>
+<td>Σ 线上派遣</td>
+<td>1＋1＋2＋3＋3＋3＋4</td>
+<td align="right">17</td>
+</tr>
+<tr>
+<td>到场人数</td>
+<td>Σ 到场</td>
+<td>1＋1＋1＋2＋2＋2＋3</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td>试工通过人数</td>
+<td>Σ 试工通过</td>
+<td>0＋1＋1＋1＋1＋2＋2</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td>当日出勤人数</td>
+<td>Σ 当日出勤</td>
+<td>0＋1＋1＋1＋1＋1＋2</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td>无豁免需求满足率</td>
+<td>试工通过 ÷ 无豁免需求</td>
+<td>8÷70</td>
+<td align="right">11.4%</td>
+</tr>
+<tr>
+<td>有豁免需求满足率</td>
+<td>试工通过 ÷ 有豁免需求</td>
+<td>8÷10</td>
+<td align="right">80.0%</td>
+</tr>
+<tr>
+<td>有豁免出勤满足率</td>
+<td>当日出勤 ÷ 有豁免需求</td>
+<td>7÷10</td>
+<td align="right">70.0%</td>
+</tr>
+<tr>
+<td>发单率</td>
+<td>已发单 ÷ 无豁免需求</td>
+<td>70÷70</td>
+<td align="right">100.0%</td>
+</tr>
+<tr>
+<td>派遣率</td>
+<td>线上派遣 ÷ 已发单</td>
+<td>17÷70</td>
+<td align="right">24.3%</td>
+</tr>
+<tr>
+<td>线上派遣率</td>
+<td>线上派遣 ÷ 总派遣</td>
+<td>17÷46</td>
+<td align="right">37.0%</td>
+</tr>
+<tr>
+<td>到场率</td>
+<td>到场 ÷ 线上派遣</td>
+<td>12÷17</td>
+<td align="right">70.6%</td>
+</tr>
+<tr>
+<td>试工通过率</td>
+<td>试工通过 ÷ 到场</td>
+<td>8÷12</td>
+<td align="right">66.7%</td>
+</tr>
+<tr>
+<td>出勤率</td>
+<td>当日出勤 ÷ 试工通过</td>
+<td>7÷8</td>
+<td align="right">87.5%</td>
+</tr>
+</tbody></table>
+<h2 id="流失计算示例">流失计算示例<a class="anchor" href="#流失计算示例" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>流失项</th>
+<th>计算过程</th>
+<th align="right">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未发单</td>
+<td>无豁免需求 70−已发单 70</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>未派遣</td>
+<td>已发单 70−线上派遣 17</td>
+<td align="right">53</td>
+</tr>
+<tr>
+<td>线下派遣</td>
+<td>总派遣 46−线上派遣 17</td>
+<td align="right">29，仅用于线上派遣率说明，不重复计入总流失</td>
+</tr>
+<tr>
+<td>未到场</td>
+<td>线上派遣 17−到场 12</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>试工未通过</td>
+<td>到场 12−试工通过 8</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>未出勤</td>
+<td>试工通过 8−当日出勤 7</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td>流失项合计</td>
+<td>未发单 0＋未派遣 53＋未到场 5＋试工未通过 4＋未出勤 1</td>
+<td align="right">63</td>
+</tr>
+<tr>
+<td>履约总流失</td>
+<td>无豁免需求 70−当日出勤 7</td>
+<td align="right">63，与各流失项合计一致</td>
+</tr>
+</tbody></table>
+<p>豁免规则只改变需求人数、需求满足率和需求缺口的分母，不改写发单、派遣、到场、试工通过和出勤的事实人数。若产品后续要求漏斗首层同步使用豁免需求，必须单独评审未发单可能为负数或发单率超过 100% 的展示规则。</p>
+<h2 id="供应商维度计算示例">供应商维度计算示例<a class="anchor" href="#供应商维度计算示例" aria-label="链接到本节">#</a></h2><p>将本例 70 个发单人数和 8 个试工通过人数拆分为两个供应商。</p>
+<table>
+<thead>
+<tr>
+<th>供应商</th>
+<th align="right">发单</th>
+<th align="right">线上派遣</th>
+<th align="right">到场</th>
+<th align="right">试工通过</th>
+<th align="right">需求贡献率</th>
+<th align="right">需求满足率</th>
+<th align="right">缺口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A 供应商</td>
+<td align="right">40</td>
+<td align="right">11</td>
+<td align="right">8</td>
+<td align="right">5</td>
+<td align="right">5÷8＝62.5%</td>
+<td align="right">5÷40＝12.5%</td>
+<td align="right">max(0，40−5)＝35</td>
+</tr>
+<tr>
+<td>B 供应商</td>
+<td align="right">30</td>
+<td align="right">6</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">3÷8＝37.5%</td>
+<td align="right">3÷30＝10.0%</td>
+<td align="right">max(0，30−3)＝27</td>
+</tr>
+<tr>
+<td>汇总</td>
+<td align="right">70</td>
+<td align="right">17</td>
+<td align="right">12</td>
+<td align="right">8</td>
+<td align="right">100.0%</td>
+<td align="right">8÷70＝11.4%</td>
+<td align="right">62</td>
+</tr>
+</tbody></table>
+<h2 id="留存率计算示例">留存率计算示例<a class="anchor" href="#留存率计算示例" aria-label="链接到本节">#</a></h2><p>假设 8 名试工通过人员中，统计截止日已有 6 人达到 7 日观察点，其中 5 人持续在职；已有 3 人达到 30 日观察点，其中 2 人持续在职。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>计算过程</th>
+<th align="right">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7 日留存率</td>
+<td>7 日持续在职 5÷已满 7 日观察期 6</td>
+<td align="right">83.3%</td>
+</tr>
+<tr>
+<td>30 日留存率</td>
+<td>30 日持续在职 2÷已满 30 日观察期 3</td>
+<td align="right">66.7%</td>
+</tr>
+<tr>
+<td>未满观察期人数</td>
+<td>试工通过 8−已满 7 日观察期 6</td>
+<td align="right">2，不进入 7 日留存分母</td>
+</tr>
+</tbody></table>
+<h2 id="环比计算示例">环比计算示例<a class="anchor" href="#环比计算示例" aria-label="链接到本节">#</a></h2><p>假设本月截至同一统计日试工通过 8 人、上月同期 5 人；本月需求满足率 80.0%、上月同期 75.0%。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>计算过程</th>
+<th>展示文案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数值环比</td>
+<td>(8−5)÷5＝60.0%，人数差 3</td>
+<td>较上月 上升 60.0%（3 人）</td>
+</tr>
+<tr>
+<td>比率环比</td>
+<td>80.0%−75.0%＝5.0%</td>
+<td>较上月 上升 5.0%</td>
+</tr>
+<tr>
+<td>上期为 0</td>
+<td>变化率分母为 0</td>
+<td>较上月 —</td>
+</tr>
+</tbody></table>
+<h2 id="数据质量校验">数据质量校验<a class="anchor" href="#数据质量校验" aria-label="链接到本节">#</a></h2><table>
+<thead>
+<tr>
+<th>校验编号</th>
+<th>校验规则</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DQ-01</td>
+<td>daily_demand_count、人数事实和权重不得为负</td>
+<td>拒绝入仓并告警</td>
+</tr>
+<tr>
+<td>DQ-02</td>
+<td>no_exemption_weight 必须为 1</td>
+<td>拒绝入仓并告警</td>
+</tr>
+<tr>
+<td>DQ-03</td>
+<td>exemption_weight 只能为 0 或 1</td>
+<td>拒绝入仓并告警</td>
+</tr>
+<tr>
+<td>DQ-04</td>
+<td>命中有效豁免时，同一需求范围内只能有一个日期权重为 1</td>
+<td>标记规则冲突并停止报表计算</td>
+</tr>
+<tr>
+<td>DQ-05</td>
+<td>豁免日期不在需求日期范围时，所有日期权重必须为 1</td>
+<td>自动修正并记录日志</td>
+</tr>
+<tr>
+<td>DQ-06</td>
+<td>arrived_count 应不大于 online_dispatched_count</td>
+<td>进入数据质量清单，不静默截断</td>
+</tr>
+<tr>
+<td>DQ-07</td>
+<td>trial_passed_count 应不大于 arrived_count</td>
+<td>进入数据质量清单</td>
+</tr>
+<tr>
+<td>DQ-08</td>
+<td>attendance_count 应不大于 trial_passed_count</td>
+<td>进入数据质量清单</td>
+</tr>
+<tr>
+<td>DQ-09</td>
+<td>同一 tenant_id、demand_id、org_group_id、job_type_id、biz_date 唯一</td>
+<td>合并前拒绝重复记录</td>
+</tr>
+</tbody></table>
 <h1 id="接口契约">接口契约<a class="anchor" href="#接口契约" aria-label="链接到本节">#</a></h1><p>接口路径为建议命名，研发可按现有网关规范调整，但字段语义、权限与错误码必须保持一致。所有接口携带租户、用户身份和数据权限上下文。</p>
 <h2 id="查询请求">查询请求<a class="anchor" href="#查询请求" aria-label="链接到本节">#</a></h2><table>
 <thead>
@@ -975,7 +1670,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <tr>
 <td>TC-07 漏斗守恒</td>
 <td>使用固定数据集</td>
-<td>各流失项和总流失成立；结果未登记不单独展示</td>
+<td>各流失项合计等于仓库需求减需求日出勤</td>
 </tr>
 <tr>
 <td>TC-08 维度同步</td>
