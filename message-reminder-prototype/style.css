@@ -48,10 +48,8 @@ body:has(.editor-v2){position:fixed;inset:0;width:100%;height:100dvh}
 .reminder-rule-table .row-actions .icon{height:28px;min-width:28px;padding:3px 6px;font-size:16px;color:#667b99;border:0;background:transparent;border-radius:4px}
 .reminder-rule-table .row-actions .icon:hover{color:#1f65d6;background:#edf4ff}
 .reminder-rule-table .row-actions .copy-rule{font-size:15px}
-.condition-inputs{display:flex;align-items:center;gap:10px}
-.condition-inputs>select[aria-label="条件字段"]{width:200px;flex:0 0 200px}
-.condition-inputs>select[aria-label="比较方式"]{width:140px;flex:0 0 140px}
-.condition-inputs>input[aria-label="条件值"]{flex:1;min-width:80px}
+.condition-inputs{display:grid;grid-template-columns:200px 140px 220px;align-items:center;gap:10px;min-width:0}
+.condition-inputs>select[aria-label="条件字段"],.condition-inputs>select[aria-label="比较方式"],.condition-inputs>input[aria-label="条件值"],.condition-inputs>select[aria-label="条件值"]{width:100%;min-width:0;max-width:none;box-sizing:border-box}
 /* 飞书通知按卡片示例呈现：OTWS 标识、突出标题、正文与底部操作按钮 */
 .feishu-message{position:relative;overflow:hidden;border:1px solid #dce4f0;background:#fff}
 .feishu-message .message-brand{background:#eef3ff;color:#2468ee;font-size:18px;font-weight:700;padding:18px 18px 16px;border-bottom:0}

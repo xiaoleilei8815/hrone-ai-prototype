@@ -555,7 +555,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 </tbody></table>
 <h1 id="规则配置">规则配置<a class="anchor" href="#规则配置" aria-label="链接到本节">#</a></h1><h2 id="通用规则-1">通用规则<a class="anchor" href="#通用规则-1" aria-label="链接到本节">#</a></h2><ul>
-<li>两类配置均按租户全局生效。保存后，新查询立即使用新规则；已打开页面在下一次查询时获取最新配置。</li>
+<li>两类配置均按租户全局生效。更新配置后，只对配置保存后新计算的内容生效；已完成计算的历史结果不追溯重算。已打开页面在下一次查询时获取最新配置及对应计算结果。</li>
 <li>只有相应按钮权限的用户可操作。后端校验权限并写入审计日志。</li>
 <li>弹窗打开时读取当前生效配置；取消不保存；保存成功关闭并提示；失败保留输入并展示原因。</li>
 <li>并发修改采用版本号控制。版本冲突提示“配置已被其他用户更新，请刷新后重试”。</li>
@@ -671,8 +671,8 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>供应商相关满足率</td>
-<td>试工通过 ÷ 发单</td>
-<td>不考虑责任因子</td>
+<td>试工通过 ÷ Σ（当日发单×批次权重）</td>
+<td>无豁免权重为 1；分母 0 显示—；不考虑责任因子</td>
 </tr>
 <tr>
 <td>需求贡献率</td>
@@ -686,8 +686,8 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>供应商相关缺口</td>
-<td>max(0，发单 − 试工通过)</td>
-<td>不考虑责任因子</td>
+<td>max(0，Σ（当日发单×批次权重） − 试工通过)</td>
+<td>按汇总后基数计算，不累加各行截零后的缺口</td>
 </tr>
 <tr>
 <td>试工未通过</td>
@@ -848,10 +848,10 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td>当日总派遣人数，含线上和线下</td>
 </tr>
 <tr>
-<td>online_dispatched_count</td>
+<td>offline_dispatched_count</td>
 <td>integer</td>
 <td>是</td>
-<td>当日线上派遣人数</td>
+<td>当日线下派遣人数；线上派遣人数由总派遣人数减线下派遣人数得到</td>
 </tr>
 <tr>
 <td>arrived_count</td>
@@ -917,7 +917,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <th align="right">当日需求</th>
 <th align="right">已发单</th>
 <th align="right">总派遣</th>
-<th align="right">线上派遣</th>
+<th align="right">线下派遣</th>
 <th align="right">到场</th>
 <th align="right">试工通过</th>
 <th align="right">当日出勤</th>
@@ -933,9 +933,9 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td>操作工</td>
 <td>10/01</td>
 <td align="right">10</td>
-<td align="right">10</td>
+<td align="right">4</td>
 <td align="right">1</td>
-<td align="right">1</td>
+<td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -950,7 +950,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td>操作工</td>
 <td>10/02</td>
 <td align="right">10</td>
-<td align="right">10</td>
+<td align="right">4</td>
 <td align="right">2</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -986,7 +986,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td align="right">10</td>
 <td align="right">10</td>
 <td align="right">9</td>
-<td align="right">3</td>
+<td align="right">6</td>
 <td align="right">2</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -1003,7 +1003,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td align="right">10</td>
 <td align="right">10</td>
 <td align="right">10</td>
-<td align="right">3</td>
+<td align="right">7</td>
 <td align="right">2</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -1020,7 +1020,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td align="right">10</td>
 <td align="right">10</td>
 <td align="right">10</td>
-<td align="right">3</td>
+<td align="right">7</td>
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
@@ -1037,7 +1037,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td align="right">10</td>
 <td align="right">10</td>
 <td align="right">10</td>
-<td align="right">4</td>
+<td align="right">6</td>
 <td align="right">3</td>
 <td align="right">2</td>
 <td align="right">2</td>
@@ -1052,9 +1052,9 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td></td>
 <td></td>
 <td align="right">70</td>
-<td align="right">70</td>
+<td align="right">58</td>
 <td align="right">46</td>
-<td align="right">17</td>
+<td align="right">29</td>
 <td align="right">12</td>
 <td align="right">8</td>
 <td align="right">7</td>
@@ -1114,8 +1114,8 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <tbody><tr>
 <td>发单人数</td>
 <td>Σ 已发单</td>
-<td>10＋10＋10＋10＋10＋10＋10</td>
-<td align="right">70</td>
+<td>4＋4＋10＋10＋10＋10＋10</td>
+<td align="right">58</td>
 </tr>
 <tr>
 <td>总派遣人数</td>
@@ -1124,9 +1124,15 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <td align="right">46</td>
 </tr>
 <tr>
+<td>线下派遣人数</td>
+<td>Σ 线下派遣</td>
+<td>0＋1＋2＋6＋7＋7＋6</td>
+<td align="right">29</td>
+</tr>
+<tr>
 <td>线上派遣人数</td>
-<td>Σ 线上派遣</td>
-<td>1＋1＋2＋3＋3＋3＋4</td>
+<td>总派遣−线下派遣</td>
+<td>46−29</td>
 <td align="right">17</td>
 </tr>
 <tr>
@@ -1168,14 +1174,14 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 <tr>
 <td>发单率</td>
 <td>已发单 ÷ 无豁免需求</td>
-<td>70÷70</td>
-<td align="right">100.0%</td>
+<td>58÷70</td>
+<td align="right">82.9%</td>
 </tr>
 <tr>
 <td>派遣率</td>
 <td>线上派遣 ÷ 已发单</td>
-<td>17÷70</td>
-<td align="right">24.3%</td>
+<td>17÷58</td>
+<td align="right">29.3%</td>
 </tr>
 <tr>
 <td>线上派遣率</td>
@@ -1212,13 +1218,13 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </thead>
 <tbody><tr>
 <td>未发单</td>
-<td>无豁免需求 70−已发单 70</td>
-<td align="right">0</td>
+<td>无豁免需求 70−已发单 58</td>
+<td align="right">12</td>
 </tr>
 <tr>
 <td>未派遣</td>
-<td>已发单 70−线上派遣 17</td>
-<td align="right">53</td>
+<td>已发单 58−线上派遣 17</td>
+<td align="right">41</td>
 </tr>
 <tr>
 <td>线下派遣</td>
@@ -1242,7 +1248,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>流失项合计</td>
-<td>未发单 0＋未派遣 53＋未到场 5＋试工未通过 4＋未出勤 1</td>
+<td>未发单 12＋未派遣 41＋未到场 5＋试工未通过 4＋未出勤 1</td>
 <td align="right">63</td>
 </tr>
 <tr>
@@ -1252,49 +1258,351 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 </tbody></table>
 <p>豁免规则只改变需求人数、需求满足率和需求缺口的分母，不改写发单、派遣、到场、试工通过和出勤的事实人数。若产品后续要求漏斗首层同步使用豁免需求，必须单独评审未发单可能为负数或发单率超过 100% 的展示规则。</p>
-<h2 id="供应商维度计算示例">供应商维度计算示例<a class="anchor" href="#供应商维度计算示例" aria-label="链接到本节">#</a></h2><p>将本例 70 个发单人数和 8 个试工通过人数拆分为两个供应商。</p>
+<h2 id="供应商维度计算示例">供应商维度计算示例<a class="anchor" href="#供应商维度计算示例" aria-label="链接到本节">#</a></h2><p>本例将 R001 的 58 个发单人数、8 个试工通过人数按发单批次逐日拆分。区域、仓、组及工种沿用上述需求示例。供应商 A 的批次 O001 覆盖 10/1～10/7，供应商 B 的批次 O002 覆盖 10/3～10/7；两个批次重叠日期按各自有效分配人数统计。</p>
+<h3 id="发单批次与豁免日期">发单批次与豁免日期<a class="anchor" href="#发单批次与豁免日期" aria-label="链接到本节">#</a></h3><p>已确认：豁免日期按每批发单开始日重新起算，开始日为第 1 天。配置第 3 天时，O001 的豁免日期为 10/3，O002 为 10/5。查询开始日期不改变批次起算点。</p>
 <table>
 <thead>
 <tr>
+<th>需求</th>
+<th>发单批次</th>
 <th>供应商</th>
-<th align="right">发单</th>
-<th align="right">线上派遣</th>
-<th align="right">到场</th>
-<th align="right">试工通过</th>
-<th align="right">需求贡献率</th>
-<th align="right">需求满足率</th>
-<th align="right">缺口</th>
+<th>发单覆盖范围</th>
+<th>每日有效发单人数</th>
+<th align="right">豁免天数</th>
+<th>豁免日期</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>A 供应商</td>
-<td align="right">40</td>
-<td align="right">11</td>
-<td align="right">8</td>
-<td align="right">5</td>
-<td align="right">5÷8＝62.5%</td>
-<td align="right">5÷40＝12.5%</td>
-<td align="right">max(0，40−5)＝35</td>
+<td>R001</td>
+<td>O001</td>
+<td>A</td>
+<td>10/1～10/7</td>
+<td>每日 4</td>
+<td align="right">3</td>
+<td>10/3</td>
 </tr>
 <tr>
-<td>B 供应商</td>
-<td align="right">30</td>
-<td align="right">6</td>
-<td align="right">4</td>
+<td>R001</td>
+<td>O002</td>
+<td>B</td>
+<td>10/3～10/7</td>
+<td>每日 6</td>
 <td align="right">3</td>
-<td align="right">3÷8＝37.5%</td>
-<td align="right">3÷30＝10.0%</td>
-<td align="right">max(0，30−3)＝27</td>
+<td>10/5</td>
+</tr>
+</tbody></table>
+<h3 id="供应商日事实表设计">供应商日事实表设计<a class="anchor" href="#供应商日事实表设计" aria-label="链接到本节">#</a></h3><p>新增 dws_labor_supplier_order_daily，粒度为租户＋需求＋发单批次＋供应商＋组织组＋工种＋业务日期。需求日表不直接连接本表后累加需求人数，避免一对多重复。需求汇总和供应商汇总先各自聚合，再按组织与日期关联。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tenant_id / demand_id / order_batch_id / supplier_id</td>
+<td>varchar</td>
+<td>必填；发单批次区分增量发单与旧单改版</td>
+</tr>
+<tr>
+<td>org_group_id / job_type_id / biz_date</td>
+<td>varchar / varchar / date</td>
+<td>必填；组织与工种沿用需求归属</td>
+</tr>
+<tr>
+<td>batch_start_date / batch_end_date</td>
+<td>date</td>
+<td>发单覆盖范围，含首尾；不是发单操作时间</td>
+</tr>
+<tr>
+<td>order_version</td>
+<td>integer</td>
+<td>每批次、每日期只取最新有效分配版本；撤回和作废不计</td>
+</tr>
+<tr>
+<td>ordered_count</td>
+<td>integer</td>
+<td>当日分配人数，不是累加历史版本</td>
+</tr>
+<tr>
+<td>total_dispatched_count / offline_dispatched_count / arrived_count / trial_passed_count / attendance_count</td>
+<td>integer</td>
+<td>本批次当日履约事实；线上派遣＝总派遣−线下派遣</td>
+</tr>
+<tr>
+<td>no_exemption_weight / exemption_weight</td>
+<td>decimal(6,4)</td>
+<td>无豁免恒为 1；有效豁免仅目标日为 1，其余为 0</td>
+</tr>
+<tr>
+<td>exemption_date</td>
+<td>date</td>
+<td>batch_start_date＋豁免天数−1</td>
+</tr>
+<tr>
+<td>rule_version / calculated_at</td>
+<td>varchar / timestamp</td>
+<td>记录实际计算使用的规则版本与时间；配置更新仅影响新计算</td>
+</tr>
+</tbody></table>
+<p>每批目标日超出该批覆盖范围时，该批全部日期权重恢复为 1。目标日在批次范围内、但不在查询范围内时，不将其视为无豁免，也不重设目标日；只汇总查询命中的日行，分母为 0 时满足率显示“—”。</p>
+<p>人员履约记录必须关联 order_batch_id。同一需求批次＋工号只能归属一个有效发单批次；改派后使用最终有效归属，不同时计入两批。发单版本变更不是新增批次。</p>
+<h3 id="发单逐日拆解">发单逐日拆解<a class="anchor" href="#发单逐日拆解" aria-label="链接到本节">#</a></h3><p>下表专列发单加权与满足率所需字段；其他履约字段在上述日事实表中保存。10/1、10/2 尚无 O002，不生成该批日行。10/1、10/2 每日有效发单为 4，10/3～10/7 每日两批合计为 10，与需求日示例一致。</p>
+<table>
+<thead>
+<tr>
+<th>批次</th>
+<th>供应商</th>
+<th>日期</th>
+<th align="right">已发单</th>
+<th align="right">试工通过</th>
+<th align="right">当日出勤</th>
+<th align="right">无豁免权重</th>
+<th align="right">有豁免权重</th>
+<th align="right">有豁免计入发单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O001</td>
+<td>A</td>
+<td>10/1</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O001</td>
+<td>A</td>
+<td>10/2</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O001</td>
+<td>A</td>
+<td>10/3</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>O001</td>
+<td>A</td>
+<td>10/4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O001</td>
+<td>A</td>
+<td>10/5</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O001</td>
+<td>A</td>
+<td>10/6</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O001</td>
+<td>A</td>
+<td>10/7</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O002</td>
+<td>B</td>
+<td>10/3</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O002</td>
+<td>B</td>
+<td>10/4</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O002</td>
+<td>B</td>
+<td>10/5</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td>O002</td>
+<td>B</td>
+<td>10/6</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>O002</td>
+<td>B</td>
+<td>10/7</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
 </tr>
 <tr>
 <td>汇总</td>
-<td align="right">70</td>
-<td align="right">17</td>
-<td align="right">12</td>
+<td></td>
+<td></td>
+<td align="right">58</td>
 <td align="right">8</td>
-<td align="right">100.0%</td>
-<td align="right">8÷70＝11.4%</td>
-<td align="right">62</td>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">10</td>
+</tr>
+</tbody></table>
+<h3 id="批次供应商及整体计算">批次、供应商及整体计算<a class="anchor" href="#批次供应商及整体计算" aria-label="链接到本节">#</a></h3><p>供应商豁免计算补充口径：原始发单人数用于展示及派遣率；满足率和缺口使用 Σ（当日发单人数×该批权重）作为计算基数。试工通过、出勤等履约事实不乘权重。无豁免时权重均为 1，退化为试工通过÷原始发单人数。此口径同时适用于供应商＋工种，不引入责任因子。</p>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th align="right">原始发单</th>
+<th align="right">无豁免发单基数</th>
+<th align="right">有豁免发单基数</th>
+<th align="right">试工通过</th>
+<th>无豁免满足率</th>
+<th>有豁免满足率</th>
+<th align="right">无豁免缺口</th>
+<th align="right">有豁免缺口</th>
+<th>需求贡献率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O001 / A</td>
+<td align="right">4×7＝28</td>
+<td align="right">28</td>
+<td align="right">10/3：4×1＝4</td>
+<td align="right">5</td>
+<td>5÷28＝17.9%</td>
+<td>5÷4＝125.0%</td>
+<td align="right">28−5＝23</td>
+<td align="right">max(0,4−5)＝0</td>
+<td>5÷8＝62.5%</td>
+</tr>
+<tr>
+<td>O002 / B</td>
+<td align="right">6×5＝30</td>
+<td align="right">30</td>
+<td align="right">10/5：6×1＝6</td>
+<td align="right">3</td>
+<td>3÷30＝10.0%</td>
+<td>3÷6＝50.0%</td>
+<td align="right">30−3＝27</td>
+<td align="right">6−3＝3</td>
+<td>3÷8＝37.5%</td>
+</tr>
+<tr>
+<td>整体</td>
+<td align="right">58</td>
+<td align="right">58</td>
+<td align="right">4＋6＝10</td>
+<td align="right">8</td>
+<td>8÷58＝13.8%</td>
+<td>8÷10＝80.0%</td>
+<td align="right">58−8＝50</td>
+<td align="right">max(0,10−8)＝2</td>
+<td>100.0%</td>
+</tr>
+</tbody></table>
+<p>同一供应商有多批时，先合计各批的加权发单与试工通过，再相除；不平均批次满足率。整体缺口按整体基数减整体通过人数后截零，因此本例整体缺口 2 与供应商行缺口之和 3 不相等；不得用行缺口求和代替整体缺口。超过 100% 的满足率保留真实数值，进度条视觉长度最多为 100%。需求贡献率仍以当前筛选范围内全部供应商试工通过人数为分母，不受豁免权重影响。</p>
+<h3 id="批次豁免验收示例">批次豁免验收示例<a class="anchor" href="#批次豁免验收示例" aria-label="链接到本节">#</a></h3><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>场景</th>
+<th>预期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SUP-01</td>
+<td>两批开始日分别为 10/1、10/3，豁免第 3 天</td>
+<td>目标日分别为 10/3、10/5，不能共用需求开始日</td>
+</tr>
+<tr>
+<td>SUP-02</td>
+<td>全范围、无豁免</td>
+<td>发单 58，通过 8，整体满足率 13.8%，缺口 50</td>
+</tr>
+<tr>
+<td>SUP-03</td>
+<td>全范围、上述豁免</td>
+<td>加权发单 10，整体满足率 80.0%，缺口 2；A 满足率 125.0%</td>
+</tr>
+<tr>
+<td>SUP-04</td>
+<td>O002 豁免配置第 6 天</td>
+<td>目标日 10/8 超出本批范围，O002 权重全部为 1、基数 30</td>
+</tr>
+<tr>
+<td>SUP-05</td>
+<td>查询 10/6～10/7</td>
+<td>两批有效目标日均未命中查询，基数 0，满足率为“—”，不改目标日</td>
+</tr>
+<tr>
+<td>SUP-06</td>
+<td>同批发单调整版本或人员改派</td>
+<td>只统计最新有效版本及唯一有效人员归属，不能累加重复</td>
+</tr>
+<tr>
+<td>SUP-07</td>
+<td>配置保存后查询已有计算结果</td>
+<td>历史结果保留原规则版本；新计算使用新配置</td>
 </tr>
 </tbody></table>
 <h2 id="留存率计算示例">留存率计算示例<a class="anchor" href="#留存率计算示例" aria-label="链接到本节">#</a></h2><p>假设 8 名试工通过人员中，统计截止日已有 6 人达到 7 日观察点，其中 5 人持续在职；已有 3 人达到 30 日观察点，其中 2 人持续在职。</p>
@@ -1382,7 +1690,7 @@ main{background:var(--paper);border:1px solid var(--line);border-radius:14px;pad
 </tr>
 <tr>
 <td>DQ-06</td>
-<td>arrived_count 应不大于 online_dispatched_count</td>
+<td>arrived_count 应不大于 total_dispatched_count−offline_dispatched_count</td>
 <td>进入数据质量清单，不静默截断</td>
 </tr>
 <tr>
