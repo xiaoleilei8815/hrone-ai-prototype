@@ -287,4 +287,35 @@ if(codeHeader&&!codeHeader.querySelector('.help-tip')){
   tip.addEventListener('mouseenter',()=>showColumnTooltip(tip));tip.addEventListener('mouseleave',hideColumnTooltip);
   tip.addEventListener('focus',()=>showColumnTooltip(tip));tip.addEventListener('blur',hideColumnTooltip);
 }
+</script><script>
+const warningLocations=[
+  ['美西13号仓','入库组'],['美西10号仓','入库组'],['美西13号仓','质检组'],
+  ['美西10号仓','入库组'],['美西13号仓','质检组'],['美西10号仓','入库组'],
+  ['美西10号仓','入库组']
+];
+(personnelHistory.WUS182347||[]).forEach((item,index)=>{
+  Object.assign(item,{warehouse:warningLocations[index][0],group:warningLocations[index][1]});
+});
+if(personnelHistory.WUS182347?.[4])personnelHistory.WUS182347[4].date='2025-12-20';
+const getWarningsWithLocation=getAssessmentWarnings;
+getAssessmentWarnings=function(record){
+  return getWarningsWithLocation(record).map(item=>{
+    if(item.warehouse&&item.group)return item;
+    const source=records.find(row=>row!==record&&row.id===record.id&&row.date===item.date);
+    return source?{...item,warehouse:source.warehouse,group:source.group}:item;
+  });
+};
+renderAssessmentWarnings=function(){
+  const warningBox=document.querySelector('#actionWarnings');
+  const list=document.querySelector('#actionWarningList');
+  const toggle=document.querySelector('#actionWarningToggle');
+  warningBox.hidden=!pendingWarningItems.length;
+  const visible=pendingHistoryExpanded?pendingWarningItems:pendingWarningItems.slice(0,5);
+  list.innerHTML=visible.map(item=>{
+    const location=[item.warehouse,item.group].filter(Boolean).join('-');
+    return `<li>${item.date}：${location?location+'，':''}${item.detail}</li>`;
+  }).join('');
+  toggle.hidden=pendingWarningItems.length<=5;
+  toggle.textContent=pendingHistoryExpanded?'收起':`展开查看全部（${pendingWarningItems.length}）`;
+};
 </script></body></html>
