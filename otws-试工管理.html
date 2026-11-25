@@ -211,19 +211,7 @@ const failFieldsObserver=new MutationObserver(()=>{
   if(failFields.hidden)return;
   const record=records[assessment.recordIndex];
   if(!record)return;
-  failFields.classList.add('config-layout');
-  document.querySelector('#dispatchDateRange').classList.add('is-fixed');
-  failFields.prepend(...dispatchConfigFields);
-  document.querySelector('#dispatchStart').value=record.date;
-  document.querySelector('#dispatchStart').disabled=true;
-  document.querySelector('#dispatchEnd').value=record.date;
-  document.querySelector('#dispatchEnd').disabled=true;
-  document.querySelector('#dispatchStart').min=record.date;
-  document.querySelector('#dispatchEnd').min=record.date;
-  const attendancePlan=document.querySelector('#attendancePlan');
-  const quotePlan=document.querySelector('#quotePlan');
-  attendancePlan.value=record.attendancePlan||attendancePlan.options[1]?.value||'';
-  quotePlan.value=record.quotePlan||quotePlan.options[1]?.value||'';
+  failFields.classList.remove('config-layout');
   failReasonField.querySelector('select').classList.remove('invalid');
   if(trialUploadField){failFields.append(trialUploadField);stagedTrialFiles=(record.trialCards||[]).map(file=>new File([file.content||''],file.name,{type:file.type||'application/octet-stream'}));renderStagedTrialFiles()}
 });
@@ -240,25 +228,19 @@ document.querySelector('#actionDialog').addEventListener('click',event=>{
 document.querySelector('#confirmAction').addEventListener('click',event=>{
   if(!pendingAssessment)return;
   const record=records[pendingAssessment.recordIndex];if(!record)return;
+  if(pendingAssessment.status==='试工不通过'){
+    const reason=document.querySelector('#actionFailReason');
+    reason.classList.toggle('invalid',!reason.value);
+    if(!reason.value){event.preventDefault();event.stopImmediatePropagation();toast('请选择试工不通过原因');return}
+    record.trialCards=stagedTrialFiles.map(file=>({name:file.name,type:file.type||'application/octet-stream',size:file.size,fileObject:file,dataUrl:URL.createObjectURL(file)}));
+    record.trialCard=record.trialCards.map(file=>file.name).join('; ');
+    return;
+  }
   const start=document.querySelector('#dispatchStart').value,end=document.querySelector('#dispatchEnd').value;
   const dateValid=Boolean(start&&end&&start>=record.date&&end>=start);
   document.querySelector('#dispatchDateRange').classList.toggle('invalid',!dateValid);
   document.querySelector('#dispatchDateError').hidden=dateValid;
   if(!dateValid){event.preventDefault();event.stopImmediatePropagation();return}
-  if(pendingAssessment.status!=='试工不通过')return;
-  let plansValid=true;
-  for(const id of ['attendancePlan','quotePlan']){
-    const input=document.querySelector('#'+id),error=document.querySelector('#'+id+'Error'),valid=Boolean(input.value);
-    input.classList.toggle('invalid',!valid);error.hidden=valid;if(!valid)plansValid=false;
-  }
-  const reason=document.querySelector('#actionFailReason');
-  reason.classList.toggle('invalid',!reason.value);
-  if(!plansValid||!reason.value){event.preventDefault();event.stopImmediatePropagation();toast('请填写所有必填字段');return}
-  record.dispatchStart=start;record.dispatchEnd=end;
-  record.attendancePlan=document.querySelector('#attendancePlan').value;
-  record.quotePlan=document.querySelector('#quotePlan').value;
-  record.trialCards=stagedTrialFiles.map(file=>({name:file.name,type:file.type||'application/octet-stream',size:file.size,fileObject:file,dataUrl:URL.createObjectURL(file)}));
-  record.trialCard=record.trialCards.map(file=>file.name).join('; ');
 },true);
 document.querySelector('.upload-box-tip').textContent='最多5个文件，每个文件最大10MB';
 document.querySelector('#trialCardUpload').onchange=event=>{
@@ -318,4 +300,4 @@ renderAssessmentWarnings=function(){
   toggle.hidden=pendingWarningItems.length<=5;
   toggle.textContent=pendingHistoryExpanded?'收起':`展开查看全部（${pendingWarningItems.length}）`;
 };
-</script></body></html>
+</script><script defer src="prototype-switcher.js"></script></body></html>

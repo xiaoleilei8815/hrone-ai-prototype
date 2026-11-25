@@ -41,4 +41,4 @@
     function exportData(){const rows=[['业务单元','在岗人数','本季成本','有效工时','30日流失率','风险人数'],...Array.from(businessTable.tBodies[0].rows).map(r=>Array.from(r.cells).slice(0,6).map(c=>c.innerText))];const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+v.replaceAll('"','""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='劳务用工分析数据.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('已导出当前分析范围的数据')}
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('on'))closeDrawer()});
   </script>
-</body></html>
+<script defer src="prototype-switcher.js"></script></body></html>

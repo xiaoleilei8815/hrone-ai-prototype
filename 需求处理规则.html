@@ -73,4 +73,4 @@
  document.getElementById('saveBtn').addEventListener('click',()=>{const invalid=configurations.some(config=>config.rules.some(rule=>!rule.region||rule.ratio===''||+rule.ratio<0||+rule.ratio>100));if(invalid){alert('请填写区域及 0 至 100 之间的允许上浮比例');return}const toast=document.getElementById('toast');toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1800)});
  document.querySelectorAll('.help').forEach(help=>{const place=()=>{const rect=help.getBoundingClientRect();const width=Math.min(360,window.innerWidth-24);const left=Math.max(12,Math.min(window.innerWidth-width-12,rect.left+rect.width/2-width/2));const top=Math.max(64,rect.top-10);help.style.setProperty('--tip-left',`${left}px`);help.style.setProperty('--tip-top',`${top}px`)};help.addEventListener('pointerenter',place);help.addEventListener('focus',place);window.addEventListener('resize',place,{passive:true})});
 })();
-</script></body></html>
+</script><script defer src="prototype-switcher.js"></script></body></html>

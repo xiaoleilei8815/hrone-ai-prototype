@@ -2099,4 +2099,4 @@ body.review-on tr.review-changed td{background:#fff3cb!important}
  document.getElementById('reviewNext').onclick=()=>{const targets=changed;if(!targets.length)return;index=(index+1)%targets.length;const target=targets[index],dialog=target.closest('dialog');if(dialog&&!dialog.open){document.querySelectorAll('dialog[open]').forEach(d=>d.close());dialog.showModal()}target.scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('reviewCount').textContent=(index+1)+' / '+targets.length};
 })();
 </script><!-- change-review:end -->
-</body></html>
+<script defer src="prototype-switcher.js"></script></body></html>

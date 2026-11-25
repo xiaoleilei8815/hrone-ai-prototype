@@ -77,4 +77,4 @@ function openHeaderFilter(e,label,target){e.stopPropagation();headerTarget=targe
 function applyHeaderFilter(){qa('#'+headerTarget).value=qa('#headerPopInput').value;qa('#headerPop').classList.remove('on');qaa('.thFilter').forEach(function(b){if(b.getAttribute('onclick').includes("'"+headerTarget+"'"))b.classList.toggle('active',!!qa('#'+headerTarget).value)});searchRows()}
 function clearHeaderFilter(){qa('#headerPopInput').value='';applyHeaderFilter()}
 document.addEventListener('click',function(e){if(!e.target.closest('#headerPop')&&!e.target.closest('.thFilter'))qa('#headerPop').classList.remove('on')});qa('#headerPopInput').addEventListener('keydown',function(e){if(e.key==='Enter')applyHeaderFilter()});
-</script></body></html>
+</script><script defer src="../prototype-switcher.js"></script></body></html>
