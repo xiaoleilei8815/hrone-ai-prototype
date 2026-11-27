@@ -11,7 +11,7 @@ tbody tr:has(td.freeze2 .未到场) td:nth-child(15)::after{content:"--"}
 #actionFailFields > .action-form-field.required-fail-reason{display:block}
 #actionFailFields > .action-form-field.required-fail-reason::before{content:"*";color:#e5484d;margin-right:4px}
 #actionFailFields > .action-form-field.required-fail-reason select{display:block;width:100%;margin-top:6px}
-#filePreview{z-index:1200}
+#filePreview{z-index:1800}
 </style><script>if(new URLSearchParams(location.search).get('portalEmbed')==='1')document.documentElement.classList.add('portal-embedded')</script><style>
 html.portal-embedded,html.portal-embedded body{min-height:100%;background:#f3f5fb}
 html.portal-embedded body>.utility,html.portal-embedded body>.topnav,html.portal-embedded body>.tabs{display:none!important}
@@ -142,7 +142,6 @@ tbody tr:hover .freeze-right{background:#f8fbff}
 @media(max-width:700px){.action-fail-fields.config-layout{grid-template-columns:1fr}}
 .action-form-field{display:grid;gap:6px;color:#505965;font-size:13px}
 .action-form-field select,.action-form-field textarea{width:100%;border:1px solid #d8dde4;border-radius:5px;padding:9px 10px;background:#fff;color:#30343b;outline:0}
-.action-form-field textarea{min-height:82px;resize:vertical}
 .action-form-field select:focus,.action-form-field textarea:focus{border-color:#3698ee;box-shadow:0 0 0 2px #3698ee20}
 .action-dialog-foot{justify-content:flex-end;gap:10px;border-top:1px solid #edf0f3;border-bottom:0}
 .action-dialog-foot .btn{min-width:86px}
@@ -184,7 +183,7 @@ function localToday(){const d=new Date();return [d.getFullYear(),String(d.getMon
 {date:'2026-11-16',status:'试工通过',name:'周雨桐',id:'WUS181807',code:'202611160006',supplier:'华南众合人力',supplierCode:'HN208',region:'华南区',warehouse:'广州南沙仓',group:'打包二组',job:'打包员',shift:'中班'},
 {date:'2026-11-15',status:'试工不通过',name:'黄志强',id:'WUS181699',code:'202611150003',supplier:'安达劳务服务',supplierCode:'AD056',region:'华东区',warehouse:'苏州园区仓',group:'分拣一组',job:'分拣员',shift:'晚班'},
 {date:'2026-11-15',status:'待试工',name:'孙悦',id:'WUS181677',code:'202611150001',supplier:'美西测试服务商',supplierCode:'MX911',region:'美西区',warehouse:'美西测试仓',group:'上架组',job:'上架员',shift:'早班'}];
-const keys=['date','status','name','id','code','supplier','supplierCode','region','warehouse','group','job','shift','failReason','failDetail','trialCard','createdBy','createdAt','modifiedBy','modifiedAt','operation'];const failedReasons={WUS182368:['现场岗位要求不匹配','未达到质检岗位的准确率要求'],WUS181834:['现场岗位要求不匹配','操作流程不熟悉，未通过质量检查'],WUS181930:['技能要求未达到','试工期间出现多次漏检'],WUS181699:['工作效率未达到要求','分拣速度低于岗位标准']};const creatorEmails={MX911:'mx911@ztn.com',HN208:'hn208@ztn.com',AD056:'ad056@ztn.com'},formatClock=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')+':00';function makeFeedbackForm(person,detail){const rows=[190,238,288,338,388,438,488,538,588,638,688,738,788];const content=`<svg xmlns="http://www.w3.org/2000/svg" width="620" height="850" viewBox="0 0 620 850"><rect width="620" height="850" fill="#fff"/><rect x="32" y="28" width="556" height="790" fill="#fff" stroke="#222" stroke-width="1.5"/><rect x="32" y="48" width="556" height="42" fill="#d9d9d9" stroke="#222"/><text x="310" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700">Neue Mitarbeiter Onboarding / Feedback Formular 劳务工反馈表</text><rect x="32" y="90" width="556" height="32" fill="#eee" stroke="#222"/><text x="48" y="111" font-family="Arial,sans-serif" font-size="13" font-weight="700">Firma Name 劳务公司</text><text x="48" y="151" font-family="Arial,sans-serif" font-size="12" font-weight="700">Name 姓名</text><text x="174" y="151" font-family="Arial,sans-serif" font-size="13">${person}</text><text x="408" y="151" font-family="Arial,sans-serif" font-size="12" font-weight="700">Datum 日期</text><text x="490" y="151" font-family="Arial,sans-serif" font-size="13">${today}</text><text x="48" y="213" font-family="Arial,sans-serif" font-size="12" font-weight="700">Geschlecht 性别</text><text x="245" y="213" font-family="Arial,sans-serif" font-size="12">□ M 男</text><text x="370" y="213" font-family="Arial,sans-serif" font-size="12">□ W 女</text><text x="490" y="213" font-family="Arial,sans-serif" font-size="12">Alter 年龄</text><text x="48" y="263" font-family="Arial,sans-serif" font-size="12" font-weight="700">Schichtauswahl 班次选择</text><text x="48" y="307" font-family="Arial,sans-serif" font-size="12">Gruppe 组别</text><text x="250" y="278" font-family="Arial,sans-serif" font-size="12">□ Frühschicht 06:00–14:00</text><text x="250" y="302" font-family="Arial,sans-serif" font-size="12">□ Tagesschicht 08:30–17:00</text><text x="250" y="326" font-family="Arial,sans-serif" font-size="12">□ Spätschicht 14:00–22:00</text><text x="250" y="350" font-family="Arial,sans-serif" font-size="12">${detail}</text><rect x="32" y="360" width="556" height="28" fill="#dedede" stroke="#222"/><text x="46" y="379" font-family="Arial,sans-serif" font-size="13" font-weight="700">I. Sprachkenntnis 语言知识</text><text x="46" y="414" font-family="Arial,sans-serif" font-size="12">1. Welche Sprache spricht der Kandidat? 候选人会说哪种语言？</text><text x="54" y="444" font-family="Arial,sans-serif" font-size="12">□ Deutsch 德语　　　□ Englisch 英语　　　□ Andere 其他</text><rect x="32" y="458" width="556" height="28" fill="#dedede" stroke="#222"/><text x="46" y="477" font-family="Arial,sans-serif" font-size="13" font-weight="700">II. PC-Kenntnisse 电脑知识</text><text x="46" y="512" font-family="Arial,sans-serif" font-size="12">1. Verfügt der Kandidat über grundlegende Computerkenntnisse?</text><text x="46" y="532" font-family="Arial,sans-serif" font-size="12">候选人是否有基础的电脑知识？　□ Ja 是　　　　□ Nein 否</text><rect x="32" y="546" width="556" height="28" fill="#dedede" stroke="#222"/><text x="46" y="565" font-family="Arial,sans-serif" font-size="13" font-weight="700">III. Lese- und Schreibfähigkeit 阅读与书写能力</text><text x="46" y="600" font-family="Arial,sans-serif" font-size="12">1. Verfügt der Kandidat über Lese- und Schreibfähigkeiten?</text><text x="46" y="620" font-family="Arial,sans-serif" font-size="12">候选人有读写能力吗？　□ Ja 是　　　　　　　　　□ Nein 否</text><rect x="32" y="634" width="185" height="76" fill="#e5e5e5" stroke="#222"/><text x="48" y="664" font-family="Arial,sans-serif" font-size="12" font-weight="700">Bewertungsergebnis</text><text x="48" y="684" font-family="Arial,sans-serif" font-size="12" font-weight="700">组长/副组长考核结果</text><text x="230" y="656" font-family="Arial,sans-serif" font-size="12">通过考核：□ 是 Bestanden　　□ 否 Nicht bestanden</text><text x="230" y="690" font-family="Arial,sans-serif" font-size="12">组长/班组长签字：________________________</text><rect x="32" y="710" width="185" height="108" fill="#e5e5e5" stroke="#222"/><text x="48" y="750" font-family="Arial,sans-serif" font-size="12" font-weight="700">Wenn nicht bestanden</text><text x="64" y="774" font-family="Arial,sans-serif" font-size="12" font-weight="700">不通过的原因</text><text x="230" y="735" font-family="Arial,sans-serif" font-size="12">□ 本人无意愿　□ 没有电脑知识　□ 不理解数字逻辑</text><text x="230" y="761" font-family="Arial,sans-serif" font-size="12">□ 太慢　□ 错误率太高　□ 未完成绩效标准</text><text x="230" y="787" font-family="Arial,sans-serif" font-size="12">□ 其他原因（请列举）：________________________</text>${rows.map(y=>`<line x1="32" y1="${y}" x2="588" y2="${y}" stroke="#555" stroke-width=".7"/>`).join('')}<line x1="217" y1="634" x2="217" y2="818" stroke="#555" stroke-width=".7"/><text x="310" y="838" text-anchor="middle" fill="#89919c" font-family="Arial,sans-serif" font-size="10">试工评估示例文件 · ${today}</text></svg>`;return content}function makeDemoFile(name,title,person,detail,color){const content=title==='现场记录'?makeFeedbackForm(person,detail):`<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300"><rect width="480" height="300" rx="12" fill="#fff"/><rect width="480" height="64" rx="12" fill="${color}"/><rect y="52" width="480" height="12" fill="${color}"/><text x="28" y="42" fill="#fff" font-size="24" font-family="sans-serif">${title}</text><text x="28" y="118" fill="#30343b" font-size="27" font-family="sans-serif">${person}</text><text x="28" y="164" fill="#68717d" font-size="18" font-family="sans-serif">${detail}</text><line x1="28" y1="206" x2="452" y2="206" stroke="#e5e8ed"/><text x="28" y="246" fill="#8a929e" font-size="15" font-family="sans-serif">试工评估示例文件 · ${today}</text></svg>`;return{name,content,type:'image/svg+xml',dataUrl:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(content)}}let currentPreviewFile=null;records.forEach((r,i)=>{r.department=['分拣员','打包员'].includes(r.job)?'物流支持部':['上架员','质检员'].includes(r.job)?'生产运营部':'仓储运营部';[r.failReason,r.failDetail]=r.status==='试工不通过'?(failedReasons[r.id]||['试工考核未通过','未达到岗位试工要求']):['--','--'];r.trialCards=[makeDemoFile(r.name+'_试工卡.svg','试工卡',r.name,r.id+' · '+r.job,'#3698ee'),makeDemoFile(r.name+'_现场记录.svg','现场记录',r.name,r.warehouse+' · '+r.shift,'#31a27a')];r.trialCard=r.trialCards.map(f=>f.name).join('; ');r.createdBy=creatorEmails[r.supplierCode]||'supplier@ztn.com';const createdMinutes=8*60+i*11;r.createdAt=r.date+' '+formatClock(createdMinutes);r.modifiedBy=['张敏(WUS180206)','李强(WUS180318)','肖雷雷(WUS180001)'][i%3];r.modifiedAt=r.date+' '+formatClock(createdMinutes+35+(i%4)*10)});const personnelHistory={WUS182347:[{date:'2026-10-01',detail:'试工不通过，不符合岗位要求(经常不在工作岗位)'},{date:'2026-08-21',detail:'提前结束派遣，个人原因'},{date:'2026-06-15',detail:'试工不通过，岗位技能不符合要求'},{date:'2026-03-02',detail:'提前结束派遣，项目阶段调整'},{date:'2025-12-10',detail:'试工不通过，未达到岗位工作标准'},{date:'2025-09-09',detail:'提前结束派遣，业务变化'},{date:'2025-06-30',detail:'派遣结束，项目需求结束'}],WUS182355:[{date:'2026-10-06',detail:'提前结束派遣，上一段派遣已结束'}]};function getAssessmentWarnings(record){const samePerson=records.filter(item=>item!==record&&item.id===record.id).map(item=>({date:item.date,detail:'试工状态：'+item.status}));return[...(personnelHistory[record.id]||[]),...samePerson].sort((a,b)=>b.date.localeCompare(a.date))}const deptTree=[{name:'仓储运营部',children:['美西仓储组','华南仓储组','华东仓储组']},{name:'物流支持部',children:['分拣一组','分拣二组','打包组']},{name:'生产运营部',children:['上架组','质检组']}];const selectedDepts=new Set();let draftDepts=new Set();const trialSchemeStorageKey='otws.portal.trial.querySchemes';let savedTrialSchemes=[];try{const stored=localStorage.getItem(trialSchemeStorageKey);savedTrialSchemes=stored?JSON.parse(stored):[]}catch(e){savedTrialSchemes=[]}if(!Array.isArray(savedTrialSchemes))savedTrialSchemes=[];function persistTrialSchemes(){try{localStorage.setItem(trialSchemeStorageKey,JSON.stringify(savedTrialSchemes))}catch(e){}}function refreshTrialSchemes(selected='standard'){const control=document.querySelector('#queryScheme');control.innerHTML='';const standard=document.createElement('option');standard.value='standard';standard.textContent='标准方案';control.append(standard);savedTrialSchemes.forEach(s=>{const option=document.createElement('option');option.value=s.id;option.textContent=s.name;control.append(option)});control.value=[...control.options].some(o=>o.value===selected)?selected:'standard'}function readTrialFilters(){return{status:document.querySelector('#statusFilter').value,from:document.querySelector('#dateFrom').value,to:document.querySelector('#dateTo').value,employee:document.querySelector('#employeeFilter').value,department:portalEmbed?document.querySelector('#deptManual').value:'',job:document.querySelector('#jobFilter').value,createdBy:document.querySelector('#createdByFilter').value,createdFrom:document.querySelector('#createdFrom').value,createdTo:document.querySelector('#createdTo').value,updatedBy:document.querySelector('#updatedByFilter').value,updatedFrom:document.querySelector('#updatedFrom').value,updatedTo:document.querySelector('#updatedTo').value}}function applyTrialScheme(){const id=document.querySelector('#queryScheme').value;if(id==='standard'){document.querySelector('#reset').click();return}const scheme=savedTrialSchemes.find(s=>s.id===id);if(!scheme)return;const f=scheme.filters;document.querySelector('#statusFilter').value=f.status||'';document.querySelector('#dateFrom').value=f.from||'';document.querySelector('#dateTo').value=f.to||'';document.querySelector('#employeeFilter').value=f.employee||'';if(portalEmbed)document.querySelector('#deptManual').value=f.department||'';document.querySelector('#jobFilter').value=f.job||'';document.querySelector('#createdByFilter').value=f.createdBy||'';document.querySelector('#createdFrom').value=f.createdFrom||'';document.querySelector('#createdTo').value=f.createdTo||'';document.querySelector('#updatedByFilter').value=f.updatedBy||'';document.querySelector('#updatedFrom').value=f.updatedFrom||'';document.querySelector('#updatedTo').value=f.updatedTo||'';document.querySelectorAll('.status-segments button').forEach(b=>b.classList.toggle('active',b.dataset.status===(f.status||'')));render();toast('已应用查询方案：'+scheme.name)}function saveTrialScheme(){const name=prompt('请输入查询方案名称');if(!name||!name.trim())return;const cleanName=name.trim(),existing=savedTrialSchemes.find(s=>s.name===cleanName),entry={id:existing?existing.id:'trial-'+Date.now(),name:cleanName,filters:readTrialFilters()};if(existing)Object.assign(existing,entry);else savedTrialSchemes.push(entry);persistTrialSchemes();refreshTrialSchemes(entry.id);toast('查询方案已保存：'+cleanName)}function openTrialSchemeSettings(){toast('查询方案设置已打开')}function deleteTrialScheme(){const id=document.querySelector('#queryScheme').value;if(id==='standard'){toast('标准方案不可删除');return}const scheme=savedTrialSchemes.find(s=>s.id===id);if(!scheme)return;if(!confirm('确定删除查询方案“'+scheme.name+'”吗？'))return;savedTrialSchemes=savedTrialSchemes.filter(s=>s.id!==id);persistTrialSchemes();refreshTrialSchemes();document.querySelector('#reset').click();toast('查询方案已删除')}function filtered(){const s=document.querySelector('#statusFilter').value,from=document.querySelector('#dateFrom').value,to=document.querySelector('#dateTo').value,q=document.querySelector('#employeeFilter').value.trim().toLowerCase(),supplierQuery=portalEmbed?'':document.querySelector('#supplierFilter').value.trim().toLowerCase(),departmentQuery=portalEmbed?document.querySelector('#deptManual').value.trim().toLowerCase():'',job=document.querySelector('#jobFilter').value,createdBy=document.querySelector('#createdByFilter').value.trim().toLowerCase(),createdFrom=document.querySelector('#createdFrom').value.replace('T',' '),createdTo=document.querySelector('#createdTo').value.replace('T',' '),updatedBy=document.querySelector('#updatedByFilter').value.trim().toLowerCase(),updatedFrom=document.querySelector('#updatedFrom').value.replace('T',' '),updatedTo=document.querySelector('#updatedTo').value.replace('T',' ');return records.filter(r=>(!s||r.status===s)&&(!from||r.date>=from)&&(!to||r.date<=to)&&(!q||(r.name+r.id).toLowerCase().includes(q))&&(portalEmbed?(!departmentQuery||r.department.toLowerCase().includes(departmentQuery)):(!selectedDepts.size||selectedDepts.has(r.department)))&&(!supplierQuery||(r.supplier+r.supplierCode).toLowerCase().includes(supplierQuery))&&(!job||r.job===job)&&(!createdBy||r.createdBy.toLowerCase().includes(createdBy))&&(!createdFrom||r.createdAt.slice(0,16)>=createdFrom)&&(!createdTo||r.createdAt.slice(0,16)<=createdTo)&&(!updatedBy||r.modifiedBy.toLowerCase().includes(updatedBy))&&(!updatedFrom||r.modifiedAt.slice(0,16)>=updatedFrom)&&(!updatedTo||r.modifiedAt.slice(0,16)<=updatedTo))}function renderDeptTree(){const term=document.querySelector('#deptSearch').value.trim().toLowerCase(),tree=document.querySelector('#deptTree');tree.innerHTML=deptTree.map(d=>{const showParent=!term||d.name.toLowerCase().includes(term),children=d.children.filter(c=>!term||c.toLowerCase().includes(term)||d.name.toLowerCase().includes(term));if(!showParent&&!children.length)return '';return `<div class="dept-group"><button class="dept-option parent" type="button" data-dept="${d.name}"><span class="arrow">▸</span><input type="checkbox" ${draftDepts.has(d.name)?'checked':''} tabindex="-1"><span>${d.name}</span></button>${children.map(c=>`<button class="dept-option child" type="button" data-dept="${d.name}"><span class="arrow">　</span><input type="checkbox" ${draftDepts.has(d.name)?'checked':''} tabindex="-1"><span>${c}</span></button>`).join('')}</div>`}).join('')||'<div style="padding:18px;text-align:center;color:#87909c">没有找到部门</div>';tree.querySelectorAll('[data-dept]').forEach(b=>b.onclick=()=>{const key=b.dataset.dept;draftDepts.has(key)?draftDepts.delete(key):draftDepts.add(key);renderDeptTree();syncDeptAll()});syncDeptAll()}function syncDeptAll(){document.querySelector('#deptAllBox').checked=draftDepts.size===deptTree.length}function updateDeptLabel(){const names=[...selectedDepts];const label=document.querySelector('#deptValue'),trigger=document.querySelector('#deptTrigger');label.textContent=!names.length?'请选择':names.length===1?names[0]:`已选 ${names.length} 个部门`;trigger.classList.toggle('has-value',!!names.length)}function render(){const rows=filtered();document.querySelector('#rows').innerHTML=rows.length?rows.map(r=>`<tr>${keys.map((k,i)=>{let cell=i===1?`<span class="status ${r[k]}">${r[k]}</span>`:k==='modifiedBy'&&portalEmbed?'HR':k==='trialCard'?`<div class="file-thumbnails">${r.trialCards.map((file,fileIndex)=>`<span class="file-item" title="${file.name}"><button class="file-preview-trigger" type="button" data-file-action="preview" data-preview-record="${records.indexOf(r)}" data-preview-index="${fileIndex}" aria-label="在线预览 ${file.name}">${(file.type||'').startsWith('image/')&&file.dataUrl?`<img src="${file.dataUrl}" alt="${file.name}">`:`<span class="file-type-icon">${(file.name.split('.').pop()||'FILE').toUpperCase()}</span>`}<svg class="file-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="file-download-trigger" type="button" data-file-action="download" data-preview-record="${records.indexOf(r)}" data-preview-index="${fileIndex}" aria-label="下载 ${file.name}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M4 17v4h16v-4"/></svg></button></span>`).join('')}</div>`:k==='operation'?r.status==='待试工'?`<div class="row-actions"><button type="button" data-record="${records.indexOf(r)}" data-status-change="试工通过">试工通过</button><button type="button" data-record="${records.indexOf(r)}" data-status-change="试工不通过">试工不通过</button><button type="button" data-record="${records.indexOf(r)}" data-status-change="未到场">未到场</button></div>`:'':r[k];return `<td class="${i===0?'freeze1':i===1?'freeze2':k==='operation'?'freeze-right':''}">${cell}</td>`}).join('')}</tr>`).join(''):`<tr><td class="empty" colspan="${portalEmbed?16:20}" style="text-align:center;height:120px;color:#87909c">没有找到符合条件的试工记录</td></tr>`;document.querySelector('#countLabel').textContent=`共 ${rows.length} 条记录`;document.querySelector('#pagerText').textContent=`共 ${rows.length} 条`}document.querySelectorAll('.status-segments button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.status-segments button').forEach(x=>x.classList.toggle('active',x===b));document.querySelector('#statusFilter').value=b.dataset.status});document.querySelector('#deptTrigger').onclick=()=>{const picker=document.querySelector('#deptPicker'),opening=!picker.classList.contains('open');picker.classList.toggle('open',opening);document.querySelector('#deptTrigger').setAttribute('aria-expanded',String(opening));if(opening){draftDepts=new Set(selectedDepts);renderDeptTree();document.querySelector('#deptSearch').value=''}};document.querySelector('#deptSearch').oninput=renderDeptTree;document.querySelector('#deptSelectAll').onclick=()=>{draftDepts=draftDepts.size===deptTree.length?new Set():new Set(deptTree.map(d=>d.name));renderDeptTree()};document.querySelector('#deptClear').onclick=()=>{draftDepts.clear();renderDeptTree()};document.querySelector('#deptConfirm').onclick=()=>{selectedDepts.clear();draftDepts.forEach(x=>selectedDepts.add(x));document.querySelector('#deptPicker').classList.remove('open');document.querySelector('#deptTrigger').setAttribute('aria-expanded','false');updateDeptLabel();render()};document.addEventListener('click',e=>{const p=document.querySelector('#deptPicker');if(!p.contains(e.target)){p.classList.remove('open');document.querySelector('#deptTrigger').setAttribute('aria-expanded','false')}});document.querySelector('#toggleFilters').onclick=()=>{const collapsed=document.querySelector('.filter').classList.toggle('filter-collapsed');const toggle=document.querySelector('#toggleFilters');toggle.textContent=collapsed?'展开筛选项':'收起筛选项';toggle.setAttribute('aria-expanded',String(!collapsed))};document.querySelector('#query').onclick=render;document.querySelector('#employeeSearch').onclick=render;document.querySelector('#creatorSearch').onclick=render;document.querySelector('#createdByFilter').addEventListener('keydown',e=>{if(e.key==='Enter')render()});document.querySelector('#updatedSearch').onclick=render;document.querySelector('#updatedByFilter').addEventListener('keydown',e=>{if(e.key==='Enter')render()});document.querySelector('#employeeFilter').addEventListener('keydown',e=>{if(e.key==='Enter')render()});document.querySelector('#reset').onclick=()=>{document.querySelectorAll('.filter .fields input,.filter .fields select').forEach(x=>x.value='');document.querySelector('#queryScheme').value='standard';document.querySelector('#dateFrom').value=today;document.querySelector('#dateTo').value=today;document.querySelectorAll('.status-segments button').forEach(x=>x.classList.toggle('active',x.dataset.status===''));selectedDepts.clear();draftDepts.clear();updateDeptLabel();renderDeptTree();render()};document.querySelector('#queryScheme').onchange=applyTrialScheme;document.querySelector('#saveQueryScheme').onclick=saveTrialScheme;document.querySelector('#settingsQueryScheme').onclick=openTrialSchemeSettings;document.querySelector('#deleteQueryScheme').onclick=deleteTrialScheme;refreshTrialSchemes();document.querySelector('#rows').addEventListener('click',e=>{const fileButton=e.target.closest('[data-file-action][data-preview-record][data-preview-index]');if(fileButton){const recordIndex=Number(fileButton.dataset.previewRecord),fileIndex=Number(fileButton.dataset.previewIndex);if(fileButton.dataset.fileAction==='preview')openFilePreview(recordIndex,fileIndex);else if(fileButton.dataset.fileAction==='download')downloadTrialFile(records[recordIndex]?.trialCards[fileIndex]);return}const button=e.target.closest('[data-record][data-status-change]');if(!button)return;const recordIndex=Number(button.dataset.record),record=records[recordIndex];if(!record||record.status!=='待试工')return;openAssessmentAction(recordIndex,button.dataset.statusChange)});let pendingAssessment=null,pendingWarningItems=[],pendingHistoryExpanded=false;function renderAssessmentWarnings(){const warningBox=document.querySelector('#actionWarnings'),list=document.querySelector('#actionWarningList'),toggle=document.querySelector('#actionWarningToggle');warningBox.hidden=!pendingWarningItems.length;const visible=pendingHistoryExpanded?pendingWarningItems:pendingWarningItems.slice(0,5);list.innerHTML=visible.map(item=>`<li>${item.date}：${item.detail}</li>`).join('');toggle.hidden=pendingWarningItems.length<=5;toggle.textContent=pendingHistoryExpanded?'收起':`展开查看全部（${pendingWarningItems.length}）`}document.querySelector('#actionWarningToggle').onclick=()=>{pendingHistoryExpanded=!pendingHistoryExpanded;renderAssessmentWarnings()};function openAssessmentAction(recordIndex,status){const record=records[recordIndex];if(!record)return;pendingAssessment={recordIndex,status};pendingHistoryExpanded=false;stagedTrialFiles=status==='试工通过'?makeDemoTrialUploads(record):[];document.querySelector('#trialCardUpload').value='';renderStagedTrialFiles();document.querySelector('#dispatchStart').value=status==='试工通过'?record.date:'';document.querySelector('#dispatchEnd').value='';document.querySelector('#dispatchDateRange').classList.remove('invalid');document.querySelector('#dispatchDateError').hidden=true;for(const id of ['attendancePlan','quotePlan']){document.querySelector('#'+id).value='';document.querySelector('#'+id).classList.remove('invalid');document.querySelector('#'+id+'Error').hidden=true}const titles={'试工通过':'确认试工通过','试工不通过':'确认试工不通过','未到场':'确认未到场'};document.querySelector('#actionDialogTitle').textContent=titles[status]||'确认试工结果';document.querySelector('#actionFailFields').hidden=status!=='试工不通过';document.querySelector('#dispatchFields').hidden=status!=='试工通过';pendingWarningItems=status==='试工通过'?getAssessmentWarnings(record):[];renderAssessmentWarnings();document.querySelector('#actionFailReason').value=record.failReason&&record.failReason!=='--'?record.failReason:'现场岗位要求不匹配';document.querySelector('#actionFailDetail').value=record.failDetail&&record.failDetail!=='--'?record.failDetail:'';document.querySelector('#confirmAction').textContent='确认';document.querySelector('#confirmAction').style.background='';document.querySelector('#confirmAction').style.borderColor='';const supplierSummaryCode={MX911:'S00001',HN208:'S00002',AD056:'S00003'}[record.supplierCode]||record.supplierCode,groupSummary=record.group==='入库一组'?'入库组':record.group,summaryItems=[['员工',`${record.name}（${record.id}）`],['试工日期',record.date],['供应商',`${record.supplier}（${supplierSummaryCode}）`],['部门',`${record.region} / ${record.warehouse} / ${groupSummary}`],['工种',record.job],['班次',record.shift]];document.querySelector('#actionRecordSummary').innerHTML=summaryItems.map(([label,value])=>`<div class="action-summary-item"><span class="action-summary-label">${label}</span><strong class="action-summary-value">${value}</strong></div>`).join('');document.querySelector('#actionDialog').hidden=false;document.querySelector('#confirmAction').focus()}function closeAssessmentAction(){document.querySelector('#actionDialog').hidden=true;pendingAssessment=null}document.querySelector('#confirmAction').onclick=()=>{if(!pendingAssessment)return;const {recordIndex,status}=pendingAssessment,record=records[recordIndex];if(!record||record.status!=='待试工'){closeAssessmentAction();return}if(status==='试工通过'){const start=document.querySelector('#dispatchStart').value,end=document.querySelector('#dispatchEnd').value;let plansValid=true;for(const id of ['attendancePlan','quotePlan']){const input=document.querySelector('#'+id),error=document.querySelector('#'+id+'Error'),valid=Boolean(input.value);input.classList.toggle('invalid',!valid);error.hidden=valid;if(!valid)plansValid=false}if(!start||!end||end<start){document.querySelector('#dispatchDateRange').classList.add('invalid');document.querySelector('#dispatchDateError').hidden=false;return}document.querySelector('#dispatchDateRange').classList.remove('invalid');document.querySelector('#dispatchDateError').hidden=true;if(!plansValid)return;record.dispatchStart=start;record.dispatchEnd=end;record.attendancePlan=document.querySelector('#attendancePlan').value;record.quotePlan=document.querySelector('#quotePlan').value;for(const file of stagedTrialFiles){record.trialCards.push({name:file.name,type:file.type||'application/octet-stream',size:file.size,fileObject:file,dataUrl:URL.createObjectURL(file)})}record.trialCard=record.trialCards.map(file=>file.name).join('; ')}if(status==='试工不通过'){const reason=document.querySelector('#actionFailReason').value,detail=document.querySelector('#actionFailDetail').value.trim();record.failReason=reason||'--';record.failDetail=detail||'--'}else{record.failReason='--';record.failDetail='--'}record.status=status;const now=new Date(),pad=n=>String(n).padStart(2,'0');record.modifiedBy='张敏(WUS180206)';record.modifiedAt=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());closeAssessmentAction();render();toast('试工状态已更新为：'+record.status)};let stagedTrialFiles=[];document.querySelector('#chooseTrialCards').onclick=()=>document.querySelector('#trialCardUpload').click();document.querySelector('#trialCardUpload').onchange=e=>{const incoming=[...e.target.files];for(const file of incoming){if(file.size>10*1024*1024){toast(file.name+' 超过10MB，未添加');continue}if(stagedTrialFiles.length>=20){toast('试工卡最多上传20个文件');break}stagedTrialFiles.push(file)}e.target.value='';renderStagedTrialFiles()};function makeDemoTrialUploads(record){return record.trialCards.slice(0,2).map((file,index)=>new File([file.content],record.name+(index===0?'_试工卡示例.svg':'_现场记录示例.svg'),{type:'image/svg+xml'}))}function renderStagedTrialFiles(){const list=document.querySelector('#uploadedTrialCards');if(!list)return;const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));list.innerHTML=stagedTrialFiles.map((file,index)=>`<div class="uploaded-file-row"><button type="button" class="uploaded-file-name" data-preview-upload="${index}" title="点击预览：${escapeHtml(file.name)}">${escapeHtml(file.name)}（${(file.size/1024/1024).toFixed(2)}MB）</button><div class="uploaded-file-actions"><button type="button" class="download-upload" data-download-upload="${index}" title="下载文件" aria-label="下载${escapeHtml(file.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg></button><button type="button" data-remove-upload="${index}" title="移除文件" aria-label="移除${escapeHtml(file.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m3 0-.8 13H6.8L6 7m3 3v7m6-7v7"/></svg></button></div></div>`).join('');list.querySelectorAll('[data-preview-upload]').forEach(button=>button.onclick=()=>openStagedFilePreview(Number(button.dataset.previewUpload)));list.querySelectorAll('[data-download-upload]').forEach(button=>button.onclick=()=>downloadTrialFile(stagedTrialFiles[Number(button.dataset.downloadUpload)]));list.querySelectorAll('[data-remove-upload]').forEach(button=>button.onclick=()=>{stagedTrialFiles.splice(Number(button.dataset.removeUpload),1);renderStagedTrialFiles()})}
+const keys=['date','status','name','id','code','supplier','supplierCode','region','warehouse','group','job','shift','failReason','failDetail','trialCard','createdBy','createdAt','modifiedBy','modifiedAt','operation'];const failedReasons={WUS182368:['现场岗位要求不匹配','未达到质检岗位的准确率要求'],WUS181834:['现场岗位要求不匹配','操作流程不熟悉，未通过质量检查'],WUS181930:['技能要求未达到','试工期间出现多次漏检'],WUS181699:['工作效率未达到要求','分拣速度低于岗位标准']};const creatorEmails={MX911:'mx911@ztn.com',HN208:'hn208@ztn.com',AD056:'ad056@ztn.com'},formatClock=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')+':00';function makeFeedbackForm(person,detail){const rows=[190,238,288,338,388,438,488,538,588,638,688,738,788];const content=`<svg xmlns="http://www.w3.org/2000/svg" width="620" height="850" viewBox="0 0 620 850"><rect width="620" height="850" fill="#fff"/><rect x="32" y="28" width="556" height="790" fill="#fff" stroke="#222" stroke-width="1.5"/><rect x="32" y="48" width="556" height="42" fill="#d9d9d9" stroke="#222"/><text x="310" y="75" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700">Neue Mitarbeiter Onboarding / Feedback Formular 劳务工反馈表</text><rect x="32" y="90" width="556" height="32" fill="#eee" stroke="#222"/><text x="48" y="111" font-family="Arial,sans-serif" font-size="13" font-weight="700">Firma Name 劳务公司</text><text x="48" y="151" font-family="Arial,sans-serif" font-size="12" font-weight="700">Name 姓名</text><text x="174" y="151" font-family="Arial,sans-serif" font-size="13">${person}</text><text x="408" y="151" font-family="Arial,sans-serif" font-size="12" font-weight="700">Datum 日期</text><text x="490" y="151" font-family="Arial,sans-serif" font-size="13">${today}</text><text x="48" y="213" font-family="Arial,sans-serif" font-size="12" font-weight="700">Geschlecht 性别</text><text x="245" y="213" font-family="Arial,sans-serif" font-size="12">□ M 男</text><text x="370" y="213" font-family="Arial,sans-serif" font-size="12">□ W 女</text><text x="490" y="213" font-family="Arial,sans-serif" font-size="12">Alter 年龄</text><text x="48" y="263" font-family="Arial,sans-serif" font-size="12" font-weight="700">Schichtauswahl 班次选择</text><text x="48" y="307" font-family="Arial,sans-serif" font-size="12">Gruppe 组别</text><text x="250" y="278" font-family="Arial,sans-serif" font-size="12">□ Frühschicht 06:00–14:00</text><text x="250" y="302" font-family="Arial,sans-serif" font-size="12">□ Tagesschicht 08:30–17:00</text><text x="250" y="326" font-family="Arial,sans-serif" font-size="12">□ Spätschicht 14:00–22:00</text><text x="250" y="350" font-family="Arial,sans-serif" font-size="12">${detail}</text><rect x="32" y="360" width="556" height="28" fill="#dedede" stroke="#222"/><text x="46" y="379" font-family="Arial,sans-serif" font-size="13" font-weight="700">I. Sprachkenntnis 语言知识</text><text x="46" y="414" font-family="Arial,sans-serif" font-size="12">1. Welche Sprache spricht der Kandidat? 候选人会说哪种语言？</text><text x="54" y="444" font-family="Arial,sans-serif" font-size="12">□ Deutsch 德语　　　□ Englisch 英语　　　□ Andere 其他</text><rect x="32" y="458" width="556" height="28" fill="#dedede" stroke="#222"/><text x="46" y="477" font-family="Arial,sans-serif" font-size="13" font-weight="700">II. PC-Kenntnisse 电脑知识</text><text x="46" y="512" font-family="Arial,sans-serif" font-size="12">1. Verfügt der Kandidat über grundlegende Computerkenntnisse?</text><text x="46" y="532" font-family="Arial,sans-serif" font-size="12">候选人是否有基础的电脑知识？　□ Ja 是　　　　□ Nein 否</text><rect x="32" y="546" width="556" height="28" fill="#dedede" stroke="#222"/><text x="46" y="565" font-family="Arial,sans-serif" font-size="13" font-weight="700">III. Lese- und Schreibfähigkeit 阅读与书写能力</text><text x="46" y="600" font-family="Arial,sans-serif" font-size="12">1. Verfügt der Kandidat über Lese- und Schreibfähigkeiten?</text><text x="46" y="620" font-family="Arial,sans-serif" font-size="12">候选人有读写能力吗？　□ Ja 是　　　　　　　　　□ Nein 否</text><rect x="32" y="634" width="185" height="76" fill="#e5e5e5" stroke="#222"/><text x="48" y="664" font-family="Arial,sans-serif" font-size="12" font-weight="700">Bewertungsergebnis</text><text x="48" y="684" font-family="Arial,sans-serif" font-size="12" font-weight="700">组长/副组长考核结果</text><text x="230" y="656" font-family="Arial,sans-serif" font-size="12">通过考核：□ 是 Bestanden　　□ 否 Nicht bestanden</text><text x="230" y="690" font-family="Arial,sans-serif" font-size="12">组长/班组长签字：________________________</text><rect x="32" y="710" width="185" height="108" fill="#e5e5e5" stroke="#222"/><text x="48" y="750" font-family="Arial,sans-serif" font-size="12" font-weight="700">Wenn nicht bestanden</text><text x="64" y="774" font-family="Arial,sans-serif" font-size="12" font-weight="700">不通过的原因</text><text x="230" y="735" font-family="Arial,sans-serif" font-size="12">□ 本人无意愿　□ 没有电脑知识　□ 不理解数字逻辑</text><text x="230" y="761" font-family="Arial,sans-serif" font-size="12">□ 太慢　□ 错误率太高　□ 未完成绩效标准</text><text x="230" y="787" font-family="Arial,sans-serif" font-size="12">□ 其他原因（请列举）：________________________</text>${rows.map(y=>`<line x1="32" y1="${y}" x2="588" y2="${y}" stroke="#555" stroke-width=".7"/>`).join('')}<line x1="217" y1="634" x2="217" y2="818" stroke="#555" stroke-width=".7"/><text x="310" y="838" text-anchor="middle" fill="#89919c" font-family="Arial,sans-serif" font-size="10">试工评估示例文件 · ${today}</text></svg>`;return content}function makeDemoFile(name,title,person,detail,color){const content=title==='现场记录'?makeFeedbackForm(person,detail):`<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300"><rect width="480" height="300" rx="12" fill="#fff"/><rect width="480" height="64" rx="12" fill="${color}"/><rect y="52" width="480" height="12" fill="${color}"/><text x="28" y="42" fill="#fff" font-size="24" font-family="sans-serif">${title}</text><text x="28" y="118" fill="#30343b" font-size="27" font-family="sans-serif">${person}</text><text x="28" y="164" fill="#68717d" font-size="18" font-family="sans-serif">${detail}</text><line x1="28" y1="206" x2="452" y2="206" stroke="#e5e8ed"/><text x="28" y="246" fill="#8a929e" font-size="15" font-family="sans-serif">试工评估示例文件 · ${today}</text></svg>`;return{name,content,type:'image/svg+xml',dataUrl:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(content)}}let currentPreviewFile=null;records.forEach((r,i)=>{r.department=['分拣员','打包员'].includes(r.job)?'物流支持部':['上架员','质检员'].includes(r.job)?'生产运营部':'仓储运营部';[r.failReason,r.failDetail]=r.status==='试工不通过'?(failedReasons[r.id]||['试工考核未通过','未达到岗位试工要求']):['--','--'];r.trialCards=[makeDemoFile(r.name+'_试工卡.svg','试工卡',r.name,r.id+' · '+r.job,'#3698ee')];r.trialCard=r.trialCards.map(f=>f.name).join('; ');r.createdBy=creatorEmails[r.supplierCode]||'supplier@ztn.com';const createdMinutes=8*60+i*11;r.createdAt=r.date+' '+formatClock(createdMinutes);r.modifiedBy=['张敏(WUS180206)','李强(WUS180318)','肖雷雷(WUS180001)'][i%3];r.modifiedAt=r.date+' '+formatClock(createdMinutes+35+(i%4)*10)});const personnelHistory={WUS182347:[{date:'2026-10-01',detail:'试工不通过，不符合岗位要求(经常不在工作岗位)'},{date:'2026-08-21',detail:'提前结束派遣，个人原因'},{date:'2026-06-15',detail:'试工不通过，岗位技能不符合要求'},{date:'2026-03-02',detail:'提前结束派遣，项目阶段调整'},{date:'2025-12-10',detail:'试工不通过，未达到岗位工作标准'},{date:'2025-09-09',detail:'提前结束派遣，业务变化'},{date:'2025-06-30',detail:'派遣结束，项目需求结束'}],WUS182355:[{date:'2026-10-06',detail:'提前结束派遣，上一段派遣已结束'}]};function getAssessmentWarnings(record){const samePerson=records.filter(item=>item!==record&&item.id===record.id).map(item=>({date:item.date,detail:'试工状态：'+item.status}));return[...(personnelHistory[record.id]||[]),...samePerson].sort((a,b)=>b.date.localeCompare(a.date))}const deptTree=[{name:'仓储运营部',children:['美西仓储组','华南仓储组','华东仓储组']},{name:'物流支持部',children:['分拣一组','分拣二组','打包组']},{name:'生产运营部',children:['上架组','质检组']}];const selectedDepts=new Set();let draftDepts=new Set();const trialSchemeStorageKey='otws.portal.trial.querySchemes';let savedTrialSchemes=[];try{const stored=localStorage.getItem(trialSchemeStorageKey);savedTrialSchemes=stored?JSON.parse(stored):[]}catch(e){savedTrialSchemes=[]}if(!Array.isArray(savedTrialSchemes))savedTrialSchemes=[];function persistTrialSchemes(){try{localStorage.setItem(trialSchemeStorageKey,JSON.stringify(savedTrialSchemes))}catch(e){}}function refreshTrialSchemes(selected='standard'){const control=document.querySelector('#queryScheme');control.innerHTML='';const standard=document.createElement('option');standard.value='standard';standard.textContent='标准方案';control.append(standard);savedTrialSchemes.forEach(s=>{const option=document.createElement('option');option.value=s.id;option.textContent=s.name;control.append(option)});control.value=[...control.options].some(o=>o.value===selected)?selected:'standard'}function readTrialFilters(){return{status:document.querySelector('#statusFilter').value,from:document.querySelector('#dateFrom').value,to:document.querySelector('#dateTo').value,employee:document.querySelector('#employeeFilter').value,department:portalEmbed?document.querySelector('#deptManual').value:'',job:document.querySelector('#jobFilter').value,createdBy:document.querySelector('#createdByFilter').value,createdFrom:document.querySelector('#createdFrom').value,createdTo:document.querySelector('#createdTo').value,updatedBy:document.querySelector('#updatedByFilter').value,updatedFrom:document.querySelector('#updatedFrom').value,updatedTo:document.querySelector('#updatedTo').value}}function applyTrialScheme(){const id=document.querySelector('#queryScheme').value;if(id==='standard'){document.querySelector('#reset').click();return}const scheme=savedTrialSchemes.find(s=>s.id===id);if(!scheme)return;const f=scheme.filters;document.querySelector('#statusFilter').value=f.status||'';document.querySelector('#dateFrom').value=f.from||'';document.querySelector('#dateTo').value=f.to||'';document.querySelector('#employeeFilter').value=f.employee||'';if(portalEmbed)document.querySelector('#deptManual').value=f.department||'';document.querySelector('#jobFilter').value=f.job||'';document.querySelector('#createdByFilter').value=f.createdBy||'';document.querySelector('#createdFrom').value=f.createdFrom||'';document.querySelector('#createdTo').value=f.createdTo||'';document.querySelector('#updatedByFilter').value=f.updatedBy||'';document.querySelector('#updatedFrom').value=f.updatedFrom||'';document.querySelector('#updatedTo').value=f.updatedTo||'';document.querySelectorAll('.status-segments button').forEach(b=>b.classList.toggle('active',b.dataset.status===(f.status||'')));render();toast('已应用查询方案：'+scheme.name)}function saveTrialScheme(){const name=prompt('请输入查询方案名称');if(!name||!name.trim())return;const cleanName=name.trim(),existing=savedTrialSchemes.find(s=>s.name===cleanName),entry={id:existing?existing.id:'trial-'+Date.now(),name:cleanName,filters:readTrialFilters()};if(existing)Object.assign(existing,entry);else savedTrialSchemes.push(entry);persistTrialSchemes();refreshTrialSchemes(entry.id);toast('查询方案已保存：'+cleanName)}function openTrialSchemeSettings(){toast('查询方案设置已打开')}function deleteTrialScheme(){const id=document.querySelector('#queryScheme').value;if(id==='standard'){toast('标准方案不可删除');return}const scheme=savedTrialSchemes.find(s=>s.id===id);if(!scheme)return;if(!confirm('确定删除查询方案“'+scheme.name+'”吗？'))return;savedTrialSchemes=savedTrialSchemes.filter(s=>s.id!==id);persistTrialSchemes();refreshTrialSchemes();document.querySelector('#reset').click();toast('查询方案已删除')}function filtered(){const s=document.querySelector('#statusFilter').value,from=document.querySelector('#dateFrom').value,to=document.querySelector('#dateTo').value,q=document.querySelector('#employeeFilter').value.trim().toLowerCase(),supplierQuery=portalEmbed?'':document.querySelector('#supplierFilter').value.trim().toLowerCase(),departmentQuery=portalEmbed?document.querySelector('#deptManual').value.trim().toLowerCase():'',job=document.querySelector('#jobFilter').value,createdBy=document.querySelector('#createdByFilter').value.trim().toLowerCase(),createdFrom=document.querySelector('#createdFrom').value.replace('T',' '),createdTo=document.querySelector('#createdTo').value.replace('T',' '),updatedBy=document.querySelector('#updatedByFilter').value.trim().toLowerCase(),updatedFrom=document.querySelector('#updatedFrom').value.replace('T',' '),updatedTo=document.querySelector('#updatedTo').value.replace('T',' ');return records.filter(r=>(!s||r.status===s)&&(!from||r.date>=from)&&(!to||r.date<=to)&&(!q||(r.name+r.id).toLowerCase().includes(q))&&(portalEmbed?(!departmentQuery||r.department.toLowerCase().includes(departmentQuery)):(!selectedDepts.size||selectedDepts.has(r.department)))&&(!supplierQuery||(r.supplier+r.supplierCode).toLowerCase().includes(supplierQuery))&&(!job||r.job===job)&&(!createdBy||r.createdBy.toLowerCase().includes(createdBy))&&(!createdFrom||r.createdAt.slice(0,16)>=createdFrom)&&(!createdTo||r.createdAt.slice(0,16)<=createdTo)&&(!updatedBy||r.modifiedBy.toLowerCase().includes(updatedBy))&&(!updatedFrom||r.modifiedAt.slice(0,16)>=updatedFrom)&&(!updatedTo||r.modifiedAt.slice(0,16)<=updatedTo))}function renderDeptTree(){const term=document.querySelector('#deptSearch').value.trim().toLowerCase(),tree=document.querySelector('#deptTree');tree.innerHTML=deptTree.map(d=>{const showParent=!term||d.name.toLowerCase().includes(term),children=d.children.filter(c=>!term||c.toLowerCase().includes(term)||d.name.toLowerCase().includes(term));if(!showParent&&!children.length)return '';return `<div class="dept-group"><button class="dept-option parent" type="button" data-dept="${d.name}"><span class="arrow">▸</span><input type="checkbox" ${draftDepts.has(d.name)?'checked':''} tabindex="-1"><span>${d.name}</span></button>${children.map(c=>`<button class="dept-option child" type="button" data-dept="${d.name}"><span class="arrow">　</span><input type="checkbox" ${draftDepts.has(d.name)?'checked':''} tabindex="-1"><span>${c}</span></button>`).join('')}</div>`}).join('')||'<div style="padding:18px;text-align:center;color:#87909c">没有找到部门</div>';tree.querySelectorAll('[data-dept]').forEach(b=>b.onclick=()=>{const key=b.dataset.dept;draftDepts.has(key)?draftDepts.delete(key):draftDepts.add(key);renderDeptTree();syncDeptAll()});syncDeptAll()}function syncDeptAll(){document.querySelector('#deptAllBox').checked=draftDepts.size===deptTree.length}function updateDeptLabel(){const names=[...selectedDepts];const label=document.querySelector('#deptValue'),trigger=document.querySelector('#deptTrigger');label.textContent=!names.length?'请选择':names.length===1?names[0]:`已选 ${names.length} 个部门`;trigger.classList.toggle('has-value',!!names.length)}function render(){const rows=filtered();document.querySelector('#rows').innerHTML=rows.length?rows.map(r=>`<tr>${keys.map((k,i)=>{let cell=i===1?`<span class="status ${r[k]}">${r[k]}</span>`:k==='modifiedBy'&&portalEmbed?'HR':k==='trialCard'?`<div class="file-thumbnails">${r.trialCards.map((file,fileIndex)=>`<span class="file-item" title="${file.name}"><button class="file-preview-trigger" type="button" data-file-action="preview" data-preview-record="${records.indexOf(r)}" data-preview-index="${fileIndex}" aria-label="在线预览 ${file.name}">${(file.type||'').startsWith('image/')&&file.dataUrl?`<img src="${file.dataUrl}" alt="${file.name}">`:`<span class="file-type-icon">${(file.name.split('.').pop()||'FILE').toUpperCase()}</span>`}<svg class="file-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="file-download-trigger" type="button" data-file-action="download" data-preview-record="${records.indexOf(r)}" data-preview-index="${fileIndex}" aria-label="下载 ${file.name}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M4 17v4h16v-4"/></svg></button></span>`).join('')}</div>`:k==='operation'?r.status==='待试工'?`<div class="row-actions"><button type="button" data-record="${records.indexOf(r)}" data-status-change="试工通过">试工通过</button><button type="button" data-record="${records.indexOf(r)}" data-status-change="试工不通过">试工不通过</button><button type="button" data-record="${records.indexOf(r)}" data-status-change="未到场">未到场</button></div>`:'':r[k];return `<td class="${i===0?'freeze1':i===1?'freeze2':k==='operation'?'freeze-right':''}">${cell}</td>`}).join('')}</tr>`).join(''):`<tr><td class="empty" colspan="${portalEmbed?16:20}" style="text-align:center;height:120px;color:#87909c">没有找到符合条件的试工记录</td></tr>`;document.querySelector('#countLabel').textContent=`共 ${rows.length} 条记录`;document.querySelector('#pagerText').textContent=`共 ${rows.length} 条`}document.querySelectorAll('.status-segments button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.status-segments button').forEach(x=>x.classList.toggle('active',x===b));document.querySelector('#statusFilter').value=b.dataset.status});document.querySelector('#deptTrigger').onclick=()=>{const picker=document.querySelector('#deptPicker'),opening=!picker.classList.contains('open');picker.classList.toggle('open',opening);document.querySelector('#deptTrigger').setAttribute('aria-expanded',String(opening));if(opening){draftDepts=new Set(selectedDepts);renderDeptTree();document.querySelector('#deptSearch').value=''}};document.querySelector('#deptSearch').oninput=renderDeptTree;document.querySelector('#deptSelectAll').onclick=()=>{draftDepts=draftDepts.size===deptTree.length?new Set():new Set(deptTree.map(d=>d.name));renderDeptTree()};document.querySelector('#deptClear').onclick=()=>{draftDepts.clear();renderDeptTree()};document.querySelector('#deptConfirm').onclick=()=>{selectedDepts.clear();draftDepts.forEach(x=>selectedDepts.add(x));document.querySelector('#deptPicker').classList.remove('open');document.querySelector('#deptTrigger').setAttribute('aria-expanded','false');updateDeptLabel();render()};document.addEventListener('click',e=>{const p=document.querySelector('#deptPicker');if(!p.contains(e.target)){p.classList.remove('open');document.querySelector('#deptTrigger').setAttribute('aria-expanded','false')}});document.querySelector('#toggleFilters').onclick=()=>{const collapsed=document.querySelector('.filter').classList.toggle('filter-collapsed');const toggle=document.querySelector('#toggleFilters');toggle.textContent=collapsed?'展开筛选项':'收起筛选项';toggle.setAttribute('aria-expanded',String(!collapsed))};document.querySelector('#query').onclick=render;document.querySelector('#employeeSearch').onclick=render;document.querySelector('#creatorSearch').onclick=render;document.querySelector('#createdByFilter').addEventListener('keydown',e=>{if(e.key==='Enter')render()});document.querySelector('#updatedSearch').onclick=render;document.querySelector('#updatedByFilter').addEventListener('keydown',e=>{if(e.key==='Enter')render()});document.querySelector('#employeeFilter').addEventListener('keydown',e=>{if(e.key==='Enter')render()});document.querySelector('#reset').onclick=()=>{document.querySelectorAll('.filter .fields input,.filter .fields select').forEach(x=>x.value='');document.querySelector('#queryScheme').value='standard';document.querySelector('#dateFrom').value=today;document.querySelector('#dateTo').value=today;document.querySelectorAll('.status-segments button').forEach(x=>x.classList.toggle('active',x.dataset.status===''));selectedDepts.clear();draftDepts.clear();updateDeptLabel();renderDeptTree();render()};document.querySelector('#queryScheme').onchange=applyTrialScheme;document.querySelector('#saveQueryScheme').onclick=saveTrialScheme;document.querySelector('#settingsQueryScheme').onclick=openTrialSchemeSettings;document.querySelector('#deleteQueryScheme').onclick=deleteTrialScheme;refreshTrialSchemes();document.querySelector('#rows').addEventListener('click',e=>{const fileButton=e.target.closest('[data-file-action][data-preview-record][data-preview-index]');if(fileButton){const recordIndex=Number(fileButton.dataset.previewRecord),fileIndex=Number(fileButton.dataset.previewIndex);if(fileButton.dataset.fileAction==='preview')openFilePreview(recordIndex,fileIndex);else if(fileButton.dataset.fileAction==='download')downloadTrialFile(records[recordIndex]?.trialCards[fileIndex]);return}const button=e.target.closest('[data-record][data-status-change]');if(!button)return;const recordIndex=Number(button.dataset.record),record=records[recordIndex];if(!record||record.status!=='待试工')return;openAssessmentAction(recordIndex,button.dataset.statusChange)});let pendingAssessment=null,pendingWarningItems=[],pendingHistoryExpanded=false;function renderAssessmentWarnings(){const warningBox=document.querySelector('#actionWarnings'),list=document.querySelector('#actionWarningList'),toggle=document.querySelector('#actionWarningToggle');warningBox.hidden=!pendingWarningItems.length;const visible=pendingHistoryExpanded?pendingWarningItems:pendingWarningItems.slice(0,5);list.innerHTML=visible.map(item=>`<li>${item.date}：${item.detail}</li>`).join('');toggle.hidden=pendingWarningItems.length<=5;toggle.textContent=pendingHistoryExpanded?'收起':`展开查看全部（${pendingWarningItems.length}）`}document.querySelector('#actionWarningToggle').onclick=()=>{pendingHistoryExpanded=!pendingHistoryExpanded;renderAssessmentWarnings()};function openAssessmentAction(recordIndex,status){const record=records[recordIndex];if(!record)return;pendingAssessment={recordIndex,status};pendingHistoryExpanded=false;stagedTrialFiles=status==='试工通过'?makeDemoTrialUploads(record):[];document.querySelector('#trialCardUpload').value='';renderStagedTrialFiles();document.querySelector('#dispatchStart').value=status==='试工通过'?record.date:'';document.querySelector('#dispatchEnd').value='';document.querySelector('#dispatchDateRange').classList.remove('invalid');document.querySelector('#dispatchDateError').hidden=true;for(const id of ['attendancePlan','quotePlan']){document.querySelector('#'+id).value='';document.querySelector('#'+id).classList.remove('invalid');document.querySelector('#'+id+'Error').hidden=true}const titles={'试工通过':'确认试工通过','试工不通过':'确认试工不通过','未到场':'确认未到场'};document.querySelector('#actionDialogTitle').textContent=titles[status]||'确认试工结果';document.querySelector('#actionFailFields').hidden=status!=='试工不通过';document.querySelector('#dispatchFields').hidden=status!=='试工通过';pendingWarningItems=status==='试工通过'?getAssessmentWarnings(record):[];renderAssessmentWarnings();document.querySelector('#actionFailReason').value=record.failReason&&record.failReason!=='--'?record.failReason:'现场岗位要求不匹配';document.querySelector('#actionFailDetail').value=record.failDetail&&record.failDetail!=='--'?record.failDetail:'';document.querySelector('#confirmAction').textContent='确认';document.querySelector('#confirmAction').style.background='';document.querySelector('#confirmAction').style.borderColor='';const supplierSummaryCode={MX911:'S00001',HN208:'S00002',AD056:'S00003'}[record.supplierCode]||record.supplierCode,groupSummary=record.group==='入库一组'?'入库组':record.group,summaryItems=[['员工',`${record.name}（${record.id}）`],['试工日期',record.date],['供应商',`${record.supplier}（${supplierSummaryCode}）`],['部门',`${record.region} / ${record.warehouse} / ${groupSummary}`],['工种',record.job],['班次',record.shift]];document.querySelector('#actionRecordSummary').innerHTML=summaryItems.map(([label,value])=>`<div class="action-summary-item"><span class="action-summary-label">${label}</span><strong class="action-summary-value">${value}</strong></div>`).join('');document.querySelector('#actionDialog').hidden=false;document.querySelector('#confirmAction').focus()}function closeAssessmentAction(){document.querySelector('#actionDialog').hidden=true;pendingAssessment=null}document.querySelector('#confirmAction').onclick=()=>{if(!pendingAssessment)return;const {recordIndex,status}=pendingAssessment,record=records[recordIndex];if(!record||record.status!=='待试工'){closeAssessmentAction();return}if(status==='试工通过'){const start=document.querySelector('#dispatchStart').value,end=document.querySelector('#dispatchEnd').value;let plansValid=true;for(const id of ['attendancePlan','quotePlan']){const input=document.querySelector('#'+id),error=document.querySelector('#'+id+'Error'),valid=Boolean(input.value);input.classList.toggle('invalid',!valid);error.hidden=valid;if(!valid)plansValid=false}if(!start||!end||end<start){document.querySelector('#dispatchDateRange').classList.add('invalid');document.querySelector('#dispatchDateError').hidden=false;return}document.querySelector('#dispatchDateRange').classList.remove('invalid');document.querySelector('#dispatchDateError').hidden=true;if(!plansValid)return;record.dispatchStart=start;record.dispatchEnd=end;record.attendancePlan=document.querySelector('#attendancePlan').value;record.quotePlan=document.querySelector('#quotePlan').value;for(const file of stagedTrialFiles){record.trialCards.push({name:file.name,type:file.type||'application/octet-stream',size:file.size,fileObject:file,dataUrl:URL.createObjectURL(file)})}record.trialCard=record.trialCards.map(file=>file.name).join('; ')}if(status==='试工不通过'){const reason=document.querySelector('#actionFailReason').value,detail=document.querySelector('#actionFailDetail').value.trim();record.failReason=reason||'--';record.failDetail=detail||'--'}else{record.failReason='--';record.failDetail='--'}record.status=status;const now=new Date(),pad=n=>String(n).padStart(2,'0');record.modifiedBy='张敏(WUS180206)';record.modifiedAt=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());closeAssessmentAction();render();toast('试工状态已更新为：'+record.status)};let stagedTrialFiles=[];document.querySelector('#chooseTrialCards').onclick=()=>document.querySelector('#trialCardUpload').click();document.querySelector('#trialCardUpload').onchange=e=>{const incoming=[...e.target.files];for(const file of incoming){if(file.size>10*1024*1024){toast(file.name+' 超过10MB，未添加');continue}if(stagedTrialFiles.length>=20){toast('试工卡最多上传20个文件');break}stagedTrialFiles.push(file)}e.target.value='';renderStagedTrialFiles()};function makeDemoTrialUploads(record){return record.trialCards.slice(0,2).map((file,index)=>new File([file.content],record.name+(index===0?'_试工卡示例.svg':'_现场记录示例.svg'),{type:'image/svg+xml'}))}function renderStagedTrialFiles(){const list=document.querySelector('#uploadedTrialCards');if(!list)return;const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));list.innerHTML=stagedTrialFiles.map((file,index)=>`<div class="uploaded-file-row"><button type="button" class="uploaded-file-name" data-preview-upload="${index}" title="点击预览：${escapeHtml(file.name)}">${escapeHtml(file.name)}（${(file.size/1024/1024).toFixed(2)}MB）</button><div class="uploaded-file-actions"><button type="button" class="download-upload" data-download-upload="${index}" title="下载文件" aria-label="下载${escapeHtml(file.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg></button><button type="button" data-remove-upload="${index}" title="移除文件" aria-label="移除${escapeHtml(file.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m3 0-.8 13H6.8L6 7m3 3v7m6-7v7"/></svg></button></div></div>`).join('');list.querySelectorAll('[data-preview-upload]').forEach(button=>button.onclick=()=>openStagedFilePreview(Number(button.dataset.previewUpload)));list.querySelectorAll('[data-download-upload]').forEach(button=>button.onclick=()=>downloadTrialFile(stagedTrialFiles[Number(button.dataset.downloadUpload)]));list.querySelectorAll('[data-remove-upload]').forEach(button=>button.onclick=()=>{stagedTrialFiles.splice(Number(button.dataset.removeUpload),1);renderStagedTrialFiles()})}
 function openStagedFilePreview(index){const file=stagedTrialFiles[index];if(!file)return;currentPreviewFile=file;document.querySelector('#filePreviewTitle').textContent=file.name+' · 试工卡文件';document.querySelector('#filePreviewName').textContent=file.name;const image=document.querySelector('#filePreviewImage'),frame=document.querySelector('#filePreviewFrame'),message=document.querySelector('#filePreviewMessage'),url=URL.createObjectURL(file);image.hidden=true;frame.hidden=true;message.hidden=true;if((file.type||'').startsWith('image/')){image.src=url;image.alt=file.name;image.hidden=false}else if(file.type==='application/pdf'){frame.src=url;frame.hidden=false}else{message.textContent='文件：'+file.name+'。此类型文件可下载查看。';message.hidden=false}document.querySelector('#filePreview').hidden=false;document.querySelector('#closeFilePreview').focus()}
 function refreshDispatchDateError(){const start=document.querySelector('#dispatchStart').value,end=document.querySelector('#dispatchEnd').value;if(!start||!end)return;const valid=end>=start;document.querySelector('#dispatchDateRange').classList.toggle('invalid',!valid);document.querySelector('#dispatchDateError').hidden=valid}document.querySelector('#dispatchStart').onchange=refreshDispatchDateError;document.querySelector('#dispatchEnd').onchange=refreshDispatchDateError;for(const id of ['attendancePlan','quotePlan'])document.querySelector('#'+id).onchange=()=>{document.querySelector('#'+id).classList.remove('invalid');document.querySelector('#'+id+'Error').hidden=true};document.querySelector('#cancelAction').onclick=closeAssessmentAction;document.querySelector('#closeActionDialog').onclick=closeAssessmentAction;document.querySelector('#actionDialog').onclick=e=>{if(e.target.id==='actionDialog')closeAssessmentAction()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.querySelector('#actionDialog').hidden)closeAssessmentAction()});function openFilePreview(recordIndex,fileIndex){const record=records[recordIndex],file=record&&record.trialCards[fileIndex];if(!file)return;currentPreviewFile=file;document.querySelector('#filePreviewTitle').textContent=record.name+' · 试工卡文件';document.querySelector('#filePreviewName').textContent=file.name;const image=document.querySelector('#filePreviewImage'),frame=document.querySelector('#filePreviewFrame'),message=document.querySelector('#filePreviewMessage');image.hidden=true;frame.hidden=true;message.hidden=true;if((file.type||'').startsWith('image/')){image.src=file.dataUrl||URL.createObjectURL(new Blob([file.content],{type:file.type}));image.alt=file.name;image.hidden=false}else if(file.type==='application/pdf'){frame.src=file.dataUrl||URL.createObjectURL(new Blob([file.content],{type:file.type}));frame.hidden=false}else{message.textContent='文件：'+file.name+'。此类型文件可下载查看。';message.hidden=false}document.querySelector('#filePreview').hidden=false;document.querySelector('#closeFilePreview').focus()}function downloadTrialFile(file){if(!file)return;const blob=file.fileObject||(file instanceof Blob?file:new Blob([file.content],{type:file.type||'application/octet-stream'})),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}function closeFilePreview(){document.querySelector('#filePreview').hidden=true;currentPreviewFile=null}document.querySelector('#closeFilePreview').onclick=closeFilePreview;document.querySelector('#filePreview').onclick=e=>{if(e.target.id==='filePreview')closeFilePreview()};document.querySelector('#downloadPreviewFile').onclick=()=>downloadTrialFile(currentPreviewFile);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.querySelector('#filePreview').hidden)closeFilePreview()});document.querySelector('#export').onclick=()=>{const rows=filtered();if(!rows.length){toast('当前没有可导出的记录');return}const exportKeys=portalEmbed?keys.filter(k=>!['supplier','supplierCode','failDetail','operation'].includes(k)):keys.filter(k=>k!=='operation'),exportHeader=portalEmbed?'试工日期,试工状态,姓名,工号,编号,区域,物理仓,组,工种,班次,试工不通过原因,试工卡,创建人,创建时间,更新人,更新时间':'试工日期,试工状态,姓名,工号,编号,供应商名称,供应商编码,区域,物理仓,组,工种,班次,试工不通过原因,试工不通过具体原因,试工卡,创建人,创建时间,更新人,更新时间';const csv=[exportHeader,...rows.map(r=>exportKeys.map(k=>'"'+String(r[k]).replaceAll('"','""')+'"').join(','))].join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='试工评估_'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(a.href);toast(`已导出 ${rows.length} 条试工记录`)};function toast(s){const t=document.querySelector('#toast');t.textContent=s;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}const columnTooltip=document.querySelector('#columnTooltip');function showColumnTooltip(target){columnTooltip.textContent=target.dataset.tip;columnTooltip.hidden=false;const r=target.getBoundingClientRect(),w=columnTooltip.offsetWidth,h=columnTooltip.offsetHeight;let left=Math.min(Math.max(8,r.left+r.width/2-w/2),innerWidth-w-8),top=r.top-h-10;if(top<8)top=Math.min(innerHeight-h-8,r.bottom+10);columnTooltip.style.left=left+'px';columnTooltip.style.top=top+'px'}function hideColumnTooltip(){columnTooltip.hidden=true}document.querySelectorAll('.help-tip').forEach(t=>{t.addEventListener('mouseenter',()=>showColumnTooltip(t));t.addEventListener('mouseleave',hideColumnTooltip);t.addEventListener('focus',()=>showColumnTooltip(t));t.addEventListener('blur',hideColumnTooltip)});document.querySelector('#dateFrom').value=today;document.querySelector('#dateTo').value=today;renderDeptTree();updateDeptLabel();render();
 </script><script>
@@ -192,7 +191,133 @@ const failFields=document.querySelector('#actionFailFields');
 const dispatchFields=document.querySelector('#dispatchFields');
 const dispatchConfigFields=[...dispatchFields.querySelectorAll('.action-form-field')].slice(0,3);
 const trialUploadField=dispatchFields.querySelector('.upload-field');
-const failReasonField=document.querySelector('#actionFailReason').closest('.action-form-field');
+const failReasonSelect=document.querySelector('#actionFailReason');
+const originalFailReasonField=failReasonSelect.closest('.action-form-field');
+const failReasonField=document.createElement('div');
+failReasonField.className=originalFailReasonField.className;
+const failReasonLabel=document.createElement('span');
+failReasonLabel.textContent='试工不通过原因';
+failReasonField.append(failReasonLabel,failReasonSelect);
+originalFailReasonField.replaceWith(failReasonField);
+const failReasonOptions=document.createElement('div');
+failReasonOptions.className='fail-reason-picker';
+const failReasonTrigger=document.createElement('div');
+failReasonTrigger.className='fail-reason-trigger';failReasonTrigger.tabIndex=0;
+failReasonTrigger.setAttribute('role','group');failReasonTrigger.setAttribute('aria-expanded','false');
+const failReasonValue=document.createElement('div');failReasonValue.className='fail-reason-value';
+const clearFailReasons=document.createElement('button');
+clearFailReasons.type='button';clearFailReasons.className='fail-reason-clear';clearFailReasons.textContent='×';
+clearFailReasons.title='清空已选';clearFailReasons.setAttribute('aria-label','清空已选原因');
+const toggleFailReasons=document.createElement('button');
+toggleFailReasons.type='button';toggleFailReasons.className='fail-reason-toggle';toggleFailReasons.textContent='⌄';
+toggleFailReasons.setAttribute('aria-label','展开或收起选项');
+const failReasonMenu=document.createElement('div');
+failReasonMenu.className='fail-reason-menu';failReasonMenu.setAttribute('role','group');
+failReasonMenu.setAttribute('aria-label','试工不通过原因，可多选');failReasonMenu.hidden=true;
+const reasonSearch=document.createElement('input');
+reasonSearch.type='search';reasonSearch.className='fail-reason-search';reasonSearch.placeholder='搜索原因';
+reasonSearch.setAttribute('aria-label','搜索试工不通过原因');
+const reasonActions=document.createElement('div');reasonActions.className='fail-reason-actions';
+const selectAllLabel=document.createElement('label');selectAllLabel.className='fail-reason-select-all';
+const selectAllReasons=document.createElement('input');selectAllReasons.type='checkbox';
+selectAllLabel.append(selectAllReasons,document.createTextNode('全选'));
+const reasonMatchCount=document.createElement('span');reasonMatchCount.className='fail-reason-match-count';
+const selectedOnlyButton=document.createElement('button');selectedOnlyButton.type='button';
+selectedOnlyButton.className='fail-reason-view-selected';selectedOnlyButton.textContent='查看已选';
+selectedOnlyButton.setAttribute('aria-pressed','false');
+reasonActions.append(selectAllLabel,reasonMatchCount,selectedOnlyButton);
+const reasonList=document.createElement('div');reasonList.className='fail-reason-list';
+const reasonFooter=document.createElement('div');reasonFooter.className='fail-reason-footer';
+const reasonSelectedCount=document.createElement('span');
+const doneFailReasons=document.createElement('button');doneFailReasons.type='button';
+doneFailReasons.className='fail-reason-done';doneFailReasons.textContent='完成';
+reasonFooter.append(reasonSelectedCount,doneFailReasons);
+failReasonMenu.append(reasonSearch,reasonActions,reasonList,reasonFooter);
+for(const option of [...failReasonSelect.options].filter(option=>option.value)){
+  const label=document.createElement('label'),checkbox=document.createElement('input');
+  checkbox.type='checkbox';checkbox.value=option.value;
+  checkbox.addEventListener('change',()=>{failReasonOptions.classList.remove('invalid');refreshFailReasonTrigger()});
+  label.append(checkbox,document.createElement('span'));
+  label.lastChild.textContent=option.textContent;label.className='fail-reason-option';
+  reasonList.append(label);
+}
+failReasonTrigger.append(failReasonValue,clearFailReasons,toggleFailReasons);
+failReasonOptions.append(failReasonTrigger,failReasonMenu);
+failReasonSelect.hidden=true;
+failReasonSelect.style.display='none';
+failReasonSelect.before(failReasonOptions);
+const selectedFailReasons=()=>[...reasonList.querySelectorAll('input:checked')].map(input=>input.value);
+function refreshFailReasonTrigger(){
+  const selected=selectedFailReasons();
+  failReasonValue.replaceChildren();
+  if(!selected.length){const placeholder=document.createElement('span');placeholder.className='fail-reason-placeholder';placeholder.textContent='请选择';failReasonValue.append(placeholder)}
+  else{
+    const options=[...reasonList.querySelectorAll('.fail-reason-option')];
+    const chosen=options.filter(label=>selected.includes(label.querySelector('input').value));
+    chosen.slice(0,2).forEach(label=>{
+      const chip=document.createElement('span');chip.className='fail-reason-chip';
+      const text=document.createElement('span');text.textContent=label.querySelector('span').textContent;
+      const remove=document.createElement('button');remove.type='button';remove.textContent='×';
+      remove.setAttribute('aria-label','移除 '+text.textContent);remove.addEventListener('click',event=>{event.stopPropagation();label.querySelector('input').checked=false;refreshFailReasonTrigger();renderFailReasonOptions()});
+      chip.append(text,remove);failReasonValue.append(chip);
+    });
+    if(chosen.length>2){const more=document.createElement('span');more.className='fail-reason-overflow';more.textContent='+'+(chosen.length-2);more.title=chosen.slice(2).map(label=>label.querySelector('span').textContent).join('、');failReasonValue.append(more)}
+  }
+  clearFailReasons.hidden=!selected.length;
+  failReasonTrigger.title=selected.join('、')||'请选择';
+  reasonSelectedCount.textContent='已选 '+selected.length+' 项';
+  renderFailReasonOptions();
+}
+function renderFailReasonOptions(){
+  const query=reasonSearch.value.trim().toLocaleLowerCase();
+  const selectedOnly=selectedOnlyButton.getAttribute('aria-pressed')==='true';
+  const labels=[...reasonList.querySelectorAll('.fail-reason-option')];
+  const visible=labels.filter(label=>{
+    const matches=label.querySelector('span').textContent.toLocaleLowerCase().includes(query);
+    const selected=label.querySelector('input').checked;
+    label.hidden=!matches||(selectedOnly&&!selected);return !label.hidden;
+  });
+  const checked=visible.filter(label=>label.querySelector('input').checked).length;
+  selectAllReasons.checked=visible.length>0&&checked===visible.length;
+  selectAllReasons.indeterminate=checked>0&&checked<visible.length;
+  reasonMatchCount.textContent=selectedOnly?'已选 '+selectedFailReasons().length+' 项':'共 '+labels.length+' 项';
+}
+const setSelectedFailReasons=values=>{reasonList.querySelectorAll('input').forEach(input=>{input.checked=values.includes(input.value)});refreshFailReasonTrigger()};
+const toggleReasonPanel=()=>{
+  failReasonMenu.hidden=!failReasonMenu.hidden;
+  failReasonTrigger.setAttribute('aria-expanded',String(!failReasonMenu.hidden));
+};
+failReasonTrigger.addEventListener('click',event=>{if(!event.target.closest('button'))toggleReasonPanel()});
+failReasonTrigger.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleReasonPanel()}});
+toggleFailReasons.addEventListener('click',toggleReasonPanel);
+clearFailReasons.addEventListener('click',event=>{event.stopPropagation();setSelectedFailReasons([])});
+reasonSearch.addEventListener('input',renderFailReasonOptions);
+selectAllReasons.addEventListener('change',()=>{
+  for(const label of reasonList.querySelectorAll('.fail-reason-option:not([hidden])'))label.querySelector('input').checked=selectAllReasons.checked;
+  refreshFailReasonTrigger();
+});
+selectedOnlyButton.addEventListener('click',()=>{
+  const active=selectedOnlyButton.getAttribute('aria-pressed')!=='true';
+  selectedOnlyButton.setAttribute('aria-pressed',String(active));
+  selectedOnlyButton.textContent=active?'返回全部':'查看已选';renderFailReasonOptions();
+});
+doneFailReasons.addEventListener('click',()=>{failReasonMenu.hidden=true;failReasonTrigger.setAttribute('aria-expanded','false')});
+document.addEventListener('click',event=>{
+  if(!failReasonOptions.contains(event.target)){failReasonMenu.hidden=true;failReasonTrigger.setAttribute('aria-expanded','false')}
+});
+failReasonOptions.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){failReasonMenu.hidden=true;failReasonTrigger.setAttribute('aria-expanded','false');failReasonTrigger.focus()}
+});
+const failReasonStyle=document.createElement('style');
+failReasonStyle.textContent='.fail-reason-picker{position:relative;min-width:0}.fail-reason-trigger{width:100%;min-height:40px;padding:3px 6px 3px 9px;border:1px solid #d8dde4;border-radius:7px;background:#fff;color:#30343b;display:flex;align-items:center;gap:6px}.fail-reason-trigger:hover,.fail-reason-trigger[aria-expanded="true"]{border-color:#3698ee}.fail-reason-value{flex:1;min-width:0;display:flex;align-items:center;gap:5px;overflow:hidden;white-space:nowrap}.fail-reason-placeholder{color:#8a929e}.fail-reason-chip{display:inline-flex;align-items:center;max-width:44%;min-width:0;gap:4px;padding:3px 5px;background:#eaf3ff;border-radius:4px;overflow:hidden;color:#3b4654}.fail-reason-chip>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fail-reason-chip button,.fail-reason-clear,.fail-reason-toggle{flex:none;border:0;background:transparent;color:#778291;cursor:pointer}.fail-reason-chip button{padding:0 2px}.fail-reason-overflow{flex:none;color:#3698ee;font-size:12px}.fail-reason-clear{width:22px;height:22px;border-radius:50%;background:#eef4fb;font-size:16px;line-height:1}.fail-reason-clear[hidden]{display:none}.fail-reason-toggle{width:24px;height:28px;font-size:17px}.fail-reason-menu{position:absolute;z-index:30;top:calc(100% + 5px);left:0;right:0;overflow:hidden;border:1px solid #dce2ea;border-radius:7px;background:#fff;box-shadow:0 10px 26px #24385428}.fail-reason-menu[hidden]{display:none}.fail-reason-search{width:calc(100% - 16px);height:34px;margin:8px;border:1px solid #d8dde4;border-radius:4px;padding:0 9px}.fail-reason-actions{height:38px;display:flex;align-items:center;gap:9px;padding:0 9px;border-block:1px solid #edf0f3;font-size:11px}.fail-reason-select-all{display:flex;align-items:center;gap:5px;white-space:nowrap}.fail-reason-select-all input,.fail-reason-option input{accent-color:#3698ee}.fail-reason-match-count{margin-right:auto;color:#7b8491;white-space:nowrap}.fail-reason-view-selected{padding:0;border:0;background:transparent;color:#3698ee;white-space:nowrap;cursor:pointer}.fail-reason-view-selected[aria-pressed="true"]{font-weight:600}.fail-reason-list{max-height:150px;overflow:auto;padding:4px 6px}.fail-reason-option{display:flex;align-items:flex-start;gap:8px;min-height:34px;padding:7px;border-radius:4px;color:#454d57;line-height:1.4;cursor:pointer}.fail-reason-option:hover{background:#f2f6fc}.fail-reason-option[hidden]{display:none}.fail-reason-option input{flex:none;margin:3px 0 0}.fail-reason-option>span{min-width:0;overflow-wrap:anywhere}.fail-reason-footer{height:40px;display:flex;align-items:center;gap:8px;padding:0 9px;border-top:1px solid #edf0f3;color:#7b8491;font-size:12px}.fail-reason-done{margin-left:auto;padding:5px 11px;border:0;border-radius:4px;background:#3698ee;color:#fff;cursor:pointer}.fail-reason-picker.invalid .fail-reason-trigger{border-color:#d45b56;box-shadow:0 0 0 1px #d45b56}';
+document.head.append(failReasonStyle);
+const trialRuleStorageKey='otws.trial.regionRules.v1';
+function getTrialSettlementRule(region){
+  try{
+    const rules=JSON.parse(localStorage.getItem(trialRuleStorageKey));
+    return Array.isArray(rules)?rules.find(rule=>rule.region===region)?.settlement||'no':'no';
+  }catch{return 'no'}
+}
 failReasonField.classList.add('required-fail-reason');
 const failFieldsObserver=new MutationObserver(()=>{
   if(document.querySelector('#actionDialog').hidden)return;
@@ -211,8 +336,33 @@ const failFieldsObserver=new MutationObserver(()=>{
   if(failFields.hidden)return;
   const record=records[assessment.recordIndex];
   if(!record)return;
-  failFields.classList.remove('config-layout');
-  failReasonField.querySelector('select').classList.remove('invalid');
+  const savedReasons=record.failReason&&record.failReason!=='--'?record.failReason.split(/[、，,]/).map(reason=>reason.trim()).filter(Boolean):['现场岗位要求不匹配'];
+  setSelectedFailReasons(savedReasons);
+  const settlementRequired=getTrialSettlementRule(record.region)==='yes';
+  failFields.classList.toggle('config-layout',settlementRequired);
+  failReasonOptions.classList.remove('invalid');
+  if(settlementRequired){
+    failFields.prepend(...dispatchConfigFields);
+    const dateRange=document.querySelector('#dispatchDateRange');
+    dateRange.classList.add('is-fixed');
+    document.querySelector('#dispatchStart').value=record.date;
+    document.querySelector('#dispatchEnd').value=record.date;
+    document.querySelector('#dispatchStart').disabled=true;
+    document.querySelector('#dispatchEnd').disabled=true;
+    document.querySelector('#dispatchStart').min='';
+    document.querySelector('#dispatchEnd').min='';
+    for(const id of ['attendancePlan','quotePlan']){
+      const select=document.querySelector('#'+id);
+      select.value=record[id]||select.options[1]?.value||'';
+      select.classList.remove('invalid');
+      document.querySelector('#'+id+'Error').hidden=true;
+    }
+  }else{
+    dispatchFields.append(...dispatchConfigFields);
+    document.querySelector('#dispatchDateRange').classList.remove('is-fixed');
+    document.querySelector('#dispatchStart').disabled=false;
+    document.querySelector('#dispatchEnd').disabled=false;
+  }
   if(trialUploadField){failFields.append(trialUploadField);stagedTrialFiles=(record.trialCards||[]).map(file=>new File([file.content||''],file.name,{type:file.type||'application/octet-stream'}));renderStagedTrialFiles()}
 });
 failFieldsObserver.observe(failFields,{attributes:true,attributeFilter:['hidden']});
@@ -229,11 +379,33 @@ document.querySelector('#confirmAction').addEventListener('click',event=>{
   if(!pendingAssessment)return;
   const record=records[pendingAssessment.recordIndex];if(!record)return;
   if(pendingAssessment.status==='试工不通过'){
-    const reason=document.querySelector('#actionFailReason');
-    reason.classList.toggle('invalid',!reason.value);
-    if(!reason.value){event.preventDefault();event.stopImmediatePropagation();toast('请选择试工不通过原因');return}
+    const reasons=selectedFailReasons();
+    failReasonOptions.classList.toggle('invalid',!reasons.length);
+    if(!reasons.length){event.preventDefault();event.stopImmediatePropagation();toast('请选择试工不通过原因');return}
+    if(getTrialSettlementRule(record.region)==='yes'){
+      let plansValid=true;
+      for(const id of ['attendancePlan','quotePlan']){
+        const input=document.querySelector('#'+id),valid=Boolean(input.value);
+        input.classList.toggle('invalid',!valid);
+        document.querySelector('#'+id+'Error').hidden=valid;
+        if(!valid)plansValid=false;
+      }
+      if(!plansValid){event.preventDefault();event.stopImmediatePropagation();return}
+      record.dispatchStart=record.date;
+      record.dispatchEnd=record.date;
+      record.attendancePlan=document.querySelector('#attendancePlan').value;
+      record.quotePlan=document.querySelector('#quotePlan').value;
+    }
     record.trialCards=stagedTrialFiles.map(file=>({name:file.name,type:file.type||'application/octet-stream',size:file.size,fileObject:file,dataUrl:URL.createObjectURL(file)}));
     record.trialCard=record.trialCards.map(file=>file.name).join('; ');
+    record.failReason=reasons.join('、');
+    record.failDetail=document.querySelector('#actionFailDetail').value.trim()||'--';
+    record.status='试工不通过';
+    const now=new Date(),pad=value=>String(value).padStart(2,'0');
+    record.modifiedBy='张敏(WUS180206)';
+    record.modifiedAt=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+    event.preventDefault();event.stopImmediatePropagation();
+    closeAssessmentAction();render();toast('试工状态已更新为：'+record.status);
     return;
   }
   const start=document.querySelector('#dispatchStart').value,end=document.querySelector('#dispatchEnd').value;
@@ -300,4 +472,517 @@ renderAssessmentWarnings=function(){
   toggle.hidden=pendingWarningItems.length<=5;
   toggle.textContent=pendingHistoryExpanded?'收起':`展开查看全部（${pendingWarningItems.length}）`;
 };
+</script><script>
+(()=>{
+  const toolbar=document.querySelector('.table-tools');
+  const exportButton=document.querySelector('#export');
+  if(!toolbar||!exportButton)return;
+  const storageKey='otws.trial.regionRules.v1';
+  const regions=[...new Set(records.map(record=>record.region))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+  const configButton=document.createElement('button');
+  configButton.className='btn trial-rule-config-trigger';
+  configButton.type='button';
+  configButton.textContent='试工规则配置';
+  configButton.hidden=portalEmbed;
+  toolbar.insertBefore(configButton,exportButton);
+
+  const style=document.createElement('style');
+  style.textContent=`
+    .table-tools{gap:10px;flex-wrap:wrap}
+    .trial-rule-dialog{position:fixed;inset:0;z-index:1300;display:flex;align-items:center;justify-content:center;padding:20px;background:#18243b66}
+    .trial-rule-dialog[hidden]{display:none}
+    .trial-rule-panel{width:min(860px,calc(100vw - 32px));max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden;border:1px solid #e5e8ed;border-radius:8px;background:#fff;box-shadow:0 18px 56px #17233738}
+    .trial-rule-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #edf0f3}
+    .trial-rule-head h2{margin:0;font-size:17px;font-weight:650}
+    .trial-rule-close{width:32px;height:32px;border:0;background:transparent;color:#69717c;font-size:22px;cursor:pointer}
+    .trial-rule-body{padding:18px 20px;overflow:auto}
+    .trial-rule-intro{margin:0 0 14px;color:#687383;font-size:13px}
+    .trial-rule-table-wrap{overflow-x:auto;border:1px solid #e5e8ed;border-radius:6px}
+    .trial-rule-table{width:100%;min-width:680px;border-collapse:collapse;font-size:13px}
+    .trial-rule-table th,.trial-rule-table td{height:auto;padding:10px 12px;border-bottom:1px solid #edf0f3;text-align:left;white-space:normal}
+    .trial-rule-table th{background:#f5f7f9;color:#555d66;font-weight:600}
+    .trial-rule-table tr:last-child td{border-bottom:0}
+    .trial-rule-table select{width:100%;height:36px;padding:0 9px;border:1px solid #d8dde4;border-radius:4px;background:#fff;color:#3f4751}
+    .trial-rule-table select:focus{border-color:#3698ee;outline:0;box-shadow:0 0 0 1px #3698ee}
+    .trial-rule-table select.invalid{border-color:#d45b56}
+    .trial-rule-remove{border:0;background:transparent;color:#2588df;white-space:nowrap;cursor:pointer}
+    .trial-rule-remove:hover{color:#d45b56}
+    .trial-rule-add{margin-top:12px}
+    .trial-rule-error{margin:10px 0 0;color:#c3423f;font-size:12px}
+    .trial-rule-error[hidden]{display:none}
+    .trial-rule-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid #edf0f3}
+    @media(max-width:600px){.trial-rule-dialog{padding:10px}.trial-rule-panel{width:calc(100vw - 20px);max-height:calc(100vh - 20px)}.trial-rule-body{padding:14px}.trial-rule-head,.trial-rule-foot{padding-left:14px;padding-right:14px}}
+  `;
+  document.head.append(style);
+
+  const dialog=document.createElement('div');
+  dialog.className='trial-rule-dialog';
+  dialog.id='trialRuleDialog';
+  dialog.hidden=true;
+  dialog.innerHTML=`<section class="trial-rule-panel" role="dialog" aria-modal="true" aria-labelledby="trialRuleTitle"><header class="trial-rule-head"><h2 id="trialRuleTitle">试工规则配置</h2><button class="trial-rule-close" type="button" aria-label="关闭">×</button></header><div class="trial-rule-body"><p class="trial-rule-intro">如果不设置，则默认试工不需要结算、试工结果需人工确认</p><div class="trial-rule-table-wrap"><table class="trial-rule-table"><thead><tr><th>区域</th><th>试工是否需要结算</th><th>自动试工通过规则</th><th>操作</th></tr></thead><tbody></tbody></table></div><button class="btn trial-rule-add" type="button">＋ 新增区域规则</button><p class="trial-rule-error" role="alert" hidden></p></div><footer class="trial-rule-foot"><button class="btn trial-rule-cancel" type="button">取消</button><button class="btn primary trial-rule-save" type="button">保存</button></footer></section>`;
+  dialog.querySelector('thead th:nth-child(3)').textContent='试工通过规则';
+  [1,2,3].forEach(index=>{
+    const marker=document.createElement('i');
+    marker.className='required-mark';
+    marker.setAttribute('aria-hidden','true');
+    marker.textContent='*';
+    dialog.querySelector(`thead th:nth-child(${index})`).prepend(marker,' ');
+  });
+  document.body.append(dialog);
+  const tbody=dialog.querySelector('tbody');
+  const error=dialog.querySelector('.trial-rule-error');
+  const createSelect=(label,options,value)=>{
+    const select=document.createElement('select');
+    select.setAttribute('aria-label',label);
+    options.forEach(([optionValue,text])=>{
+      const option=document.createElement('option');option.value=optionValue;option.textContent=text;select.append(option);
+    });
+    select.value=value||'';
+    return select;
+  };
+  const readSaved=()=>{
+    try{const value=JSON.parse(localStorage.getItem(storageKey));return Array.isArray(value)?value:[]}
+    catch{return[]}
+  };
+  let rules=readSaved();
+  if(!rules.length)rules=regions.map(region=>({region,settlement:'',autoPass:''}));
+  const addRow=(rule={})=>{
+    const row=document.createElement('tr');
+    const regionCell=document.createElement('td');
+    const settlementCell=document.createElement('td');
+    const autoCell=document.createElement('td');
+    const actionCell=document.createElement('td');
+    const region=createSelect('区域', [['', '请选择区域'],...regions.map(value=>[value,value])],rule.region);
+    const settlement=createSelect('试工是否需要结算',[['','请选择'],['yes','结算'],['no','不结算']],rule.settlement);
+    const autoPass=createSelect('自动试工通过规则',[['','请选择'],['manual','人工确认'],['clocked','有打卡则自动试工通过']],rule.autoPass);
+    const remove=document.createElement('button');remove.className='trial-rule-remove';remove.type='button';remove.textContent='删除';
+    remove.addEventListener('click',()=>{row.remove();error.hidden=true});
+    regionCell.append(region);settlementCell.append(settlement);autoCell.append(autoPass);actionCell.append(remove);
+    row.append(regionCell,settlementCell,autoCell,actionCell);tbody.append(row);
+  };
+  rules.forEach(addRow);
+  const closeDialog=()=>{dialog.hidden=true;configButton.focus()};
+  configButton.addEventListener('click',()=>{
+    dialog.hidden=false;error.hidden=true;
+    dialog.querySelector('select')?.focus();
+  });
+  dialog.querySelector('.trial-rule-close').addEventListener('click',closeDialog);
+  dialog.querySelector('.trial-rule-cancel').addEventListener('click',closeDialog);
+  dialog.addEventListener('click',event=>{if(event.target===dialog)closeDialog()});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!dialog.hidden)closeDialog()});
+  dialog.querySelector('.trial-rule-add').addEventListener('click',()=>{
+    const assigned=new Set([...tbody.querySelectorAll('tr select[aria-label="区域"]')].map(select=>select.value).filter(Boolean));
+    const next=regions.find(region=>!assigned.has(region));
+    if(!next){error.textContent='当前示例区域均已添加';error.hidden=false;return}
+    addRow({region:next});error.hidden=true;
+  });
+  dialog.querySelector('.trial-rule-save').addEventListener('click',()=>{
+    const nextRules=[...tbody.rows].map(row=>({
+      region:row.querySelector('[aria-label="区域"]').value,
+      settlement:row.querySelector('[aria-label="试工是否需要结算"]').value,
+      autoPass:row.querySelector('[aria-label="自动试工通过规则"]').value
+    }));
+    const regionsSelected=nextRules.map(rule=>rule.region).filter(Boolean);
+    const duplicate=regionsSelected.some((region,index)=>regionsSelected.indexOf(region)!==index);
+    const incomplete=[...tbody.rows].some(row=>[...row.querySelectorAll('select')].some(select=>!select.value));
+    tbody.querySelectorAll('tr').forEach(row=>row.querySelectorAll('select').forEach(select=>select.classList.toggle('invalid',!select.value)));
+    if(duplicate||incomplete){error.textContent=duplicate?'同一区域只能配置一条规则':'请完成每条区域规则的必填配置';error.hidden=false;return}
+    try{localStorage.setItem(storageKey,JSON.stringify(nextRules))}
+    catch{error.textContent='保存失败，请检查浏览器本地存储权限';error.hidden=false;return}
+    rules=nextRules;closeDialog();toast('试工规则已保存');
+  });
+})();
+</script><script>
+(()=>{
+  const table=document.querySelector('#rows')?.closest('table');
+  const toolbar=document.querySelector('.table-tools');
+  const exportButton=document.querySelector('#export');
+  if(!table||!toolbar||!exportButton||typeof render!=='function')return;
+  const selected=new Set();
+  const style=document.createElement('style');
+  style.textContent=`
+    .bulk-toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-right:auto}
+    .bulk-toolbar button:disabled{opacity:.45;cursor:not-allowed}
+    .bulk-row-check,.bulk-head-check{width:15px;height:15px;margin:0 8px 0 0;vertical-align:middle;accent-color:#3698ee;cursor:pointer}
+    .bulk-dialog{position:fixed;inset:0;z-index:1500;display:flex;align-items:center;justify-content:center;padding:16px;background:#18243b66}
+    .bulk-dialog[hidden],.bulk-body [hidden]{display:none!important}
+    .bulk-panel{width:min(1200px,calc(100vw - 28px));max-height:calc(100vh - 28px);display:flex;flex-direction:column;overflow:hidden;border:1px solid #e5e8ed;border-radius:8px;background:#fff;box-shadow:0 18px 56px #17233738}
+    .bulk-head,.bulk-foot{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #edf0f3}
+    .bulk-head strong{font-size:16px}.bulk-head button{width:30px;height:30px;border:0;background:transparent;color:#69717c;font-size:22px;cursor:pointer}
+    .bulk-body{padding:16px 18px;overflow:auto;display:grid;gap:14px}
+    .bulk-summary{display:grid;gap:8px;color:#47515e}.bulk-summary strong{color:#252a31}
+    .bulk-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 0;font-size:13px;font-weight:600;color:#38414c}.bulk-section-title small{font-weight:400;color:#7b8491}.bulk-roster-tools{display:flex;align-items:center;justify-content:flex-end;gap:12px}.bulk-roster-filter{width:min(640px,100%);display:grid;grid-template-columns:58px minmax(0,1fr);align-items:center;gap:8px 10px}.bulk-roster-label{grid-row:1/3;color:#454d59;font-size:13px}.bulk-roster-input-wrap{height:38px;display:flex;border:1px solid #d8dde4;border-radius:5px;overflow:hidden}.bulk-roster-search{width:100%;min-width:0;height:100%;border:0;outline:0;padding:0 12px;background:#fff;color:#303943}.bulk-roster-search::placeholder{color:#b2bac7}.bulk-roster-search-icon{width:46px;flex:none;border:0;border-left:1px solid #d8dde4;background:#fff;color:#69717c;display:grid;place-items:center;cursor:pointer}.bulk-roster-search-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.bulk-roster-filter-actions{grid-column:2;display:flex;gap:8px}.bulk-roster-filter-actions button{height:34px;min-width:90px;padding:0 16px;border:1px solid #d8dde4;border-radius:5px;background:#fff;color:#38404a}.bulk-roster-filter-actions .bulk-roster-query{background:#3698ee;border-color:#3698ee;color:#fff}.bulk-roster-pages{align-self:flex-end;padding-bottom:2px}.bulk-roster-pages{display:flex;align-items:center;gap:6px;color:#69717c;font-size:12px}.bulk-roster-pages button{height:28px;min-width:50px;padding:0 8px;border:1px solid #d8dde4;border-radius:4px;background:#fff;color:#4e5864;font-size:12px}.bulk-roster-pages button:disabled{opacity:.45;cursor:not-allowed}.bulk-people-scroll{max-height:min(440px,48vh);overflow:auto;border:1px solid #e5e8ed;border-radius:5px}.bulk-people{width:100%;min-width:1040px;border-collapse:separate;border-spacing:0;font-size:12px}.bulk-people th{position:sticky;top:0;z-index:1;padding:9px 10px;background:#f3f5f7;border-bottom:1px solid #dfe3e8;text-align:left;font-weight:600;white-space:nowrap}.bulk-people td{padding:9px 10px;border-bottom:1px solid #edf0f3;vertical-align:top}.bulk-people tr:last-child td{border-bottom:0}.bulk-person-name{font-weight:600;color:#303943;white-space:nowrap}.bulk-person-meta{display:block;margin-top:3px;color:#77818d;max-width:220px;overflow-wrap:anywhere}.bulk-person-date{display:block;color:#59636f;margin-top:3px;white-space:nowrap}.bulk-person-date-range{display:grid;grid-template-columns:120px 10px 120px;align-items:center;gap:5px}.bulk-people input[type=date],.bulk-people select{width:100%;min-width:0;height:34px;border:1px solid #d8dde4;border-radius:4px;padding:0 7px;background:#fff;color:#303943}.bulk-people input[type=file]{width:185px;font-size:11px}.bulk-person-file-names{display:block;max-width:200px;margin-top:4px;color:#1676c5;overflow-wrap:anywhere}.bulk-person-remove{border:0;background:transparent;color:#76808b;cursor:pointer;font-size:18px}.bulk-person-remove:hover{color:#c3423f}.bulk-empty{padding:24px;text-align:center;color:#7b8491}
+    .bulk-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px}
+    .bulk-field{display:grid;gap:6px;min-width:0;color:#505965;font-size:13px}
+    .bulk-field select,.bulk-field textarea{width:100%;min-height:36px;border:1px solid #d8dde4;border-radius:5px;padding:8px 10px;background:#fff;color:#30343b}
+    .bulk-field textarea{min-height:72px;resize:vertical}.bulk-field.full{grid-column:1/-1}
+    .bulk-reason-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;padding:10px;border:1px solid #d8dde4;border-radius:5px}
+    .bulk-reason-list label{display:flex;gap:7px;align-items:flex-start;line-height:1.4}.bulk-reason-list input{margin:3px 0 0;accent-color:#3698ee}
+    .bulk-error{font-size:12px;color:#c3423f}.bulk-error[hidden]{display:none}
+    .bulk-foot{justify-content:flex-end;gap:9px;border-top:1px solid #edf0f3;border-bottom:0}
+    @media(max-width:580px){.bulk-fields,.bulk-reason-list{grid-template-columns:1fr}.bulk-field.full{grid-column:auto}.bulk-toolbar{width:100%;margin:0}.bulk-head,.bulk-foot{padding-inline:14px}.bulk-body{padding:14px}.bulk-roster-tools{align-items:stretch;flex-direction:column}.bulk-roster-filter{width:100%;grid-template-columns:48px minmax(0,1fr)}.bulk-roster-filter-actions button{min-width:76px}.bulk-roster-pages{align-self:flex-end;justify-content:flex-end}}
+  `;
+  style.textContent+=`.bulk-panel{width:min(1320px,calc(100vw - 32px))}.bulk-body{gap:10px;padding:14px 16px}.bulk-summary{gap:6px}.bulk-batch-settings{display:grid;grid-template-columns:minmax(190px,1.45fr) minmax(175px,1fr) minmax(175px,1fr) auto;align-items:end;gap:10px;padding:10px 12px;border:1px solid #e2e7ed;border-radius:5px;background:#f8fafc}.bulk-batch-settings[hidden]{display:none}.bulk-batch-heading{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;color:#303943;font-size:13px;font-weight:600}.bulk-batch-heading small{font-size:11px;font-weight:400;color:#727d89}.bulk-batch-field{display:grid;gap:5px;min-width:0;font-size:11px;color:#59636f}.bulk-batch-field input,.bulk-batch-field select{width:100%;min-width:0;height:34px;border:1px solid #d8dde4;border-radius:4px;padding:0 7px;background:#fff;color:#303943;font-size:12px}.bulk-batch-date-field .bulk-batch-dispatch-range{width:100%;min-width:0;height:34px;gap:4px;padding:0 7px;border-radius:4px}.bulk-batch-date-field .bulk-batch-dispatch-range>svg{width:16px;height:16px;flex-basis:16px;fill:none;stroke:currentColor;stroke-width:1.5}.bulk-batch-date-field .bulk-batch-dispatch-range>span{width:10px;flex:0 0 10px}.bulk-batch-date-field .dispatch-date-input input{height:100%;border:0;border-radius:0;padding:0 2px;background:transparent;font-size:12px}.bulk-batch-date-field .dispatch-date-input span{left:2px;font-size:11px}.bulk-batch-dispatch-range .dispatch-date-input.is-empty span{display:block}.bulk-batch-actions{display:flex;justify-content:flex-end}.bulk-batch-apply{height:34px;padding:0 14px;white-space:nowrap}.bulk-batch-settings .bulk-batch-error{grid-column:1/-1;margin:0;color:#c3423f;font-size:11px}.bulk-batch-settings .bulk-batch-error[hidden]{display:none}.bulk-people-scroll{max-height:min(400px,44vh);border-radius:4px}.bulk-people{min-width:1120px;table-layout:fixed}.bulk-people th{padding:9px 10px}.bulk-people td{padding:7px 9px}.bulk-pager{height:48px;gap:9px;padding:0 8px}.bulk-pager button{padding:5px 9px}.bulk-pager .bulk-page-number{min-width:28px}.bulk-pager button:disabled{opacity:.48;cursor:not-allowed}.bulk-dispatch-date-range{width:100%;min-width:245px;height:38px;gap:4px;padding:0 7px;border-radius:4px}.bulk-dispatch-date-range>svg{width:17px;height:17px;flex-basis:17px;fill:none;stroke:currentColor;stroke-width:1.5}.bulk-dispatch-date-range>span{width:10px;flex-basis:10px}.bulk-people .bulk-dispatch-date-range .dispatch-date-input input{height:100%;border:0;border-radius:0;padding:0 4px;background:transparent}.bulk-fail-dispatch-range{min-width:0;height:38px;display:grid;grid-template-columns:minmax(0,1fr) 10px minmax(0,1fr);gap:2px;padding:0 4px}.bulk-people .bulk-fail-dispatch-range .dispatch-date-input input{width:100%;min-width:0;height:100%;padding:0 2px;font-size:10px}.bulk-people .bulk-fail-dispatch-range input:disabled,.bulk-people select:disabled{background:#f1f3f5;color:#8a929e;border-color:#e1e5e9;opacity:1;cursor:not-allowed}.bulk-person-detail{width:100%;min-width:0;min-height:58px;padding:6px 7px;border:1px solid #d8dde4;border-radius:4px;background:#fff;color:#303943;font-size:11px;line-height:1.4;resize:vertical}.bulk-person-detail:focus{outline:0;border-color:#3698ee;box-shadow:0 0 0 1px #3698ee}.bulk-person-reason-menu{position:fixed;z-index:1700;right:auto;bottom:auto;max-width:calc(100vw - 16px)}.bulk-upload-box{min-width:0;padding:6px;border-radius:4px}.bulk-upload-box .upload-box-top{align-items:flex-start;flex-direction:column;gap:3px}.bulk-upload-trigger{height:28px;padding:0 8px;font-size:11px}.bulk-upload-box .upload-box-tip{font-size:10px;line-height:1.35}.bulk-upload-box .uploaded-file-list{gap:3px;margin-top:5px}.bulk-upload-box .uploaded-file-row{padding:4px 5px;font-size:11px}.bulk-upload-box .uploaded-file-name{width:auto;height:auto;flex:1;min-width:0;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.4;color:#087cff;text-align:left}.bulk-upload-box .uploaded-file-name:hover{text-decoration:underline}.bulk-person-meta{max-width:none;white-space:normal;line-height:1.4}.bulk-person-name{white-space:normal;overflow-wrap:anywhere}.bulk-person-remove{width:auto;height:auto;padding:2px 4px;border:0;border-radius:3px;background:transparent;color:#1676c5;font-size:12px;white-space:nowrap}.bulk-person-remove:hover{background:transparent;color:#c3423f;text-decoration:underline}.file-preview{z-index:1600}@media(max-width:760px){.bulk-panel{width:calc(100vw - 16px)}.bulk-body{padding:12px}.bulk-batch-settings{grid-template-columns:1fr 1fr}.bulk-batch-heading,.bulk-batch-settings .bulk-batch-error{grid-column:1/-1}.bulk-batch-actions{grid-column:1/-1}.bulk-people-scroll{max-height:40vh}.bulk-people{min-width:1120px}}`;
+  style.textContent+=`.bulk-people th:first-child,.bulk-people td:first-child{position:sticky;left:0;box-shadow:2px 0 4px #27384a0d}.bulk-people th:first-child{z-index:3;background:#f3f5f7}.bulk-people td:first-child{z-index:2;background:#fff}.bulk-people th:last-child,.bulk-people td:last-child{position:sticky;right:0;box-shadow:-2px 0 4px #27384a0d}.bulk-people th:last-child{z-index:3;background:#f3f5f7}.bulk-people td:last-child{z-index:2;background:#fff}#filePreview{z-index:1800}`;
+  style.textContent+=`.bulk-batch-settings.is-fail-settings{grid-template-columns:minmax(190px,1.35fr) minmax(150px,1fr) minmax(150px,1fr) minmax(190px,1.2fr) minmax(170px,1.1fr) auto}.bulk-batch-settings.is-fail-settings .bulk-batch-actions{grid-column:6}.bulk-batch-settings.is-fail-reasons-only{grid-template-columns:minmax(190px,1fr) minmax(170px,1fr) auto}.bulk-batch-settings.is-fail-reasons-only .bulk-batch-actions{grid-column:3}.bulk-batch-settlement-fields,.bulk-batch-fail-fields{display:contents}.bulk-batch-settlement-fields[hidden],.bulk-batch-fail-fields[hidden]{display:none!important}.bulk-batch-settings .fail-reason-trigger{height:34px;min-height:34px;border-radius:4px}.bulk-batch-settings .fail-reason-menu{z-index:1800}.bulk-batch-dispatch-range .dispatch-date-input.is-empty input{color:transparent}@media(max-width:760px){.bulk-batch-settings.is-fail-settings{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-settings .bulk-batch-actions{grid-column:1/-1}.bulk-batch-settings.is-fail-reasons-only{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-reasons-only .bulk-batch-actions{grid-column:1/-1}}`;
+  document.head.append(style);
+  const bulkBar=document.createElement('div');bulkBar.className='bulk-toolbar';
+  const batchButtons=['试工通过','试工不通过','未到场'].map(status=>{
+    const button=document.createElement('button');button.type='button';button.className='btn'+(status==='试工通过'?' primary':'');if(status==='试工不通过')button.style.cssText='background:#d8891c;border-color:#d8891c;color:#fff';button.textContent='批量'+status;button.disabled=true;button.dataset.bulkStatus=status;return button;
+  });
+  const ruleConfigButton=toolbar.querySelector('.trial-rule-config-trigger');
+  bulkBar.append(...batchButtons);
+  if(ruleConfigButton)bulkBar.append(ruleConfigButton);
+  bulkBar.append(exportButton);toolbar.prepend(bulkBar);
+
+  const dialog=document.createElement('div');dialog.className='bulk-dialog';dialog.hidden=true;
+  dialog.innerHTML=`<section class="bulk-panel" role="dialog" aria-modal="true" aria-labelledby="bulkTitle"><header class="bulk-head"><strong id="bulkTitle">批量处理试工</strong><button type="button" class="bulk-close" aria-label="关闭">×</button></header><div class="bulk-body"><div class="bulk-summary"><div class="bulk-batch-settings" hidden><div class="bulk-batch-heading"><span>批量设置</span><small class="bulk-batch-scope"></small></div><div class="bulk-batch-field bulk-batch-date-field"><span>派遣日期</span><div class="dispatch-date-range bulk-dispatch-date-range bulk-batch-dispatch-range"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 2v6M17 2v6M3 10h18"/></svg><label class="dispatch-date-input"><input type="date" aria-label="统一派遣开始日期"><span>开始日期</span></label><span>-</span><label class="dispatch-date-input"><input type="date" aria-label="统一派遣结束日期"><span>结束日期</span></label></div></div><label class="bulk-batch-field"><span>考勤方案</span><select data-batch-plan="attendance"><option value="">不统一修改</option></select></label><label class="bulk-batch-field"><span>报价方案</span><select data-batch-plan="quote"><option value="">不统一修改</option></select></label><div class="bulk-batch-actions"><button type="button" class="btn primary bulk-batch-apply">应用设置</button></div><p class="bulk-batch-error" role="alert" hidden></p></div><div class="bulk-people-scroll"><table class="bulk-people"><thead></thead><tbody></tbody></table></div><div class="pager bulk-pager"><span class="bulk-page-total">共 0 条</span><button type="button" data-page="prev">上一页</button><button type="button" class="on bulk-page-number">1</button><button type="button" data-page="next">下一页</button><span>10条/页</span></div></div><p class="bulk-error" hidden></p></div><footer class="bulk-foot"><button type="button" class="btn bulk-cancel">取消</button><button type="button" class="btn primary bulk-confirm">确认批量处理</button></footer></section>`;
+  document.body.append(dialog);
+  const title=dialog.querySelector('#bulkTitle'),error=dialog.querySelector('.bulk-error');
+  const peopleTable=dialog.querySelector('.bulk-people'),peopleHead=peopleTable.querySelector('thead'),peopleBody=peopleTable.querySelector('tbody');
+  const pageSummary=dialog.querySelector('.bulk-page-total'),pageNumber=dialog.querySelector('.bulk-page-number');
+  const pageButtons=dialog.querySelectorAll('[data-page]');
+  const batchSettings=dialog.querySelector('.bulk-batch-settings'),batchScope=dialog.querySelector('.bulk-batch-scope'),batchDateInputs=batchSettings.querySelectorAll('input[type="date"]'),batchPlanSelects=batchSettings.querySelectorAll('[data-batch-plan]'),batchError=batchSettings.querySelector('.bulk-batch-error');
+  batchPlanSelects.forEach(select=>{select.options[0].textContent='请选择'});
+  const batchSettlementFields=document.createElement('div');batchSettlementFields.className='bulk-batch-settlement-fields';
+  const batchDateField=batchSettings.querySelector('.bulk-batch-date-field'),batchPlanFields=[...batchPlanSelects].map(select=>select.closest('label'));
+  batchSettings.insertBefore(batchSettlementFields,batchDateField);batchSettlementFields.append(batchDateField,...batchPlanFields);
+  const batchFailFields=document.createElement('div');batchFailFields.className='bulk-batch-fail-fields';batchFailFields.hidden=true;
+  const batchFailReasonField=document.createElement('div');batchFailReasonField.className='bulk-batch-field';batchFailReasonField.innerHTML='<span>试工不通过原因</span><div class="bulk-batch-fail-reason"></div>';
+  const batchFailDetailField=document.createElement('label');batchFailDetailField.className='bulk-batch-field';batchFailDetailField.innerHTML='<span>试工不通过具体原因</span><input type="text" class="bulk-batch-fail-detail" placeholder="统一填写试工不通过具体原因" aria-label="批量填写试工不通过具体原因">';
+  batchFailFields.append(batchFailReasonField,batchFailDetailField);batchSettings.insertBefore(batchFailFields,batchSettings.querySelector('.bulk-batch-actions'));
+  const batchFailDetailInput=batchFailDetailField.querySelector('input');
+  const pageSize=10,personState=new Map();let currentPage=0;
+  const reasonNames=['现场岗位要求不匹配','技能要求未达到','工作效率未达到要求','候选人本人无意愿','其他原因'];
+  const batchFailureState={reasons:[]};let batchReasonPicker;
+  let activeBulkReasonPicker=null;
+  const positionBulkReasonMenu=()=>activeBulkReasonPicker?.position();
+  document.addEventListener('click',event=>{const picker=activeBulkReasonPicker;if(picker&&!picker.wrapper.contains(event.target)&&!picker.menu.contains(event.target))picker.close()});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&activeBulkReasonPicker){const trigger=activeBulkReasonPicker.trigger;activeBulkReasonPicker.close();trigger.focus();event.preventDefault();event.stopImmediatePropagation()}});
+  window.addEventListener('resize',positionBulkReasonMenu);
+  dialog.querySelector('.bulk-people-scroll').addEventListener('scroll',positionBulkReasonMenu);
+  function createBulkReasonPicker(record,state){
+    const wrapper=document.createElement('div');wrapper.className='fail-reason-picker bulk-person-reason-picker';
+    const trigger=document.createElement('div');trigger.className='fail-reason-trigger';trigger.tabIndex=0;trigger.setAttribute('role','group');trigger.setAttribute('aria-label',record.name+'试工不通过原因');trigger.setAttribute('aria-expanded','false');
+    const value=document.createElement('div');value.className='fail-reason-value';
+    const clear=document.createElement('button');clear.type='button';clear.className='fail-reason-clear';clear.textContent='×';clear.title='清空已选';clear.setAttribute('aria-label','清空 '+record.name+' 的不通过原因');
+    const toggle=document.createElement('button');toggle.type='button';toggle.className='fail-reason-toggle';toggle.textContent='⌄';toggle.setAttribute('aria-label','展开 '+record.name+' 的不通过原因');
+    trigger.append(value,clear,toggle);
+    const menu=document.createElement('div');menu.className='fail-reason-menu bulk-person-reason-menu';menu.setAttribute('role','group');menu.setAttribute('aria-label',record.name+'试工不通过原因，可多选');menu.hidden=true;
+    const search=document.createElement('input');search.type='search';search.className='fail-reason-search';search.placeholder='搜索原因';search.setAttribute('aria-label','搜索原因');
+    const actions=document.createElement('div');actions.className='fail-reason-actions';
+    const allLabel=document.createElement('label');allLabel.className='fail-reason-select-all';const all=document.createElement('input');all.type='checkbox';allLabel.append(all,document.createTextNode('全选'));
+    const count=document.createElement('span');count.className='fail-reason-match-count';
+    const selectedButton=document.createElement('button');selectedButton.type='button';selectedButton.className='fail-reason-view-selected';selectedButton.textContent='查看已选';selectedButton.setAttribute('aria-pressed','false');actions.append(allLabel,count,selectedButton);
+    const options=document.createElement('div');options.className='fail-reason-list';
+    reasonNames.forEach(reason=>{const label=document.createElement('label'),checkbox=document.createElement('input'),text=document.createElement('span');label.className='fail-reason-option';checkbox.type='checkbox';checkbox.value=reason;checkbox.checked=state.reasons.includes(reason);text.textContent=reason;checkbox.addEventListener('change',()=>{state.reasons=checkbox.checked?[...state.reasons,reason]:state.reasons.filter(item=>item!==reason);refresh()});label.append(checkbox,text);options.append(label)});
+    const footer=document.createElement('div');footer.className='fail-reason-footer';const selectedCount=document.createElement('span');const done=document.createElement('button');done.type='button';done.className='fail-reason-done';done.textContent='完成';footer.append(selectedCount,done);menu.append(search,actions,options,footer);wrapper.append(trigger);
+    const refresh=()=>{
+      value.replaceChildren();const chosen=reasonNames.filter(reason=>state.reasons.includes(reason));options.querySelectorAll('input').forEach(input=>{input.checked=chosen.includes(input.value)});
+      if(!chosen.length){const placeholder=document.createElement('span');placeholder.className='fail-reason-placeholder';placeholder.textContent='请选择';value.append(placeholder)}
+      chosen.slice(0,2).forEach(reason=>{const chip=document.createElement('span');chip.className='fail-reason-chip';const label=document.createElement('span');label.textContent=reason;const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','移除 '+reason);remove.addEventListener('click',event=>{event.stopPropagation();state.reasons=state.reasons.filter(item=>item!==reason);refresh()});chip.append(label,remove);value.append(chip)});
+      if(chosen.length>2){const more=document.createElement('span');more.className='fail-reason-overflow';more.textContent='+'+(chosen.length-2);more.title=chosen.slice(2).join('、');value.append(more)}
+      clear.hidden=!chosen.length;trigger.title=chosen.join('、')||'请选择';selectedCount.textContent='已选 '+chosen.length+' 项';
+      const query=search.value.trim().toLocaleLowerCase(),selectedOnly=selectedButton.getAttribute('aria-pressed')==='true';
+      const visible=[...options.querySelectorAll('.fail-reason-option')].filter(label=>{const matches=label.lastChild.textContent.toLocaleLowerCase().includes(query),checked=label.querySelector('input').checked;label.hidden=!matches||(selectedOnly&&!checked);return !label.hidden});
+      const checked=visible.filter(label=>label.querySelector('input').checked).length;all.checked=visible.length>0&&checked===visible.length;all.indeterminate=checked>0&&checked<visible.length;
+      count.textContent=selectedOnly?'已选 '+chosen.length+' 项':'共 '+reasonNames.length+' 项';
+    };
+    const picker={wrapper,trigger,menu,position(){if(menu.hidden)return;const rect=trigger.getBoundingClientRect(),width=Math.min(Math.max(rect.width,300),innerWidth-16);menu.style.width=width+'px';const height=menu.offsetHeight;const left=Math.min(Math.max(8,rect.left),innerWidth-width-8);const top=rect.bottom+height+8<=innerHeight?rect.bottom+5:Math.max(8,rect.top-height-5);menu.style.left=left+'px';menu.style.top=top+'px'},close(){menu.hidden=true;menu.remove();trigger.setAttribute('aria-expanded','false');if(activeBulkReasonPicker===picker)activeBulkReasonPicker=null}};
+    const open=()=>{if(activeBulkReasonPicker&&activeBulkReasonPicker!==picker)activeBulkReasonPicker.close();activeBulkReasonPicker=picker;document.body.append(menu);menu.hidden=false;trigger.setAttribute('aria-expanded','true');picker.position()};
+    trigger.addEventListener('click',event=>{if(event.target.closest('button'))return;menu.hidden?open():picker.close()});trigger.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();menu.hidden?open():picker.close()}});toggle.addEventListener('click',()=>menu.hidden?open():picker.close());
+    clear.addEventListener('click',event=>{event.stopPropagation();state.reasons=[];options.querySelectorAll('input').forEach(input=>input.checked=false);refresh()});
+    search.addEventListener('input',refresh);all.addEventListener('change',()=>{options.querySelectorAll('.fail-reason-option:not([hidden]) input').forEach(input=>{input.checked=all.checked;const reason=input.value;if(all.checked&&!state.reasons.includes(reason))state.reasons.push(reason);if(!all.checked)state.reasons=state.reasons.filter(item=>item!==reason)});refresh()});
+    selectedButton.addEventListener('click',()=>{const active=selectedButton.getAttribute('aria-pressed')!=='true';selectedButton.setAttribute('aria-pressed',String(active));selectedButton.textContent=active?'返回全部':'查看已选';refresh()});done.addEventListener('click',()=>picker.close());refresh();return wrapper;
+  }
+  batchReasonPicker=createBulkReasonPicker({name:'全部选中人员'},batchFailureState);
+  batchFailReasonField.querySelector('.bulk-batch-fail-reason').append(batchReasonPicker);
+  let activeStatus='';
+  const getRecords=()=>[...selected].map(index=>records[index]).filter(record=>record&&record.status==='待试工');
+  function renderPeople(chosen){
+    chosen.forEach(record=>{const index=records.indexOf(record);if(!personState.has(index)){const start=activeStatus==='试工不通过'?record.date:(record.dispatchStart&&record.dispatchStart>=record.date?record.dispatchStart:record.date);const end=activeStatus==='试工不通过'?record.date:(record.dispatchEnd&&record.dispatchEnd>=start?record.dispatchEnd:start);personState.set(index,{start,end,attendance:record.attendancePlan||'',quote:record.quotePlan||'',reasons:record.failReason&&record.failReason!=='--'?record.failReason.split('、'):[],failDetail:record.failDetail&&record.failDetail!=='--'?record.failDetail:'',files:(record.trialCards||[]).map(file=>file.fileObject instanceof File?file.fileObject:new File([file.content||''],file.name,{type:file.type||'application/octet-stream'}))})}});
+    const matches=chosen;
+    const pageCount=Math.max(1,Math.ceil(matches.length/pageSize));currentPage=Math.min(currentPage,pageCount-1);
+    const pageRecords=matches.slice(currentPage*pageSize,(currentPage+1)*pageSize);
+    updateBulkBatchSettings(chosen);
+    pageSummary.textContent=`共 ${matches.length} 条`;
+    pageNumber.textContent=String(currentPage+1);
+    pageNumber.disabled=false;
+    pageButtons.forEach(button=>button.disabled=button.dataset.page==='prev'?currentPage===0:currentPage>=pageCount-1);
+    const needsPlans=activeStatus==='试工通过'||(activeStatus==='试工不通过'&&chosen.some(record=>settlementRule(record.region)==='yes'));
+    activeBulkReasonPicker?.close();
+    peopleHead.replaceChildren();peopleBody.replaceChildren();
+    const columns=activeStatus==='未到场'
+      ?[{label:'试工日期',width:'15%'},{label:'员工/派遣信息',width:'75%'},{label:'操作',width:'10%'}]
+      :activeStatus==='试工通过'
+        ?[{label:'试工日期',width:'9%'},{label:'员工/派遣信息',width:'20%'},{label:'派遣日期',width:'20%'},{label:'考勤方案',width:'11%'},{label:'报价方案',width:'11%'},{label:'试工卡',width:'24%'},{label:'操作',width:'5%'}]
+        :needsPlans
+        ?[{label:'试工日期',width:'7%'},{label:'员工/派遣信息',width:'13%'},{label:'派遣日期',width:'11%'},{label:'考勤方案',width:'8%'},{label:'报价方案',width:'8%'},{label:'试工不通过原因',width:'13%'},{label:'具体原因',width:'9%'},{label:'试工卡',width:'27%'},{label:'操作',width:'4%'}]
+          :[{label:'试工日期',width:'7%'},{label:'员工/派遣信息',width:'13%'},{label:'派遣日期',width:'11%'},{label:'考勤方案',width:'8%'},{label:'报价方案',width:'8%'},{label:'试工不通过原因',width:'13%'},{label:'具体原因',width:'9%'},{label:'试工卡',width:'27%'},{label:'操作',width:'4%'}];
+    const colgroup=document.createElement('colgroup');columns.forEach(column=>{const col=document.createElement('col');col.style.width=column.width;colgroup.append(col)});
+    peopleTable.querySelector('colgroup')?.remove();peopleTable.prepend(colgroup);peopleTable.style.minWidth=activeStatus==='试工不通过'?'1320px':activeStatus==='试工通过'?'1240px':'1120px';
+    const headRow=document.createElement('tr');columns.forEach(({label})=>{const th=document.createElement('th');if(activeStatus==='试工不通过'&&label==='试工不通过原因'){const required=document.createElement('i');required.className='required-mark';required.textContent='*';th.append(required,document.createTextNode(' '+label))}else th.textContent=label;headRow.append(th)});peopleHead.append(headRow);
+    if(!pageRecords.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=columns.length;td.className='bulk-empty';td.textContent='请先选择待试工人员';tr.append(td);peopleBody.append(tr);return}
+    pageRecords.forEach(record=>{
+      const index=records.indexOf(record),state=personState.get(index);
+      const tr=document.createElement('tr');tr.dataset.record=index;
+      const trialDate=document.createElement('td');trialDate.textContent=record.date;tr.append(trialDate);
+      const identity=document.createElement('td'),name=document.createElement('strong');name.className='bulk-person-name';name.textContent=`${record.name}（${record.id}）`;
+      const meta=document.createElement('span');meta.className='bulk-person-meta';meta.textContent=[record.region,record.warehouse,record.group,record.job].filter(Boolean).join(' / ');identity.append(name,meta);tr.append(identity);
+      if(activeStatus==='试工通过'){
+        const cell=document.createElement('td'),range=document.createElement('div');range.className='dispatch-date-range bulk-dispatch-date-range';
+        range.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 2v6M17 2v6M3 10h18"/></svg><label class="dispatch-date-input"><input type="date" required aria-label="派遣开始日期"><span>开始日期</span></label><span>-</span><label class="dispatch-date-input"><input type="date" required aria-label="派遣结束日期"><span>结束日期</span></label>';
+        const [start,end]=range.querySelectorAll('input[type="date"]');
+        start.min=record.date;start.value=state.start;end.min=state.start||record.date;end.value=state.end;
+        start.setAttribute('aria-label',record.name+'派遣开始日期');end.setAttribute('aria-label',record.name+'派遣结束日期');
+        start.addEventListener('change',()=>{state.start=start.value;end.min=start.value||record.date;if(end.value<start.value){end.value=start.value;state.end=end.value}refreshPlanOptions(record,tr,state)});
+        end.addEventListener('change',()=>{state.end=end.value;refreshPlanOptions(record,tr,state)});
+        range.addEventListener('click',event=>{if(event.target.closest('input'))return;start.focus();if(start.showPicker){try{start.showPicker()}catch{}}});
+        cell.append(range);tr.append(cell);
+      }
+      const settling=activeStatus==='试工不通过'&&settlementRule(record.region)==='yes';
+      if(activeStatus==='试工不通过'){
+        const cell=document.createElement('td'),range=document.createElement('div');range.className='dispatch-date-range bulk-dispatch-date-range bulk-fail-dispatch-range';
+        range.innerHTML='<label class="dispatch-date-input"><input type="date" aria-label="派遣开始日期"></label><span>-</span><label class="dispatch-date-input"><input type="date" aria-label="派遣结束日期"></label>';
+        const [start,end]=range.querySelectorAll('input[type="date"]');start.min=record.date;end.min=record.date;start.value=settling?(state.start||record.date):'';end.value=settling?(state.end||record.date):'';start.disabled=end.disabled=!settling;start.required=end.required=settling;
+        start.setAttribute('aria-label',record.name+'派遣开始日期');end.setAttribute('aria-label',record.name+'派遣结束日期');
+        start.addEventListener('change',()=>{state.start=start.value;end.min=start.value||record.date;if(end.value<start.value){end.value=start.value;state.end=end.value}refreshPlanOptions(record,tr,state)});
+        end.addEventListener('change',()=>{state.end=end.value;refreshPlanOptions(record,tr,state)});
+        range.addEventListener('click',event=>{if(!settling||event.target.closest('input'))return;start.focus();if(start.showPicker){try{start.showPicker()}catch{}}});cell.append(range);tr.append(cell);
+      }
+      if(activeStatus==='试工不通过'){
+        for(const key of ['attendance','quote']){
+          const cell=document.createElement('td'),select=document.createElement('select');select.setAttribute('aria-label',record.name+(key==='attendance'?'考勤方案':'报价方案'));
+          if(settling){select.dataset.plan=key;select.addEventListener('change',()=>{state[key]=select.value})}
+          else{const option=document.createElement('option');option.value='';option.textContent='';select.append(option);select.disabled=true}
+          cell.append(select);tr.append(cell);
+        }
+      }else if(needsPlans){
+        for(const [key,preferred] of [['attendance',state.attendance],['quote',state.quote]]){
+          const cell=document.createElement('td'),select=document.createElement('select');select.dataset.plan=key;select.setAttribute('aria-label',record.name+(key==='attendance'?'考勤方案':'报价方案'));
+          select.addEventListener('change',()=>{state[key]=select.value});cell.append(select);tr.append(cell);
+        }
+      }
+      if(activeStatus==='试工不通过'){
+        const reasonCell=document.createElement('td');reasonCell.append(createBulkReasonPicker(record,state));tr.append(reasonCell);
+        const detailCell=document.createElement('td'),detail=document.createElement('textarea');detail.className='bulk-person-detail';detail.value=state.failDetail;detail.placeholder='填写具体原因';detail.setAttribute('aria-label',record.name+'试工不通过具体原因');detail.addEventListener('input',()=>{state.failDetail=detail.value});detailCell.append(detail);tr.append(detailCell);
+      }
+      if(activeStatus!=='未到场'){
+        const cell=document.createElement('td'),box=document.createElement('div');box.className='upload-box bulk-upload-box';
+        const top=document.createElement('div');top.className='upload-box-top';
+        const choose=document.createElement('button');choose.type='button';choose.className='btn bulk-upload-trigger';choose.textContent='上传文件';choose.setAttribute('aria-label',record.name+'试工卡上传');
+        const tip=document.createElement('span');tip.className='upload-box-tip';tip.textContent='最多5个文件，每个文件最大10MB';
+        const fileInput=document.createElement('input');fileInput.type='file';fileInput.multiple=true;fileInput.accept='image/*,.pdf,.doc,.docx,.xls,.xlsx';fileInput.hidden=true;
+        const list=document.createElement('div');list.className='uploaded-file-list';
+        choose.addEventListener('click',()=>fileInput.click());
+        fileInput.addEventListener('change',()=>{
+          const incoming=[...fileInput.files];let rejected=false;
+          for(const file of incoming){if(file.size>10*1024*1024||state.files.length>=5){rejected=true;continue}state.files.push(file)}
+          fileInput.value='';if(rejected)toast('每人试工卡最多5个文件，每个不超过10MB');renderBulkTrialFiles(list,state.files,state);
+        });
+        top.append(choose,tip);box.append(top,fileInput,list);cell.append(box);tr.append(cell);renderBulkTrialFiles(list,state.files,state);
+      }
+      const action=document.createElement('td'),remove=document.createElement('button');remove.type='button';remove.className='bulk-person-remove';remove.textContent='删除';remove.title='移除此人员';remove.setAttribute('aria-label','移除 '+record.name);
+      remove.addEventListener('click',()=>{selected.delete(index);personState.delete(index);syncControls();renderPeople(getRecords());if(!getRecords().length)closeBulkDialog()});action.append(remove);tr.append(action);
+      peopleBody.append(tr);refreshPlanOptions(record,tr,state);
+    });
+  }
+  function revealBulkRecord(record,selector){
+    const chosen=getRecords(),index=chosen.indexOf(record);if(index<0)return;
+    currentPage=Math.floor(index/pageSize);renderPeople(chosen);
+    peopleBody.querySelector(`[data-record="${records.indexOf(record)}"] ${selector}`)?.focus();
+  }
+  function refreshPlanOptions(record,row,state){
+    const start=state.start||record.date,end=state.end||record.date;
+    const attendance=row.querySelector('[data-plan="attendance"]');
+    if(attendance){
+      const options=getPlanOptions(record,start,end).attendance;
+      fillPlanSelect(attendance,options,state.attendance||record.attendancePlan||options[0]);state.attendance=attendance.value;
+    }
+    const quote=row.querySelector('[data-plan="quote"]');
+    if(quote){
+      const options=getPlanOptions(record,start,end).quote;
+      fillPlanSelect(quote,options,state.quote||record.quotePlan||options[0]);state.quote=quote.value;
+    }
+  }
+  function getPlanOptions(record,start=record.date,end=record.date){
+    const attendance=['标准考勤方案'];
+    if(record.region==='美西区'&&record.warehouse==='美西13号仓'&&record.group==='入库一组')attendance.unshift('美西考勤方案911');
+    if(record.shift!=='早班'&&record.warehouse&&record.group)attendance.push('仓储两班制考勤方案');
+    const quote=['标准报价方案'],validRange=start>=record.date&&end>=start;
+    if(validRange&&record.region==='美西区'&&record.warehouse?.startsWith('美西')&&['仓储操作员','分拣员'].includes(record.job))quote.unshift('美西测试（WUS260814001）');
+    if(validRange&&record.warehouse&&record.group&&record.job)quote.push('仓储基础报价方案');
+    return{attendance:[...new Set(attendance)],quote:[...new Set(quote)]};
+  }
+  function getBatchEligibleRecords(chosen=getRecords()){
+    return chosen.filter(record=>activeStatus==='试工通过'||(activeStatus==='试工不通过'&&settlementRule(record.region)==='yes'));
+  }
+  function updateBulkBatchSettings(chosen){
+    const eligible=getBatchEligibleRecords(chosen),show=activeStatus==='试工不通过'?chosen.length>0:activeStatus==='试工通过'&&eligible.length>0;
+    batchSettings.hidden=!show;batchError.hidden=true;
+    if(!show)return;
+    batchSettings.classList.toggle('is-fail-settings',activeStatus==='试工不通过'&&eligible.length>0);
+    batchSettings.classList.toggle('is-fail-reasons-only',activeStatus==='试工不通过'&&!eligible.length);
+    batchSettlementFields.hidden=!eligible.length;
+    batchFailFields.hidden=activeStatus!=='试工不通过';
+    batchScope.textContent=activeStatus==='试工不通过'?(eligible.length?`派遣日期/方案应用到${eligible.length}人（不结算自动跳过）；原因应用到全部${chosen.length}人`:`原因应用到全部${chosen.length}人`):`应用到${eligible.length}人`;
+    const minDate=eligible.map(record=>record.date).sort().reverse()[0]||'';
+    batchDateInputs.forEach(input=>{input.min=minDate});
+    if(batchDateInputs[0].value)batchDateInputs[1].min=batchDateInputs[0].value;
+    for(const select of batchPlanSelects){
+      const key=select.dataset.batchPlan,previous=select.value;
+      let common=null;
+      for(const record of eligible){
+        const state=personState.get(records.indexOf(record)),useRange=batchDateInputs[0].value&&batchDateInputs[1].value;
+        const options=getPlanOptions(record,useRange?batchDateInputs[0].value:(state?.start||record.date),useRange?batchDateInputs[1].value:(state?.end||record.date))[key];
+        common=common===null?options:common.filter(option=>options.includes(option));
+      }
+      select.replaceChildren(new Option('请选择',''));
+      (common||[]).forEach(option=>select.add(new Option(option,option)));
+      select.value=(common||[]).includes(previous)?previous:'';
+    }
+  }
+  function fillPlanSelect(select,options,preferred){
+    const previous=select.dataset.initialized?select.value:preferred;select.replaceChildren();options.forEach(value=>{const option=document.createElement('option');option.value=value;option.textContent=value;select.append(option)});select.value=options.includes(previous)?previous:options[0];select.dataset.initialized='true';
+  }
+  function renderBulkTrialFiles(list,files,state){
+    list.replaceChildren();
+    files.forEach((file,index)=>{
+      const row=document.createElement('div');row.className='uploaded-file-row';
+      const name=document.createElement('button');name.type='button';name.className='uploaded-file-name';name.textContent=`${file.name}（${(file.size/1024/1024).toFixed(2)}MB）`;name.title='点击预览：'+file.name;name.addEventListener('click',()=>openBulkFilePreview(file));
+      const actions=document.createElement('div');actions.className='uploaded-file-actions';
+      const download=document.createElement('button');download.type='button';download.className='download-upload';download.textContent='↓';download.title='下载文件';download.setAttribute('aria-label','下载'+file.name);download.addEventListener('click',()=>downloadTrialFile(file));
+      const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.title='移除文件';remove.setAttribute('aria-label','移除'+file.name);remove.addEventListener('click',()=>{state.files.splice(index,1);renderBulkTrialFiles(list,state.files,state)});
+      actions.append(download,remove);row.append(name,actions);list.append(row);
+    });
+  }
+  function openBulkFilePreview(file){
+    if(!file)return;currentPreviewFile=file;document.querySelector('#filePreviewTitle').textContent=file.name+' · 试工卡文件';document.querySelector('#filePreviewName').textContent=file.name;
+    const image=document.querySelector('#filePreviewImage'),frame=document.querySelector('#filePreviewFrame'),message=document.querySelector('#filePreviewMessage'),url=URL.createObjectURL(file);
+    image.hidden=true;frame.hidden=true;message.hidden=true;
+    if((file.type||'').startsWith('image/')){image.src=url;image.alt=file.name;image.hidden=false}else if(file.type==='application/pdf'){frame.src=url;frame.hidden=false}else{message.textContent='文件：'+file.name+'。此类型文件可下载查看。';message.hidden=false}
+    document.querySelector('#filePreview').hidden=false;document.querySelector('#closeFilePreview').focus();
+  }
+  pageButtons.forEach(button=>button.addEventListener('click',()=>{currentPage+=button.dataset.page==='next'?1:-1;renderPeople(getRecords())}));
+  const syncBatchDatePlaceholders=()=>batchDateInputs.forEach(input=>input.closest('.dispatch-date-input').classList.toggle('is-empty',!input.value));
+  batchSettings.querySelector('.bulk-batch-dispatch-range').addEventListener('click',event=>{if(event.target.closest('input'))return;batchDateInputs[0].focus();if(batchDateInputs[0].showPicker){try{batchDateInputs[0].showPicker()}catch{}}});
+  batchDateInputs[0].addEventListener('change',()=>{syncBatchDatePlaceholders();batchDateInputs[1].min=batchDateInputs[0].value||batchDateInputs[0].min;updateBulkBatchSettings(getRecords())});
+  batchDateInputs[1].addEventListener('change',()=>{syncBatchDatePlaceholders();updateBulkBatchSettings(getRecords())});
+  syncBatchDatePlaceholders();
+  batchPlanSelects.forEach(select=>select.addEventListener('change',()=>{batchError.hidden=true}));
+  dialog.querySelector('.bulk-batch-apply').addEventListener('click',()=>{
+    const chosen=getRecords(),eligible=getBatchEligibleRecords(chosen),start=batchDateInputs[0].value,end=batchDateInputs[1].value;
+    const attendance=batchSettings.querySelector('[data-batch-plan="attendance"]').value,quote=batchSettings.querySelector('[data-batch-plan="quote"]').value;
+    const failDetail=batchFailDetailInput.value.trim(),hasFailSettings=activeStatus==='试工不通过'&&(batchFailureState.reasons.length>0||Boolean(failDetail));
+    batchError.hidden=true;
+    if(Boolean(start)!==Boolean(end)){batchError.textContent='请同时填写派遣开始和结束日期。';batchError.hidden=false;return}
+    if(start&&end&&(start<batchDateInputs[0].min||end<start)){batchError.textContent='派遣日期不得早于所选人员中最晚的试工日期，结束日期不得早于开始日期。';batchError.hidden=false;return}
+    if(!start&&!attendance&&!quote&&!hasFailSettings){batchError.textContent='请选择至少一项批量设置后再应用。';batchError.hidden=false;return}
+    for(const record of eligible){
+      const state=personState.get(records.indexOf(record));
+      if(start){state.start=start;state.end=end}
+      const options=getPlanOptions(record,state.start||record.date,state.end||record.date);
+      if(!options.attendance.includes(state.attendance))state.attendance=options.attendance[0]||'';
+      if(!options.quote.includes(state.quote))state.quote=options.quote[0]||'';
+      if(attendance)state.attendance=attendance;
+      if(quote)state.quote=quote;
+    }
+    if(activeStatus==='试工不通过')for(const record of chosen){
+      const state=personState.get(records.indexOf(record));
+      if(batchFailureState.reasons.length)state.reasons=[...batchFailureState.reasons];
+      if(failDetail)state.failDetail=failDetail;
+    }
+    error.hidden=true;renderPeople(getRecords());
+  });
+  const visiblePending=()=>filtered().map(record=>records.indexOf(record)).filter(index=>records[index]?.status==='待试工');
+  const settlementRule=region=>{
+    try{const rules=JSON.parse(localStorage.getItem('otws.trial.regionRules.v1'));return Array.isArray(rules)?rules.find(rule=>rule.region===region)?.settlement||'no':'no'}catch{return 'no'}
+  };
+  function syncControls(){
+    for(const index of selected){if(records[index]?.status!=='待试工')selected.delete(index)}
+    const recordsSelected=getRecords();
+    for(const button of batchButtons)button.disabled=!recordsSelected.length;
+    const head=table.querySelector('thead th.freeze1');
+    if(head){
+      let master=head.querySelector('.bulk-head-check');
+      if(!master){master=document.createElement('input');master.type='checkbox';master.className='bulk-head-check';master.setAttribute('aria-label','全选当前筛选中的待试工');head.prepend(master)}
+      const visible=visiblePending();const checked=visible.filter(index=>selected.has(index)).length;
+      master.checked=visible.length>0&&checked===visible.length;master.indeterminate=checked>0&&checked<visible.length;
+    }
+    const renderedRecords=filtered();
+    for(const [rowIndex,row] of [...table.querySelectorAll('#rows tr')].entries()){
+      const record=renderedRecords[rowIndex];if(!record)continue;
+      const index=records.indexOf(record),cell=row.querySelector('td.freeze1');if(!cell)continue;
+      let checkbox=cell.querySelector('.bulk-row-check');
+      if(!checkbox){const date=cell.textContent.trim();checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.className='bulk-row-check';checkbox.dataset.record=index;const label=document.createElement('span');label.className='bulk-date-label';label.textContent=date;cell.replaceChildren(checkbox,label);}
+      checkbox.disabled=record.status!=='待试工';
+      checkbox.setAttribute('aria-label',record.status==='待试工'?'选择 '+record.name+'，待试工':'不可选择 '+record.name+'，当前状态：'+record.status);
+      checkbox.title=record.status==='待试工'?'选择待试工记录':'仅待试工记录可批量操作';
+      checkbox.checked=record.status==='待试工'&&selected.has(index);
+    }
+  }
+  const baseRender=render;
+  render=function(){baseRender();syncControls()};
+  table.addEventListener('change',event=>{
+    if(event.target.matches('.bulk-row-check')){const index=Number(event.target.dataset.record);event.target.checked?selected.add(index):selected.delete(index);syncControls()}
+    if(event.target.matches('.bulk-head-check')){for(const index of visiblePending())event.target.checked?selected.add(index):selected.delete(index);syncControls()}
+  });
+  function openBulkDialog(status){
+    const chosen=getRecords();if(!chosen.length)return;
+    activeStatus=status;error.hidden=true;title.textContent=`批量${status}`;
+    batchDateInputs.forEach(input=>{input.value='';input.min=''});syncBatchDatePlaceholders();batchPlanSelects.forEach(select=>{select.value=''});batchFailureState.reasons=[];batchReasonPicker.querySelector('.fail-reason-clear').click();batchFailDetailInput.value='';batchError.hidden=true;
+    personState.clear();currentPage=0;
+    renderPeople(chosen);
+    const needsSettlement=chosen.filter(record=>settlementRule(record.region)==='yes');
+    dialog.hidden=false;dialog.querySelector('.bulk-confirm').focus();
+  }
+  for(const button of batchButtons)button.addEventListener('click',()=>openBulkDialog(button.dataset.bulkStatus));
+  function closeBulkDialog(){activeBulkReasonPicker?.close();dialog.hidden=true;activeStatus=''}
+  dialog.querySelector('.bulk-close').addEventListener('click',closeBulkDialog);
+  dialog.querySelector('.bulk-cancel').addEventListener('click',closeBulkDialog);
+  dialog.addEventListener('click',event=>{if(event.target===dialog)closeBulkDialog()});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!dialog.hidden)closeBulkDialog()});
+  dialog.querySelector('.bulk-confirm').addEventListener('click',()=>{
+    const chosen=getRecords();if(!chosen.length){closeBulkDialog();return}
+    for(const record of chosen){
+      const state=personState.get(records.indexOf(record));
+      const start=state?.start||record.date,end=state?.end||record.date;
+      if(activeStatus==='试工通过'&&(!start||!end||start<record.date||end<start)){
+        error.textContent=`${record.name}的派遣日期无效：开始日期不得早于试工日期，结束日期不得早于开始日期。`;error.hidden=false;return;
+      }
+      const needsPlan=activeStatus==='试工通过'||(activeStatus==='试工不通过'&&settlementRule(record.region)==='yes');
+      if(activeStatus==='试工不通过'&&needsPlan&&(!start||!end||start<record.date||end<start)){
+        error.textContent=`${record.name}的派遣日期无效：开始日期不得早于试工日期，结束日期不能早于开始日期。`;error.hidden=false;revealBulkRecord(record,'.bulk-fail-dispatch-range input');return;
+      }
+      if(needsPlan&&(!state?.attendance||!state?.quote)){
+        error.textContent=`请为${record.name}选择考勤方案和报价方案。`;error.hidden=false;revealBulkRecord(record,'[data-plan]');return;
+      }
+    }
+    if(activeStatus==='试工不通过'){
+      const missing=chosen.find(record=>!(personState.get(records.indexOf(record))?.reasons.length));
+      if(missing){error.textContent='请为'+missing.name+'选择至少一个试工不通过原因';error.hidden=false;revealBulkRecord(missing,'.bulk-person-reason-picker .fail-reason-trigger');return}
+    }
+    const now=new Date(),pad=value=>String(value).padStart(2,'0');
+    const modifiedAt=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' '+pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+    for(const record of chosen){
+      const state=personState.get(records.indexOf(record));
+      if(activeStatus==='试工通过'||(activeStatus==='试工不通过'&&settlementRule(record.region)==='yes')){
+        record.dispatchStart=activeStatus==='试工通过'||activeStatus==='试工不通过'?(state.start||record.date):record.date;
+        record.dispatchEnd=activeStatus==='试工通过'||activeStatus==='试工不通过'?(state.end||record.date):record.date;
+        record.attendancePlan=state.attendance;
+        record.quotePlan=state.quote;
+      }
+      if(activeStatus==='试工不通过'){
+        record.failReason=(state?.reasons||[]).join('、');record.failDetail=state?.failDetail.trim()||'--';
+      }else{record.failReason='--';record.failDetail='--'}
+      if(activeStatus!=='未到场'){
+        record.trialCards=(state?.files||[]).map(file=>({name:file.name,type:file.type||'application/octet-stream',size:file.size,fileObject:file,dataUrl:URL.createObjectURL(file)}));
+        record.trialCard=record.trialCards.map(file=>file.name).join('; ')||'--';
+      }
+      record.status=activeStatus;record.modifiedBy='张敏(WUS180206)';record.modifiedAt=modifiedAt;
+    }
+    selected.clear();closeBulkDialog();render();toast(`已批量更新 ${chosen.length} 人：${activeStatus}`);
+  });
+  syncControls();
+})();
 </script><script defer src="prototype-switcher.js"></script></body></html>

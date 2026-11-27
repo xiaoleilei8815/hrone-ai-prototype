@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#327bf0">
+  <title>临时工管理移动端原型</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #3d3d3d;
+      --muted: #777f8b;
+      --line: #edf1f7;
+      --blue: #5ba6ed;
+      --orange: #f28a51;
+      --mint: #54cf96;
+      --red: #ef5d62;
+      --purple: #7c78ec;
+      --violet: #bd5bd8;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; background: var(--page-bg); }
+
+    body {
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button { font: inherit; }
+
+    .app {
+      width: 100%;
+      min-height: 100dvh;
+      background: var(--page-bg);
+      overflow-x: hidden;
+    }
+
+    .main-view {
+      min-height: 100dvh;
+      padding-bottom: max(118px, calc(82px + var(--safe-bottom)));
+    }
+
+    .hero {
+      position: relative;
+      height: calc(132px + var(--safe-top));
+      min-height: calc(132px + var(--safe-top));
+      padding-top: var(--safe-top);
+      overflow: hidden;
+      color: #fff;
+      background: linear-gradient(135deg, #3f90ee 0%, #2f6ee8 100%);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: .48;
+      background:
+        linear-gradient(161deg, rgba(255,255,255,.12) 0 13%, transparent 13% 100%),
+        linear-gradient(8deg, rgba(11,54,175,.38) 0 13%, transparent 13% 100%),
+        radial-gradient(circle at 79% 73%, rgba(12,47,192,.7) 0 7px, transparent 8px),
+        radial-gradient(circle at 82% 69%, rgba(255,255,255,.24) 0 7px, transparent 8px),
+        radial-gradient(circle at 67% 35%, rgba(17,50,202,.65) 0 13px, transparent 14px),
+        radial-gradient(circle at 65% 49%, rgba(85,151,244,.6) 0 13px, transparent 14px),
+        radial-gradient(circle at 62% 60%, rgba(85,151,244,.44) 0 12px, transparent 13px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 16%;
+      top: 13px;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(13,48,210,.72);
+      box-shadow: 0 5px 10px rgba(19,56,176,.16);
+      transform: rotate(31deg);
+      z-index: -1;
+    }
+
+    .hero-lines {
+      position: absolute;
+      left: -20px;
+      right: 0;
+      bottom: 0;
+      height: 55px;
+      opacity: .26;
+      background: repeating-linear-gradient(171deg, rgba(255,255,255,.4) 0 1px, transparent 1px 4px);
+      transform: skewX(-18deg);
+      pointer-events: none;
+    }
+
+    .profile {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding-top: 2px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border: 4px solid rgba(255,255,255,.34);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: #f45b27;
+      box-shadow: 0 3px 9px rgba(20,70,184,.2);
+      cursor: pointer;
+    }
+
+    .avatar svg { width: 29px; height: 29px; stroke-width: 1.7; }
+
+    .greeting {
+      margin: 0;
+      font-size: clamp(17px, 4.6vw, 20px);
+      line-height: 1.2;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .section {
+      background: var(--surface);
+      padding: 16px 18px 18px;
+      border-bottom: 11px solid var(--page-bg);
+    }
+
+    .section:last-child { border-bottom: 0; }
+
+    .section-title {
+      margin: 0 0 17px;
+      font-size: clamp(17px, 4.5vw, 19px);
+      line-height: 1.25;
+      font-weight: 500;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+      gap: 12px 8px;
+    }
+
+    .menu-item {
+      appearance: none;
+      min-width: 0;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 11px;
+      cursor: pointer;
+      border-radius: 8px;
+      touch-action: manipulation;
+    }
+
+    .menu-item:focus-visible {
+      outline: 3px solid rgba(47,111,232,.32);
+      outline-offset: 5px;
+    }
+
+    .menu-item:active .icon-wrap { transform: scale(.93); }
+
+    .icon-wrap {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transition: transform .14s ease;
+    }
+
+    .icon-wrap svg { width: 32px; height: 32px; overflow: visible; }
+
+    .orange { color: var(--orange); background: #fff1df; }
+    .blue { color: var(--blue); background: #eaf4ff; }
+    .mint { color: var(--mint); background: #e8fbf3; }
+    .red { color: var(--red); background: #fee9e4; }
+    .purple { color: var(--purple); background: #efecff; }
+    .violet { color: var(--violet); background: #fae9ff; }
+
+    .menu-label {
+      max-width: 100%;
+      font-size: clamp(15px, 4vw, 17px);
+      line-height: 1.35;
+      font-weight: 400;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+
+    .badge {
+      position: absolute;
+      top: -5px;
+      right: -6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #df3538;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .home-indicator {
+      position: fixed;
+      left: 50%;
+      bottom: max(5px, calc(var(--safe-bottom) / 2));
+      width: 27px;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(80,80,80,.5);
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .detail-view {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      background: var(--page-bg);
+      transform: translateX(100%);
+      visibility: hidden;
+      transition: transform .24s ease, visibility 0s linear .24s;
+    }
+
+    .detail-view.open {
+      transform: translateX(0);
+      visibility: visible;
+      transition: transform .24s ease;
+    }
+
+    .detail-header {
+      min-height: calc(54px + var(--safe-top));
+      padding: calc(10px + var(--safe-top)) 16px 10px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 38px;
+      align-items: center;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .back-button, .journey-button {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #3d4652;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .back-button:active, .journey-button:active { background: #eef2f7; }
+    .back-button svg, .journey-button svg { width: 22px; height: 22px; }
+
+    .detail-title {
+      margin: 0;
+      padding: 0 6px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px calc(96px + var(--safe-bottom));
+      overscroll-behavior: contain;
+    }
+
+    .detail-hero {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .detail-hero .icon-wrap { flex: 0 0 auto; width: 52px; height: 52px; }
+    .detail-hero .icon-wrap svg { width: 37px; height: 37px; }
+    .detail-hero h2 { margin: 0; font-size: 18px; font-weight: 600; }
+    .detail-hero p { margin: 5px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+    .info-list {
+      margin: 14px 0 0;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .info-row {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info-row:last-child { border-bottom: 0; }
+    .info-label { display: block; color: var(--muted); font-size: 12px; line-height: 1.4; }
+    .info-value { display: block; margin-top: 4px; font-size: 15px; line-height: 1.55; overflow-wrap: anywhere; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 5px;
+      padding: 5px 9px;
+      border-radius: 6px;
+      color: #a65716;
+      background: #fff1df;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef8b43;
+    }
+
+    .detail-action {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 12px 16px max(12px, var(--safe-bottom));
+      background: rgba(255,255,255,.96);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .primary-button {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #3278ea;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 14px rgba(50,120,234,.2);
+    }
+
+    .primary-button svg { width: 19px; height: 19px; }
+    .primary-button:active { transform: translateY(1px); }
+
+    .journey-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 160;
+      display: none;
+      background: #fff;
+      overflow-y: auto;
+      padding: calc(24px + var(--safe-top)) 18px calc(30px + var(--safe-bottom));
+    }
+
+    .journey-panel.open { display: block; }
+    .journey-panel h2 { margin: 0; padding-right: 45px; font-size: 22px; }
+    .journey-panel > p { margin: 7px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .close-journey {
+      position: absolute;
+      top: calc(18px + var(--safe-top));
+      right: 14px;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f0f3f8;
+      color: #3f4650;
+      cursor: pointer;
+    }
+
+    .journey-step {
+      position: relative;
+      margin-left: 12px;
+      padding: 0 0 22px 24px;
+      border-left: 2px solid #dbe8fb;
+    }
+
+    .journey-step:last-child { border-left-color: transparent; }
+
+    .journey-step::before {
+      content: attr(data-step);
+      position: absolute;
+      left: -13px;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: #397eea;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .journey-step h3 { margin: 0 0 8px; font-size: 16px; }
+    .journey-step dl { margin: 0; }
+    .journey-step div { margin-top: 7px; }
+    .journey-step dt { color: var(--muted); font-size: 12px; }
+    .journey-step dd { margin: 2px 0 0; font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(84px + var(--safe-bottom));
+      z-index: 220;
+      max-width: calc(100vw - 40px);
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: #fff;
+      background: rgba(31,38,48,.94);
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: center;
+      transform: translate(-50%, 18px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    @media (max-width: 350px) {
+      .section { padding-inline: 12px; }
+      .menu-grid { gap-inline: 2px; }
+      .menu-label { font-size: 14px; }
+      .greeting { font-size: 16px; }
+    }
+
+    @media (min-width: 431px) {
+      .app { max-width: 430px; margin: 0 auto; box-shadow: 0 0 0 1px rgba(21,34,57,.06); }
+      .detail-view, .journey-panel { left: 50%; right: auto; width: 430px; transform: translateX(50%); }
+      .detail-view.open { transform: translateX(-50%); }
+      .journey-panel.open { left: 50%; transform: translateX(-50%); }
+      .detail-action { left: 50%; right: auto; width: 430px; transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <div class="main-view" id="mainView">
+      <header class="hero">
+        <div class="hero-lines" aria-hidden="true"></div>
+        <div class="profile">
+          <button class="avatar" id="avatarButton" type="button" aria-label="查看临时工管理用户旅程">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="16" cy="10" r="6"></circle>
+              <path d="M5.5 28c.2-7 4.2-10.5 10.5-10.5S26.3 21 26.5 28c-5 1.4-16 1.4-21 0Z"></path>
+            </svg>
+          </button>
+          <p class="greeting">Hi, 李明(zt00001)</p>
+        </div>
+      </header>
+
+      <div id="menuSections"></div>
+      <div class="home-indicator" aria-hidden="true"></div>
+    </div>
+
+    <section class="detail-view" id="detailView" aria-hidden="true" aria-labelledby="detailTitle">
+      <header class="detail-header">
+        <button class="back-button" id="backButton" type="button" aria-label="返回首页">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+        <h1 class="detail-title" id="detailTitle"></h1>
+        <button class="journey-button" id="journeyButton" type="button" aria-label="查看任务旅程">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></svg>
+        </button>
+      </header>
+      <div class="detail-scroll">
+        <div class="detail-hero">
+          <div class="icon-wrap" id="detailIcon"></div>
+          <div>
+            <h2 id="detailHeading"></h2>
+            <p id="detailDescription"></p>
+          </div>
+        </div>
+        <div class="info-list">
+          <div class="info-row">
+            <span class="info-label">当前处理角色</span>
+            <span class="info-value" id="detailRole"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">当前任务</span>
+            <span class="info-value" id="detailTask"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">业务状态</span>
+            <span class="status-pill" id="detailStatus"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">系统自动动作</span>
+            <span class="info-value" id="detailAutomation"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">完成后</span>
+            <span class="info-value" id="detailResult"></span>
+          </div>
+        </div>
+      </div>
+      <div class="detail-action">
+        <button class="primary-button" id="primaryButton" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span id="primaryButtonText">开始处理</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="journey-panel" id="journeyPanel" aria-hidden="true" aria-labelledby="journeyTitle">
+      <button class="close-journey" id="closeJourney" type="button" aria-label="关闭用户旅程">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+      </button>
+      <h2 id="journeyTitle">临时工管理用户旅程</h2>
+      <p>角色 × 业务场景导航。点击头像或详情页右上角可随时查看。</p>
+      <div class="journey-step" data-step="1">
+        <h3>用工部门发起需求</h3>
+        <dl>
+          <div><dt>角色与动作</dt><dd>用工经理提交岗位、人数、工作日期和技能要求。</dd></div>
+          <div><dt>系统动作</dt><dd>校验必填信息并将需求发送给审批人。</dd></div>
+          <div><dt>状态与下一责任人</dt><dd>待审批；由部门负责人处理。</dd></div>
+        </dl>
+      </div>
+      <div class="journey-step" data-step="2">
+        <h3>审批并指派需求</h3>
+        <dl>
+          <div><dt>角色与动作</dt><dd>负责人审批，临时工管理员确认供应渠道和负责人。</dd></div>
+          <div><dt>系统动作</dt><dd>生成待办并保留未处理角标，完成后转入已完成记录。</dd></div>
+          <div><dt>状态与下一责任人</dt><dd>招聘中；由临时工管理员创建员工或维护花名册。</dd></div>
+        </dl>
+      </div>
+      <div class="journey-step" data-step="3">
+        <h3>创建员工、试工评估并完成派遣</h3>
+        <dl>
+          <div><dt>角色与动作</dt><dd>管理员创建员工档案，现场负责人完成试工评估，再执行员工派遣。</dd></div>
+          <div><dt>系统动作</dt><dd>校验证件和重复档案，记录试工结论，并检查派遣日期与需求余量。</dd></div>
+          <div><dt>状态与下一责任人</dt><dd>已派遣；由员工与考勤管理员共同确认到岗。</dd></div>
+        </dl>
+      </div>
+      <div class="journey-step" data-step="4">
+        <h3>考勤异常闭环</h3>
+        <dl>
+          <div><dt>角色与动作</dt><dd>员工发起补签，考勤管理员处理未确认考勤。</dd></div>
+          <div><dt>系统动作</dt><dd>自动回写考勤结果并通知员工和用工经理。</dd></div>
+          <div><dt>状态与结果</dt><dd>已完成；处理人、动作、时间和结果保留在记录中。</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+    const iconSvgs = {
+      request: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="8" y="5" width="24" height="29" rx="4" fill="currentColor" opacity=".94"/><path d="M13 12h13M13 18h13M13 24h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="m23 30 9-9 3 3-9 9-5 2 2-5Z" fill="#fff" stroke="currentColor" stroke-width="1.2"/></svg>`,
+      approve: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="5" width="24" height="30" rx="4" fill="currentColor" opacity=".9"/><path d="M12 12h13M12 18h10M12 24h7" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="29" cy="27" r="7" fill="#fff"/><path d="M24 35c.4-4.5 2.1-7 5-7s4.7 2.5 5 7" fill="currentColor"/></svg>`,
+      search: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="6" width="27" height="28" rx="5" fill="currentColor" opacity=".92"/><circle cx="20" cy="19" r="7" stroke="#fff" stroke-width="3.2"/><path d="m25 24 5 5" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>`,
+      submit: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="8" y="6" width="24" height="28" rx="1.5" stroke="currentColor" stroke-width="2.5"/><path d="M13 13h14M13 18h14M20 29V20m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      dispatch: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="19" cy="16" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M8 34c.8-7 4.4-11 11-11 4.2 0 7.2 1.7 9 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="m27 26 10-5-4 12-2-5-4-2Z" fill="#fff" stroke="currentColor" stroke-width="1.5"/></svg>`,
+      employee: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M8 32c.7-6.5 4.5-10 10-10s9.3 3.5 10 10" fill="currentColor"/><circle cx="18" cy="14" r="7" fill="currentColor"/><path d="M28 12h7M28 17h7M29 22h6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+      roster: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="14" cy="15" r="6" fill="currentColor"/><circle cx="27" cy="14" r="6" fill="currentColor" opacity=".88"/><path d="M5 33c.5-7 3.5-11 9-11s8.5 4 9 11M20 33c.5-7 2.8-11 7-11 5 0 7.5 4 8 11" stroke="currentColor" stroke-width="5"/></svg>`,
+      trial: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="6" width="26" height="29" rx="4" fill="currentColor"/><path d="M13 14h14M13 20h8" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><path d="m16 28 3 3 7-8" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      workerDispatch: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="18" cy="13" r="7" fill="currentColor"/><path d="M7 31c1-7 4.5-11 11-11 5.7 0 9.2 3 10.5 8" fill="currentColor"/><path d="M22 24h12m0 0-4-4m4 4-4 4" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      records: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="8" y="7" width="25" height="29" rx="5" fill="currentColor"/><rect x="14" y="3" width="14" height="7" rx="2" fill="#fff" opacity=".65"/><path d="M14 16h13M14 22h13M14 28h9" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></svg>`,
+      calendar: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="8" width="28" height="25" rx="4" fill="currentColor"/><path d="M6 15h28M13 5v7M27 5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="m13 24 4 4 9-9" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      attendance: `<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="7" width="27" height="27" rx="6" fill="currentColor"/><path d="M13 14h15M13 21h15M19 28h9" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="14" cy="27" r="3" fill="#fff"/></svg>`
+    };
+
+    const sections = [
+      {
+        title: "临时工请求管理",
+        items: [
+          { id: "request-apply", label: "请求申请", icon: "request", tone: "orange", role: "用工申请人", task: "填写临时工岗位、人数、用工日期与技能要求。", status: "待提交", automation: "系统自动校验必填项、日期范围与重复申请。", result: "提交后生成审批待办，并通知部门负责人。", action: "提交申请" },
+          { id: "request-approve", label: "请求审批", icon: "approve", tone: "blue", role: "部门负责人", task: "核对用工必要性、预算和人员数量并作出审批决定。", status: "待审批", automation: "系统自动汇总申请内容、预算影响和历史用工数据。", result: "审批结果通知申请人；通过后进入需求提交。", action: "处理审批" },
+          { id: "pending-list", label: "待请求列表", icon: "search", tone: "orange", badge: 2, role: "临时工管理员", task: "处理当前分配给你的 2 条临时工请求。", status: "2 条待处理", automation: "未完成前持续保留待办；完成后自动移入已完成记录。", result: "处理记录保留处理人、动作、时间和业务结果。", action: "查看待办" }
+        ]
+      },
+      {
+        title: "用工需求",
+        items: [
+          { id: "demand-submit", label: "提交需求", icon: "submit", tone: "orange", role: "用工经理", task: "将已通过的请求补充为可招聘、可派遣的正式需求。", status: "待提交", automation: "系统带入已审批信息并检查岗位、班次和到岗日期。", result: "提交后进入需求审批，系统向审批人发送待办。", action: "提交需求" },
+          { id: "demand-approve", label: "审批需求", icon: "approve", tone: "blue", role: "需求审批人", task: "确认需求范围、用工周期与供应策略。", status: "待审批", automation: "系统提示与现有需求的重复项及人员缺口。", result: "通过后需求进入可指派状态；驳回则通知提交人修改。", action: "处理审批" },
+          { id: "demand-assign", label: "指派需求", icon: "dispatch", tone: "mint", role: "临时工管理员", task: "选择负责人和供应渠道，将需求指派到执行队列。", status: "待指派", automation: "系统按区域、岗位和工作量推荐负责人。", result: "负责人收到任务通知，需求状态更新为招聘中。", action: "确认指派" }
+        ]
+      },
+      {
+        title: "员工管理",
+        items: [
+          { id: "employee-create", label: "创建员工", icon: "employee", tone: "blue", role: "临时工管理员", task: "录入身份、联系方式、用工关系和岗位信息。", status: "待建档", automation: "系统检查证件有效性、重复档案与必填字段。", result: "员工档案创建成功并进入花名册。", action: "创建员工" },
+          { id: "employee-roster", label: "花名册", icon: "roster", tone: "mint", role: "临时工管理员", task: "查看在岗、待入职和已离场临时工档案。", status: "正常", automation: "系统根据入离场和派遣结果自动更新人员状态。", result: "档案变更实时同步给相关用工与考勤流程。", action: "查看花名册" }
+        ]
+      },
+      {
+        title: "试工评估",
+        items: [
+          { id: "trial-evaluation", label: "试工评估", icon: "trial", tone: "orange", role: "现场负责人", task: "记录员工到场情况、试工表现与评估结论。", status: "待评估", automation: "系统带入员工、需求和试工安排，并校验重复评估。", result: "评估结论同步到员工档案，通知临时工管理员处理后续派遣。", action: "开始评估" }
+        ]
+      },
+      {
+        title: "临时工派遣",
+        items: [
+          { id: "worker-dispatch", label: "员工派遣", icon: "workerDispatch", tone: "red", role: "临时工管理员", task: "为已建档员工选择需求、工作地点和派遣周期。", status: "待派遣", automation: "系统校验员工状态、需求余量和日期冲突。", result: "派遣完成后通知员工及用工经理确认到岗。", action: "确认派遣" },
+          { id: "dispatch-records", label: "派遣记录", icon: "records", tone: "purple", role: "临时工管理员", task: "查询派遣中的员工与历史派遣结果。", status: "可查询", automation: "系统自动归档派遣变更、撤回和结束记录。", result: "记录可追溯到需求、员工、处理人和处理时间。", action: "查看记录" }
+        ]
+      },
+      {
+        title: "考勤管理",
+        items: [
+          { id: "attendance-fix", label: "补签", icon: "calendar", tone: "blue", role: "临时工员工", task: "选择缺卡日期并提交补签原因与证明。", status: "待申请", automation: "系统自动识别缺卡班次并带入应出勤时间。", result: "提交后通知考勤审批人，处理结果同步给员工。", action: "发起补签" },
+          { id: "attendance-pending", label: "未确认考勤", icon: "attendance", tone: "violet", role: "考勤管理员", task: "核对异常工时、缺卡与待确认班次。", status: "待确认", automation: "系统自动聚合异常项并标记与排班不一致的记录。", result: "确认后更新考勤结果，异常项保留完整处理轨迹。", action: "处理考勤" }
+        ]
+      }
+    ];
+
+    const allItems = sections.flatMap(section => section.items);
+    const itemById = Object.fromEntries(allItems.map(item => [item.id, item]));
+    const menuSections = document.getElementById("menuSections");
+    const mainView = document.getElementById("mainView");
+    const detailView = document.getElementById("detailView");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailHeading = document.getElementById("detailHeading");
+    const detailDescription = document.getElementById("detailDescription");
+    const detailIcon = document.getElementById("detailIcon");
+    const detailRole = document.getElementById("detailRole");
+    const detailTask = document.getElementById("detailTask");
+    const detailStatus = document.getElementById("detailStatus");
+    const detailAutomation = document.getElementById("detailAutomation");
+    const detailResult = document.getElementById("detailResult");
+    const primaryButtonText = document.getElementById("primaryButtonText");
+    const primaryButton = document.getElementById("primaryButton");
+    const journeyPanel = document.getElementById("journeyPanel");
+    const toast = document.getElementById("toast");
+    let currentItem = null;
+    let lastTrigger = null;
+    let savedScrollY = 0;
+    let toastTimer = null;
+
+    function renderMenus() {
+      menuSections.innerHTML = sections.map(section => `
+        <section class="section" aria-labelledby="${section.items[0].id}-heading">
+          <h2 class="section-title" id="${section.items[0].id}-heading">${section.title}</h2>
+          <div class="menu-grid">
+            ${section.items.map(item => `
+              <button class="menu-item" type="button" data-item-id="${item.id}" aria-label="打开${item.label}">
+                <span class="icon-wrap ${item.tone}">
+                  ${iconSvgs[item.icon]}
+                  ${item.badge ? `<span class="badge" aria-label="${item.badge}条待处理">${item.badge}</span>` : ""}
+                </span>
+                <span class="menu-label">${item.label}</span>
+              </button>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function openDetail(item, trigger) {
+      currentItem = item;
+      lastTrigger = trigger || document.activeElement;
+      savedScrollY = window.scrollY;
+      detailTitle.textContent = item.label;
+      detailHeading.textContent = item.label;
+      detailDescription.textContent = item.task;
+      detailIcon.className = `icon-wrap ${item.tone}`;
+      detailIcon.innerHTML = iconSvgs[item.icon];
+      detailRole.textContent = item.role;
+      detailTask.textContent = item.task;
+      detailStatus.textContent = item.status;
+      detailAutomation.textContent = item.automation;
+      detailResult.textContent = item.result;
+      primaryButtonText.textContent = item.action;
+      mainView.setAttribute("aria-hidden", "true");
+      detailView.setAttribute("aria-hidden", "false");
+      detailView.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.getElementById("backButton").focus({ preventScroll: true });
+      history.pushState({ detail: item.id }, "", `#${item.id}`);
+    }
+
+    function closeDetail({ updateHistory = true } = {}) {
+      if (!detailView.classList.contains("open")) return;
+      detailView.classList.remove("open");
+      detailView.setAttribute("aria-hidden", "true");
+      mainView.removeAttribute("aria-hidden");
+      document.body.style.overflow = "";
+      requestAnimationFrame(() => window.scrollTo(0, savedScrollY));
+      if (lastTrigger) lastTrigger.focus({ preventScroll: true });
+      if (updateHistory && location.hash) history.back();
+    }
+
+    function openJourney() {
+      journeyPanel.classList.add("open");
+      journeyPanel.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      document.getElementById("closeJourney").focus({ preventScroll: true });
+    }
+
+    function closeJourney() {
+      journeyPanel.classList.remove("open");
+      journeyPanel.setAttribute("aria-hidden", "true");
+      if (!detailView.classList.contains("open")) document.body.style.overflow = "";
+      if (detailView.classList.contains("open")) document.getElementById("journeyButton").focus({ preventScroll: true });
+      else document.getElementById("avatarButton").focus({ preventScroll: true });
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add("show");
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    renderMenus();
+
+    menuSections.addEventListener("click", event => {
+      const trigger = event.target.closest("[data-item-id]");
+      if (!trigger) return;
+      openDetail(itemById[trigger.dataset.itemId], trigger);
+    });
+
+    document.getElementById("backButton").addEventListener("click", () => closeDetail());
+    document.getElementById("avatarButton").addEventListener("click", openJourney);
+    document.getElementById("journeyButton").addEventListener("click", openJourney);
+    document.getElementById("closeJourney").addEventListener("click", closeJourney);
+    primaryButton.addEventListener("click", () => {
+      if (!currentItem) return;
+      showToast(`${currentItem.label}：已进入处理流程`);
+    });
+
+    window.addEventListener("popstate", () => {
+      if (journeyPanel.classList.contains("open")) closeJourney();
+      const id = location.hash.slice(1);
+      if (!id) closeDetail({ updateHistory: false });
+      else if (itemById[id] && !detailView.classList.contains("open")) openDetail(itemById[id], null);
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      if (journeyPanel.classList.contains("open")) closeJourney();
+      else closeDetail();
+    });
+
+    const initialId = location.hash.slice(1);
+    if (itemById[initialId]) openDetail(itemById[initialId], null);
+  </script>
+</body>
+</html>
