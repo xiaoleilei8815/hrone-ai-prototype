@@ -624,7 +624,7 @@ renderAssessmentWarnings=function(){
   `;
   style.textContent+=`.bulk-panel{width:min(1320px,calc(100vw - 32px))}.bulk-body{gap:10px;padding:14px 16px}.bulk-summary{gap:6px}.bulk-batch-settings{display:grid;grid-template-columns:minmax(190px,1.45fr) minmax(175px,1fr) minmax(175px,1fr) auto;align-items:end;gap:10px;padding:10px 12px;border:1px solid #e2e7ed;border-radius:5px;background:#f8fafc}.bulk-batch-settings[hidden]{display:none}.bulk-batch-heading{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;color:#303943;font-size:13px;font-weight:600}.bulk-batch-heading small{font-size:11px;font-weight:400;color:#727d89}.bulk-batch-field{display:grid;gap:5px;min-width:0;font-size:11px;color:#59636f}.bulk-batch-field input,.bulk-batch-field select{width:100%;min-width:0;height:34px;border:1px solid #d8dde4;border-radius:4px;padding:0 7px;background:#fff;color:#303943;font-size:12px}.bulk-batch-date-field .bulk-batch-dispatch-range{width:100%;min-width:0;height:34px;gap:4px;padding:0 7px;border-radius:4px}.bulk-batch-date-field .bulk-batch-dispatch-range>svg{width:16px;height:16px;flex-basis:16px;fill:none;stroke:currentColor;stroke-width:1.5}.bulk-batch-date-field .bulk-batch-dispatch-range>span{width:10px;flex:0 0 10px}.bulk-batch-date-field .dispatch-date-input input{height:100%;border:0;border-radius:0;padding:0 2px;background:transparent;font-size:12px}.bulk-batch-date-field .dispatch-date-input span{left:2px;font-size:11px}.bulk-batch-dispatch-range .dispatch-date-input.is-empty span{display:block}.bulk-batch-actions{display:flex;justify-content:flex-end}.bulk-batch-apply{height:34px;padding:0 14px;white-space:nowrap}.bulk-batch-settings .bulk-batch-error{grid-column:1/-1;margin:0;color:#c3423f;font-size:11px}.bulk-batch-settings .bulk-batch-error[hidden]{display:none}.bulk-people-scroll{max-height:min(400px,44vh);border-radius:4px}.bulk-people{min-width:1120px;table-layout:fixed}.bulk-people th{padding:9px 10px}.bulk-people td{padding:7px 9px}.bulk-pager{height:48px;gap:9px;padding:0 8px}.bulk-pager button{padding:5px 9px}.bulk-pager .bulk-page-number{min-width:28px}.bulk-pager button:disabled{opacity:.48;cursor:not-allowed}.bulk-dispatch-date-range{width:100%;min-width:245px;height:38px;gap:4px;padding:0 7px;border-radius:4px}.bulk-dispatch-date-range>svg{width:17px;height:17px;flex-basis:17px;fill:none;stroke:currentColor;stroke-width:1.5}.bulk-dispatch-date-range>span{width:10px;flex-basis:10px}.bulk-people .bulk-dispatch-date-range .dispatch-date-input input{height:100%;border:0;border-radius:0;padding:0 4px;background:transparent}.bulk-fail-dispatch-range{min-width:0;height:38px;display:grid;grid-template-columns:minmax(0,1fr) 10px minmax(0,1fr);gap:2px;padding:0 4px}.bulk-people .bulk-fail-dispatch-range .dispatch-date-input input{width:100%;min-width:0;height:100%;padding:0 2px;font-size:10px}.bulk-people .bulk-fail-dispatch-range input:disabled,.bulk-people select:disabled{background:#f1f3f5;color:#8a929e;border-color:#e1e5e9;opacity:1;cursor:not-allowed}.bulk-person-detail{width:100%;min-width:0;min-height:58px;padding:6px 7px;border:1px solid #d8dde4;border-radius:4px;background:#fff;color:#303943;font-size:11px;line-height:1.4;resize:vertical}.bulk-person-detail:focus{outline:0;border-color:#3698ee;box-shadow:0 0 0 1px #3698ee}.bulk-person-reason-menu{position:fixed;z-index:1700;right:auto;bottom:auto;max-width:calc(100vw - 16px)}.bulk-upload-box{min-width:0;padding:6px;border-radius:4px}.bulk-upload-box .upload-box-top{align-items:flex-start;flex-direction:column;gap:3px}.bulk-upload-trigger{height:28px;padding:0 8px;font-size:11px}.bulk-upload-box .upload-box-tip{font-size:10px;line-height:1.35}.bulk-upload-box .uploaded-file-list{gap:3px;margin-top:5px}.bulk-upload-box .uploaded-file-row{padding:4px 5px;font-size:11px}.bulk-upload-box .uploaded-file-name{width:auto;height:auto;flex:1;min-width:0;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.4;color:#087cff;text-align:left}.bulk-upload-box .uploaded-file-name:hover{text-decoration:underline}.bulk-person-meta{max-width:none;white-space:normal;line-height:1.4}.bulk-person-name{white-space:normal;overflow-wrap:anywhere}.bulk-person-remove{width:auto;height:auto;padding:2px 4px;border:0;border-radius:3px;background:transparent;color:#1676c5;font-size:12px;white-space:nowrap}.bulk-person-remove:hover{background:transparent;color:#c3423f;text-decoration:underline}.file-preview{z-index:1600}@media(max-width:760px){.bulk-panel{width:calc(100vw - 16px)}.bulk-body{padding:12px}.bulk-batch-settings{grid-template-columns:1fr 1fr}.bulk-batch-heading,.bulk-batch-settings .bulk-batch-error{grid-column:1/-1}.bulk-batch-actions{grid-column:1/-1}.bulk-people-scroll{max-height:40vh}.bulk-people{min-width:1120px}}`;
   style.textContent+=`.bulk-people th:first-child,.bulk-people td:first-child{position:sticky;left:0;box-shadow:2px 0 4px #27384a0d}.bulk-people th:first-child{z-index:3;background:#f3f5f7}.bulk-people td:first-child{z-index:2;background:#fff}.bulk-people th:last-child,.bulk-people td:last-child{position:sticky;right:0;box-shadow:-2px 0 4px #27384a0d}.bulk-people th:last-child{z-index:3;background:#f3f5f7}.bulk-people td:last-child{z-index:2;background:#fff}#filePreview{z-index:1800}`;
-  style.textContent+=`.bulk-batch-settings:not(.is-fail-settings):not(.is-fail-reasons-only){grid-template-columns:minmax(190px,1fr) minmax(190px,1fr) auto}.bulk-batch-settings.is-fail-settings{grid-template-columns:minmax(160px,1fr) minmax(160px,1fr) minmax(190px,1.2fr) minmax(180px,1.1fr) auto}.bulk-batch-settings.is-fail-settings .bulk-batch-actions{grid-column:5}.bulk-batch-settings.is-fail-reasons-only{grid-template-columns:minmax(190px,1fr) minmax(170px,1fr) auto}.bulk-batch-settings.is-fail-reasons-only .bulk-batch-actions{grid-column:3}.bulk-batch-settlement-fields,.bulk-batch-fail-fields{display:contents}.bulk-batch-settlement-fields[hidden],.bulk-batch-fail-fields[hidden]{display:none!important}.bulk-batch-settings .fail-reason-trigger{height:34px;min-height:34px;border-radius:4px}.bulk-batch-settings .fail-reason-menu{z-index:1800}@media(max-width:760px){.bulk-batch-settings:not(.is-fail-settings):not(.is-fail-reasons-only){grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-settings{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-settings .bulk-batch-actions{grid-column:1/-1}.bulk-batch-settings.is-fail-reasons-only{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-reasons-only .bulk-batch-actions{grid-column:1/-1}}`;
+  style.textContent+=`.bulk-batch-settings:not(.is-fail-settings):not(.is-fail-reasons-only):not(.is-success-settings){grid-template-columns:minmax(190px,1fr) minmax(190px,1fr) auto}.bulk-batch-settings.is-success-settings{grid-template-columns:repeat(4,minmax(0,1fr)) auto}.bulk-batch-settings.is-success-settings .bulk-batch-actions{grid-column:auto}.bulk-batch-settings.is-fail-settings{grid-template-columns:minmax(160px,1fr) minmax(160px,1fr) minmax(190px,1.2fr) minmax(180px,1.1fr) auto}.bulk-batch-settings.is-fail-settings .bulk-batch-actions{grid-column:5}.bulk-batch-settings.is-fail-reasons-only{grid-template-columns:minmax(190px,1fr) minmax(170px,1fr) auto}.bulk-batch-settings.is-fail-reasons-only .bulk-batch-actions{grid-column:3}.bulk-batch-settlement-fields,.bulk-batch-fail-fields{display:contents}.bulk-batch-settlement-fields[hidden],.bulk-batch-fail-fields[hidden],.bulk-batch-field[hidden]{display:none!important}.bulk-batch-date-input{min-width:0}.bulk-batch-settings .fail-reason-trigger{height:34px;min-height:34px;border-radius:4px}.bulk-batch-settings .fail-reason-menu{z-index:1800}@media(max-width:760px){.bulk-batch-settings:not(.is-fail-settings):not(.is-fail-reasons-only):not(.is-success-settings){grid-template-columns:1fr 1fr}.bulk-batch-settings.is-success-settings{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-success-settings .bulk-batch-actions{grid-column:1/-1}.bulk-batch-settings.is-fail-settings{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-settings .bulk-batch-actions{grid-column:1/-1}.bulk-batch-settings.is-fail-reasons-only{grid-template-columns:1fr 1fr}.bulk-batch-settings.is-fail-reasons-only .bulk-batch-actions{grid-column:1/-1}}`;
   document.head.append(style);
   const bulkBar=document.createElement('div');bulkBar.className='bulk-toolbar';
   const batchButtons=['试工通过','试工不通过','未到场'].map(status=>{
@@ -636,7 +636,7 @@ renderAssessmentWarnings=function(){
   bulkBar.append(exportButton);toolbar.prepend(bulkBar);
 
   const dialog=document.createElement('div');dialog.className='bulk-dialog';dialog.hidden=true;
-  dialog.innerHTML=`<section class="bulk-panel" role="dialog" aria-modal="true" aria-labelledby="bulkTitle"><header class="bulk-head"><strong id="bulkTitle">批量处理试工</strong><button type="button" class="bulk-close" aria-label="关闭">×</button></header><div class="bulk-body"><div class="bulk-summary"><div class="bulk-batch-settings" hidden><div class="bulk-batch-heading"><span>批量设置</span><small class="bulk-batch-scope"></small></div><label class="bulk-batch-field"><span>考勤方案</span><select data-batch-plan="attendance"><option value="">不统一修改</option></select></label><label class="bulk-batch-field"><span>报价方案</span><select data-batch-plan="quote"><option value="">不统一修改</option></select></label><div class="bulk-batch-actions"><button type="button" class="btn primary bulk-batch-apply">应用设置</button></div><p class="bulk-batch-error" role="alert" hidden></p></div><div class="bulk-people-scroll"><table class="bulk-people"><thead></thead><tbody></tbody></table></div><div class="pager bulk-pager"><span class="bulk-page-total">共 0 条</span><button type="button" data-page="prev">上一页</button><button type="button" class="on bulk-page-number">1</button><button type="button" data-page="next">下一页</button><span>10条/页</span></div></div><p class="bulk-error" hidden></p></div><footer class="bulk-foot"><button type="button" class="btn bulk-cancel">取消</button><button type="button" class="btn primary bulk-confirm">确认批量处理</button></footer></section>`;
+  dialog.innerHTML=`<section class="bulk-panel" role="dialog" aria-modal="true" aria-labelledby="bulkTitle"><header class="bulk-head"><strong id="bulkTitle">批量处理试工</strong><button type="button" class="bulk-close" aria-label="关闭">×</button></header><div class="bulk-body"><div class="bulk-summary"><div class="bulk-batch-settings" hidden><div class="bulk-batch-heading"><span>批量设置</span><small class="bulk-batch-scope"></small></div><div class="bulk-batch-settlement-fields"><label class="bulk-batch-field bulk-batch-date-input"><span>派遣开始日期</span><input type="date" data-batch-date="start" aria-label="统一派遣开始日期"></label><label class="bulk-batch-field bulk-batch-date-input"><span>派遣结束日期</span><input type="date" data-batch-date="end" aria-label="统一派遣结束日期"></label><label class="bulk-batch-field"><span>考勤方案</span><select data-batch-plan="attendance"><option value="">不统一修改</option></select></label><label class="bulk-batch-field"><span>报价方案</span><select data-batch-plan="quote"><option value="">不统一修改</option></select></label></div><div class="bulk-batch-actions"><button type="button" class="btn primary bulk-batch-apply">应用设置</button></div><p class="bulk-batch-error" role="alert" hidden></p></div><div class="bulk-people-scroll"><table class="bulk-people"><thead></thead><tbody></tbody></table></div><div class="pager bulk-pager"><span class="bulk-page-total">共 0 条</span><button type="button" data-page="prev">上一页</button><button type="button" class="on bulk-page-number">1</button><button type="button" data-page="next">下一页</button><span>10条/页</span></div></div><p class="bulk-error" hidden></p></div><footer class="bulk-foot"><button type="button" class="btn bulk-cancel">取消</button><button type="button" class="btn primary bulk-confirm">确认批量处理</button></footer></section>`;
   document.body.append(dialog);
   const title=dialog.querySelector('#bulkTitle'),error=dialog.querySelector('.bulk-error');
   const peopleTable=dialog.querySelector('.bulk-people'),peopleHead=peopleTable.querySelector('thead'),peopleBody=peopleTable.querySelector('tbody');
@@ -644,9 +644,7 @@ renderAssessmentWarnings=function(){
   const pageButtons=dialog.querySelectorAll('[data-page]');
   const batchSettings=dialog.querySelector('.bulk-batch-settings'),batchScope=dialog.querySelector('.bulk-batch-scope'),batchPlanSelects=batchSettings.querySelectorAll('[data-batch-plan]'),batchError=batchSettings.querySelector('.bulk-batch-error');
   batchPlanSelects.forEach(select=>{select.options[0].textContent='请选择'});
-  const batchSettlementFields=document.createElement('div');batchSettlementFields.className='bulk-batch-settlement-fields';
-  const batchPlanFields=[...batchPlanSelects].map(select=>select.closest('label'));
-  batchSettings.insertBefore(batchSettlementFields,batchSettings.querySelector('.bulk-batch-actions'));batchSettlementFields.append(...batchPlanFields);
+  const batchSettlementFields=batchSettings.querySelector('.bulk-batch-settlement-fields'),batchDateInputs=batchSettings.querySelectorAll('[data-batch-date]');
   const batchFailFields=document.createElement('div');batchFailFields.className='bulk-batch-fail-fields';batchFailFields.hidden=true;
   const batchFailReasonField=document.createElement('div');batchFailReasonField.className='bulk-batch-field';batchFailReasonField.innerHTML='<span>试工不通过原因</span><div class="bulk-batch-fail-reason"></div>';
   const batchFailDetailField=document.createElement('label');batchFailDetailField.className='bulk-batch-field';batchFailDetailField.innerHTML='<span>试工不通过具体原因</span><input type="text" class="bulk-batch-fail-detail" placeholder="统一填写试工不通过具体原因" aria-label="批量填写试工不通过具体原因">';
@@ -721,7 +719,7 @@ renderAssessmentWarnings=function(){
           :[{label:'试工日期',width:'7%'},{label:'员工/派遣信息',width:'13%'},{label:'派遣日期',width:'11%'},{label:'考勤方案',width:'8%'},{label:'报价方案',width:'8%'},{label:'试工不通过原因',width:'13%'},{label:'具体原因',width:'9%'},{label:'试工卡',width:'27%'},{label:'操作',width:'4%'}];
     const colgroup=document.createElement('colgroup');columns.forEach(column=>{const col=document.createElement('col');col.style.width=column.width;colgroup.append(col)});
     peopleTable.querySelector('colgroup')?.remove();peopleTable.prepend(colgroup);peopleTable.style.minWidth=activeStatus==='试工不通过'?'1320px':activeStatus==='试工通过'?'1240px':'1120px';
-    const headRow=document.createElement('tr');columns.forEach(({label})=>{const th=document.createElement('th');if(activeStatus==='试工不通过'&&label==='试工不通过原因'){const required=document.createElement('i');required.className='required-mark';required.textContent='*';th.append(required,document.createTextNode(' '+label))}else th.textContent=label;headRow.append(th)});peopleHead.append(headRow);
+    const headRow=document.createElement('tr');columns.forEach(({label})=>{const th=document.createElement('th'),isRequired=activeStatus==='试工通过'&&['派遣日期','考勤方案','报价方案'].includes(label)||activeStatus==='试工不通过'&&label==='试工不通过原因';if(isRequired){const required=document.createElement('i');required.className='required-mark';required.textContent='*';th.append(required,document.createTextNode(' '+label))}else th.textContent=label;headRow.append(th)});peopleHead.append(headRow);
     if(!pageRecords.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=columns.length;td.className='bulk-empty';td.textContent='请先选择待试工人员';tr.append(td);peopleBody.append(tr);return}
     pageRecords.forEach(record=>{
       const index=records.indexOf(record),state=personState.get(index);
@@ -819,17 +817,24 @@ renderAssessmentWarnings=function(){
     const eligible=getBatchEligibleRecords(chosen),show=activeStatus==='试工不通过'?chosen.length>0:activeStatus==='试工通过'&&eligible.length>0;
     batchSettings.hidden=!show;batchError.hidden=true;
     if(!show)return;
+    batchSettings.classList.toggle('is-success-settings',activeStatus==='试工通过');
     batchSettings.classList.toggle('is-fail-settings',activeStatus==='试工不通过'&&eligible.length>0);
     batchSettings.classList.toggle('is-fail-reasons-only',activeStatus==='试工不通过'&&!eligible.length);
     batchSettlementFields.hidden=!eligible.length;
+    batchSettings.querySelectorAll('.bulk-batch-date-input').forEach(field=>{field.hidden=activeStatus!=='试工通过'});
     batchFailFields.hidden=activeStatus!=='试工不通过';
     batchScope.textContent=activeStatus==='试工不通过'?`方案应用到${eligible.length}人（不结算自动跳过）；原因应用到全部${chosen.length}人`:`应用到${eligible.length}人`;
+    const minDate=eligible.map(record=>record.date).sort().reverse()[0]||'';
+    const batchStart=batchSettings.querySelector('[data-batch-date="start"]'),batchEnd=batchSettings.querySelector('[data-batch-date="end"]');
+    batchStart.min=minDate;batchEnd.min=batchStart.value||minDate;
     for(const select of batchPlanSelects){
       const key=select.dataset.batchPlan,previous=select.value;
       let common=null;
       for(const record of eligible){
         const state=personState.get(records.indexOf(record));
-        const options=getPlanOptions(record,state?.start||record.date,state?.end||record.date)[key];
+        const start=activeStatus==='试工通过'?(batchStart.value||state?.start||record.date):(state?.start||record.date);
+        const end=activeStatus==='试工通过'?(batchEnd.value||state?.end||record.date):(state?.end||record.date);
+        const options=getPlanOptions(record,start,end)[key];
         common=common===null?options:common.filter(option=>options.includes(option));
       }
       select.replaceChildren(new Option('请选择',''));
@@ -859,15 +864,30 @@ renderAssessmentWarnings=function(){
     document.querySelector('#filePreview').hidden=false;document.querySelector('#closeFilePreview').focus();
   }
   pageButtons.forEach(button=>button.addEventListener('click',()=>{currentPage+=button.dataset.page==='next'?1:-1;renderPeople(getRecords())}));
+  const batchStartDate=batchSettings.querySelector('[data-batch-date="start"]'),batchEndDate=batchSettings.querySelector('[data-batch-date="end"]');
+  batchStartDate.addEventListener('change',()=>updateBulkBatchSettings(getRecords()));
+  batchEndDate.addEventListener('change',()=>updateBulkBatchSettings(getRecords()));
   batchPlanSelects.forEach(select=>select.addEventListener('change',()=>{batchError.hidden=true}));
   dialog.querySelector('.bulk-batch-apply').addEventListener('click',()=>{
     const chosen=getRecords(),eligible=getBatchEligibleRecords(chosen);
+    const start=batchStartDate.value,end=batchEndDate.value;
     const attendance=batchSettings.querySelector('[data-batch-plan="attendance"]').value,quote=batchSettings.querySelector('[data-batch-plan="quote"]').value;
     const failDetail=batchFailDetailInput.value.trim(),hasFailSettings=activeStatus==='试工不通过'&&(batchFailureState.reasons.length>0||Boolean(failDetail));
     batchError.hidden=true;
-    if(!attendance&&!quote&&!hasFailSettings){batchError.textContent='请选择至少一项批量设置后再应用。';batchError.hidden=false;return}
+    if(activeStatus==='试工通过'){
+      for(const record of eligible){
+        const state=personState.get(records.indexOf(record)),nextStart=start||state.start||record.date,nextEnd=end||state.end||nextStart;
+        if(nextStart<record.date||nextEnd<nextStart){batchError.textContent='派遣开始日期不得早于所选人员中最晚的试工日期，结束日期不得早于开始日期。';batchError.hidden=false;return}
+      }
+    }
+    if(!start&&!end&&!attendance&&!quote&&!hasFailSettings){batchError.textContent='请选择至少一项批量设置后再应用。';batchError.hidden=false;return}
     for(const record of eligible){
       const state=personState.get(records.indexOf(record));
+      if(activeStatus==='试工通过'){
+        if(start)state.start=start;
+        if(end)state.end=end;
+        if(!state.end||state.end<state.start)state.end=state.start;
+      }
       const options=getPlanOptions(record,state.start||record.date,state.end||record.date);
       if(!options.attendance.includes(state.attendance))state.attendance=options.attendance[0]||'';
       if(!options.quote.includes(state.quote))state.quote=options.quote[0]||'';
@@ -917,7 +937,7 @@ renderAssessmentWarnings=function(){
   function openBulkDialog(status){
     const chosen=getRecords();if(!chosen.length)return;
     activeStatus=status;error.hidden=true;title.textContent=`批量${status}`;
-    batchPlanSelects.forEach(select=>{select.value=''});batchFailureState.reasons=[];batchReasonPicker.querySelector('.fail-reason-clear').click();batchFailDetailInput.value='';batchError.hidden=true;
+    batchDateInputs.forEach(input=>{input.value='';input.min=''});batchPlanSelects.forEach(select=>{select.value=''});batchFailureState.reasons=[];batchReasonPicker.querySelector('.fail-reason-clear').click();batchFailDetailInput.value='';batchError.hidden=true;
     personState.clear();currentPage=0;
     renderPeople(chosen);
     const needsSettlement=chosen.filter(record=>settlementRule(record.region)==='yes');
